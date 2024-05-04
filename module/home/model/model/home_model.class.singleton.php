@@ -7,7 +7,7 @@ class home_model
 
     function __construct()
     {
-        //$this->bll = home_bll::getInstance();
+        $this->bll = home_bll::getInstance();
     }
 
     public static function getInstance()
@@ -20,7 +20,8 @@ class home_model
 
     public function get_carrusel_type()
     {
-        error_log("Model home");
+        return $this->bll->get_type_BLL();
     }
 
+    
 }

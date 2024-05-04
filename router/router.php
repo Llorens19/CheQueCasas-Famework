@@ -1,6 +1,6 @@
 <?php
 
-//require 'autoload.php';
+require 'autoload.php';
 
 $path = $_SERVER['DOCUMENT_ROOT'] . '/CheQueHabitaculos_MVC/CheQueCasas_Framework/';
 include($path . "utils/common.inc.php");
