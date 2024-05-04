@@ -23,5 +23,27 @@ class home_model
         return $this->bll->get_type_BLL();
     }
 
+    public function get_carrusel_operations()
+    {
+        return $this->bll->get_operations_BLL();
+    }
+
+    public function get_carrusel_city()
+    {
+
+        return $this->bll->get_city_BLL();
+    }
+
+    public function get_most_viewed()
+    {
+
+        return $this->bll->get_most_viewed_BLL();
+    }
+
+    public function get_lasts_views($args)
+    {
+
+        return $this->bll->get_lasts_views_BLL($args);
+    }
     
 }
