@@ -2,7 +2,7 @@
 
 require 'autoload.php';
 
-$path = $_SERVER['DOCUMENT_ROOT'] . '/CheQueHabitaculos_MVC/v9/';
+$path = $_SERVER['DOCUMENT_ROOT'] . '/CheQueHabitaculos_MVC/CheQueCasas_Framework/';
 include($path . "utils/common.inc.php");
 // include($path . "utils/mail.inc.php");
 include_once($path . "paths.php");

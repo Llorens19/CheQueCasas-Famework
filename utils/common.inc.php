@@ -58,4 +58,3 @@
             return SITE_PATH . $link;
         }
     }
-?>
