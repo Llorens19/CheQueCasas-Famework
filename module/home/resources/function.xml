@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <functions>
-    
     <function>
         <name>view</name>
         <uri>view</uri>
@@ -9,6 +8,26 @@
     <function>
         <name>carrusel_type</name>
         <uri>carrusel_type</uri>
+    </function>
+    
+    <function>
+        <name>carrusel_operations</name>
+        <uri>carrusel_operations</uri>
+    </function>
+    
+    <function>
+        <name>carrusel_city</name>
+        <uri>carrusel_city</uri>
+    </function>
+
+    <function>
+        <name>most_viewed</name>
+        <uri>most_viewed</uri>
+    </function>
+
+    <function>
+        <name>lasts_views</name>
+        <uri>lasts_views</uri>
     </function>
 
 </functions>
