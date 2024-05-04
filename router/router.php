@@ -1,9 +1,9 @@
 <?php
 
-require 'autoload.php';
+//require 'autoload.php';
 
 $path = $_SERVER['DOCUMENT_ROOT'] . '/CheQueHabitaculos_MVC/CheQueCasas_Framework/';
-include($path . "utils/common.inc.php");
+//include($path . "utils/common.inc.php");
 // include($path . "utils/mail.inc.php");
 include_once($path . "paths.php");
 
@@ -37,6 +37,7 @@ class router
         } else {
             $this->uriFunction = 'view';
         }
+        
     }
 
     function routingStart()
@@ -44,13 +45,14 @@ class router
         try {
             call_user_func(array($this->loadModule(), $this->loadFunction())); //Llamamos a la función que hemos cargado
         } catch (Exception $e) {
-            common::load_error();  //Si no se ha cargado bien, cargamos la página de error
+            //common::load_error();  //Si no se ha cargado bien, cargamos la página de error
         }
     }
 
     //Cargamos el módulo que queremos cargar
     private function loadModule()
     {
+        error_log("modulooooooooooo");
         if (file_exists('resources/modules.xml')) { //Si existe el archivo de módulos
             $modules = simplexml_load_file('resources/modules.xml'); //Cargamos los módulos
             foreach ($modules as $row) { //Recorremos los módulos
@@ -61,6 +63,8 @@ class router
                         require_once($path); //Lo cargamos
                         $controllerName = 'controller_' . (string) $row->name; //Guardamos el nombre del controlador
                         $this->nameModule = (string) $row->name; //Guardamos el nombre del módulo
+
+                        error_log("Cargamos el módulo: " . $this->nameModule . " y la función: " . $this->uriFunction); //Mostramos un mensaje en el log
                         return new $controllerName; // Devolvemos el controlador que queremos cargar 
                     }
                 }

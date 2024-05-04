@@ -1,5 +1,5 @@
 <?php
-define('PROJECT', '/CheQueHabitaculos_MVC/v9/');
+define('PROJECT', '/CheQueHabitaculos_MVC/CheQueCasas_Framework/');
 
 //SITE_ROOT
 define('SITE_ROOT', $_SERVER['DOCUMENT_ROOT'] . PROJECT);
