@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<functions>
+    <function>
+        <name>view</name>
+        <uri>view</uri>
+    </function>
+    <function>
+        <name>load_buildings</name>
+        <uri>load_buildings</uri>
+    </function>
+    <function>
+        <name>details_building</name>
+        <uri>details_building</uri>
+    </function>
+    <function>
+        <name>filters_shop_refill</name>
+        <uri>filters_shop_refill</uri>
+    </function>
+
+    <function>
+        <name>filters_table</name>
+        <uri>filters_table</uri>
+    </function>
+
+    <function>
+        <name>count_click_details</name>
+        <uri>count_click_details</uri>
+    </function>
+
+
+    <function>
+        <name>total_prod</name>
+        <uri>total_prod</uri>
+    </function>
+
+    <function>
+        <name>likes_user</name>
+        <uri>likes_user</uri>
+    </function>
+
+
+    <function>
+        <name>table_likes</name>
+        <uri>table_likes</uri>
+    </function>
+
+    <function>
+        <name>action_like</name>
+        <uri>action_like</uri>
+    </function>
+
+
+
+</functions>
