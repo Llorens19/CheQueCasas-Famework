@@ -6,7 +6,7 @@
         }
         function carrusel_type() {
             error_log('carga alguna funcion');
-            //echo json_encode(common::load_model('home_model', 'get_carrusel_type'));
+            echo json_encode(common::load_model('home_model', 'get_carrusel_type'));
         }
 
     }
