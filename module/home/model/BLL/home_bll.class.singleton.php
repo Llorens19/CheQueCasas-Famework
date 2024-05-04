@@ -17,8 +17,18 @@
 		}
 
 		public function get_type_BLL() {
-			return $this -> dao -> select_type($this -> db);
-		}
+			try {
+				$select_type = $this -> dao -> select_type($this -> db);
+			} catch (Exception $e) {
+				return "error";
+			}
+	
+			if (!empty($select_type)) {
+				return $select_type;
 
+			} else {
+				return "error";
+			}
+		}
 		
 	}
