@@ -53,7 +53,6 @@ class home_dao
 
 	public function select_lasts_views($array, $db)
 	{
-
 		$sql = "SELECT *
                     FROM building b, type t, operations o, city c
                     WHERE b.id_type = t.id_type
@@ -69,7 +68,7 @@ class home_dao
 		return $db->listar($stmt);
 	}
 
-	
+
 
 	function select_images($db)
 	{
