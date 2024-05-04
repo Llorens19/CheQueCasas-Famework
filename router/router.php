@@ -3,7 +3,7 @@
 //require 'autoload.php';
 
 $path = $_SERVER['DOCUMENT_ROOT'] . '/CheQueHabitaculos_MVC/CheQueCasas_Framework/';
-//include($path . "utils/common.inc.php");
+include($path . "utils/common.inc.php");
 // include($path . "utils/mail.inc.php");
 include_once($path . "paths.php");
 
@@ -37,7 +37,6 @@ class router
         } else {
             $this->uriFunction = 'view';
         }
-        
     }
 
     function routingStart()
@@ -45,7 +44,7 @@ class router
         try {
             call_user_func(array($this->loadModule(), $this->loadFunction())); //Llamamos a la función que hemos cargado
         } catch (Exception $e) {
-            //common::load_error();  //Si no se ha cargado bien, cargamos la página de error
+            common::load_error();  //Si no se ha cargado bien, cargamos la página de error
         }
     }
 
@@ -76,7 +75,7 @@ class router
     private function loadFunction()
     {
         $path = MODULES_PATH . $this->nameModule . '/resources/function.xml'; //Cargamos las funciones del módulo que esta dentro de cada carpeta de modulo
-       
+
 
         if (file_exists($path)) {
             $functions = simplexml_load_file($path);

@@ -8,6 +8,7 @@
         }
         
         public static function load_view($topPage, $view) {
+            error_log("Cargamos la vista: " . $view);
             $topPage = VIEW_PATH_INC . $topPage;
             if ((file_exists($topPage)) && (file_exists($view))) {
                 require_once ($topPage);
