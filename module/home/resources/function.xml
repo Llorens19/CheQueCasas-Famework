@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <functions>
+    
     <function>
         <name>view</name>
         <uri>view</uri>
+    </function>
+
+    <function>
+        <name>carrusel_type</name>
+        <uri>carrusel_type</uri>
     </function>
 
 </functions>
