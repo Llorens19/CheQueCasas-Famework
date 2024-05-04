@@ -5,7 +5,7 @@
 		static $_instance;
 
 		function __construct() {
-			//$this -> dao = home_dao::getInstance();
+			$this -> dao = home_dao::getInstance();
 			$this -> db = db::getInstance();
 		}
 
@@ -17,7 +17,7 @@
 		}
 
 		public function get_type_BLL() {
-			error_log("BLL cargado");
+			return $this -> dao -> select_type($this -> db);
 		}
 
 		
