@@ -8,5 +8,22 @@
             error_log('carga alguna funcion');
             echo json_encode(common::load_model('home_model', 'get_carrusel_type'));
         }
+        
+        function carrusel_operations() {
+            echo json_encode(common::load_model('home_model', 'get_carrusel_operations'));
+        }
+        
+        function carrusel_city() {
+            echo json_encode(common::load_model('home_model', 'get_carrusel_city'));
+        }
+
+        function most_viewed() {
+            echo json_encode(common::load_model('home_model', 'get_most_viewed'));
+        }
+
+        
+        function lasts_views() {
+            echo json_encode(common::load_model('home_model', 'get_lasts_views', $_POST["lasts_views"]));
+        }
 
     }
