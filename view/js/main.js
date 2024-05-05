@@ -168,7 +168,7 @@ function friendlyURL(url) {
         link += "/" + aux[1];
       }
   }
-  return "http://localhost/CheQueHabitaculos_MVC/v9" + link;
+  return "http://localhost/CheQueHabitaculos_MVC/CheQueCasas_Framework" + link;
 }
 
 
