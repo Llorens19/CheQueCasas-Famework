@@ -13,6 +13,4 @@
             echo json_encode(common::load_model('search_model', 'get_search_type', ['complete', $_POST['array_filters']]));
         }
 
-
-        
     }
