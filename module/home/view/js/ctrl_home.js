@@ -23,7 +23,7 @@ function carrousel_operations() {
 }
 
 function carrousel_type() {
-    ajaxPromise('GET', 'JSON', 'index.php?module=home&op=carrusel_type')
+    ajaxPromise('GET', 'JSON', 'index.php?module=home', {op: "carrusel_type" })
         .then(function (data) {
             for (row in data) {
                 $('<div></div>').attr('class', "card element_type").attr('id', data[row].id_type).appendTo(".carrousel_list2")
@@ -45,7 +45,7 @@ function carrousel_type() {
 }
 
 function carrousel_city() {
-    ajaxPromise('GET', 'JSON', 'index.php?module=home&op=carrusel_city')
+    ajaxPromise('GET', 'JSON', 'index.php?module=home', {op: "carrusel_city" })
         .then(function (data) {
             for (row in data) {
                 $('<swiper-slide></swiper-slide>').attr('class', "element_city").attr('id', data[row].id_city).appendTo(".carrousel_list3")
@@ -67,7 +67,7 @@ function carrousel_city() {
 }
 
 function most_viewed() {
-    ajaxPromise('GET', 'JSON', 'index.php?module=home&op=most_viewed')
+    ajaxPromise('GET', 'JSON', 'index.php?module=home', {op: "most_viewed" })
         .then(function (data) {
             for (row in data[0]) {
                 $('<swiper-slide></swiper-slide>').attr('class', "element_lasts_views").attr('id', data[0][row].id_building).appendTo(".carrousel_list4")
@@ -131,7 +131,7 @@ function lasts_views() {
     console.log(lasts_views);
     if (lasts_views != null) {
 
-        ajaxPromise('POST', 'JSON', 'index.php?module=home&op=lasts_views', { lasts_views: lasts_views })
+        ajaxPromise('POST', 'JSON', 'index.php?module=home&op=lasts_views', { lasts_views: lasts_views, op: "lasts_views"})
             .then(function (data) {
                 for (row in data[0]) {
                     $('<swiper-slide></swiper-slide>').attr('class', "element_lasts_views").attr('id', data[0][row].id_building).appendTo(".carrousel_list5")
@@ -258,7 +258,7 @@ function prepare_filters() {
     localStorage.removeItem("price");
     localStorage.removeItem("order");
 
-    ajaxPromise("POST", "JSON", "index.php?module=shop&op=filters_table")
+    ajaxPromise("POST", "JSON", "index.php?module=shop", {op: "filters_table" })
         .then(function (data) {
             localStorage.removeItem("data_filters_table");
             localStorage.setItem("data_filters_table", JSON.stringify(data));
