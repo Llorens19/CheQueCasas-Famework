@@ -1,4 +1,3 @@
-// ================AJAX-PROMISE================
 async function ajaxPromise(sType, sTData, sUrl, sData = undefined) {
     try {
         const data = await $.ajax({
@@ -14,8 +13,37 @@ async function ajaxPromise(sType, sTData, sUrl, sData = undefined) {
 };
 
 
+function friendlyURL(url) {
+    var link = "";
+    url = url.replace("?", "");
+    url = url.split("&");
+    cont = 0;
+    for (var i = 0; i < url.length; i++) {
+        cont++;
+        var aux = url[i].split("=");
+        if (cont == 2) {
+            link += "/" + aux[1] + "/";
+        } else {
+            link += "/" + aux[1];
+        }
+    }
+    return "http://localhost/CheQueHabitaculos_MVC/CheQueCasas_Framework" + link;
+}
 
-//================LOAD-HEADER================
+
+$(document).on("click", '.shop_building_all', function () {
+    var filters = [];
+    localStorage.removeItem('filters');
+    filters.push({ "no": ["no"] });
+    localStorage.setItem('filters', JSON.stringify(filters));
+    setTimeout(function () {
+        window.location.href = 'index.php?page=controller_shop&op=list';
+    }, 1000);
+});
+
+
+
+
 function load_menu() {
     const token = localStorage.getItem('access_token');
     console.log(token);
@@ -138,7 +166,7 @@ function load_menu() {
 }
 
 
-//================CLICK-LOGIUT================
+
 function click_logout() {
     $(document).on('click', '.logout', function () {
         localStorage.removeItem('total_prod');
@@ -147,7 +175,6 @@ function click_logout() {
     });
 }
 
-//================LOG-OUT================
 function logout() {
     ajaxPromise('POST', 'JSON', 'index.php?module=login&op=logout')
         .then(function (data) {
@@ -159,7 +186,7 @@ function logout() {
         });
 }
 
-// Remove localstorage('page') with click in shop
+
 function click_shop() {
     $(document).on('click', '#opc_shop', function () {
         localStorage.removeItem('page');

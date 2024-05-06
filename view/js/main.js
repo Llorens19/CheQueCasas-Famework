@@ -153,37 +153,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-/* FRIENDLY URL */
-function friendlyURL(url) {
-  var link = "";
-  url = url.replace("?", "");
-  url = url.split("&");
-  cont = 0;
-  for (var i = 0; i < url.length; i++) {
-    cont++;
-      var aux = url[i].split("=");
-      if (cont == 2) {
-        link += "/" + aux[1] + "/";	
-      }else{
-        link += "/" + aux[1];
-      }
-  }
-  return "http://localhost/CheQueHabitaculos_MVC/CheQueCasas_Framework" + link;
-}
-
-
-//nuevo
-
-$(document).on("click", '.shop_building_all', function () {
-  var filters = [];
-  localStorage.removeItem('filters');
-  filters.push({ "no": ["no"] });
-  localStorage.setItem('filters', JSON.stringify(filters));
-  setTimeout(function () {
-      window.location.href = 'index.php?page=controller_shop&op=list';
-  }, 1000);
-});
-
-
-
 
