@@ -33,7 +33,12 @@ class router
             $this->uriModule = 'home';
         }
         if (isset($_GET['op'])) {   //Si no cargamos ninguna función, forzamos la de view
+
             $this->uriFunction = ($_GET['op'] === "") ? 'view' : $_GET['op'];
+            
+        } else if (isset($_POST['op'])) {
+
+            $this->uriFunction = ($_POST['op'] === "") ? 'view' : $_POST['op'];
         } else {
             $this->uriFunction = 'view';
         }

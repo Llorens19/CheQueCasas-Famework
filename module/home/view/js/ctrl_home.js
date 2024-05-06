@@ -1,7 +1,7 @@
 console.log("/////////////////////////////////////////////////////////////////");
 
 function carrousel_operations() {
-    ajaxPromise('GET', 'JSON', 'index.php?module=home&op=carrusel_operations')
+    ajaxPromise('GET', 'JSON', 'index.php?module=home', {op: "carrusel_operations" })
         .then(function (data) {
             for (row in data) {
                 $('<div></div>').attr('class', "element_operations col-lg-3 col-md-6 service-item d-flex").attr('id', data[row].id_operations).appendTo(".carrousel_list")
