@@ -1,7 +1,5 @@
-console.log("/////////////////////////////////////////////////////////////////");
-
 function carrousel_operations() {
-    ajaxPromise('GET', 'JSON', 'index.php?module=home', {op: "carrusel_operations" })
+    ajaxPromise('GET', 'JSON', friendlyURL('?module=home'), {op: "carrusel_operations" })
         .then(function (data) {
             for (row in data) {
                 $('<div></div>').attr('class', "element_operations col-lg-3 col-md-6 service-item d-flex").attr('id', data[row].id_operations).appendTo(".carrousel_list")
@@ -23,7 +21,7 @@ function carrousel_operations() {
 }
 
 function carrousel_type() {
-    ajaxPromise('GET', 'JSON', 'index.php?module=home', {op: "carrusel_type" })
+    ajaxPromise('GET', 'JSON', friendlyURL('?module=home'), {op: "carrusel_type" })
         .then(function (data) {
             for (row in data) {
                 $('<div></div>').attr('class', "card element_type").attr('id', data[row].id_type).appendTo(".carrousel_list2")
@@ -199,7 +197,7 @@ function clicks() {
         localStorage.removeItem('city');
         localStorage.setItem('operations', this.getAttribute('id'));
         setTimeout(function () {
-            window.location.href = 'index.php?module=shop&op=view';
+            window.location.href = 'index.php?module=shop';
         }, 200);
     });
 
@@ -211,7 +209,7 @@ function clicks() {
 
         localStorage.setItem('type', this.getAttribute('id'));
         setTimeout(function () {
-            window.location.href = 'index.php?module=shop&op=view';
+            window.location.href = 'index.php?module=shop';
         }, 200);
     });
 
@@ -224,7 +222,7 @@ function clicks() {
         localStorage.setItem('city', this.getAttribute('id'));
 
         setTimeout(function () {
-            window.location.href = 'index.php?module=shop&op=view';
+            window.location.href = 'index.php?module=shop';
         }, 200);
     });
 
@@ -248,7 +246,7 @@ function clicks() {
         localStorage.removeItem('id_details');
         localStorage.setItem('id_details', this.getAttribute('id'));
         setTimeout(function () {
-            window.location.href = 'index.php?module=shop&op=view';
+            window.location.href = 'index.php?module=shop';
         }, 200);
     });
 }
