@@ -1,22 +1,22 @@
-function ajaxForSearch(url, sData = undefined, total_prod = 0, items_page = 9) {
+function ajaxForSearch(url, sData = undefined, module, total_prod = 0, items_page = 9) {
     localStorage.setItem('page', 1);
     let filters = sData;
-    print_buildings(url, { 'filters': filters, 'total_prod': total_prod, 'items_page': items_page });
+    print_buildings(url, { 'filters': filters, op:module,'total_prod': total_prod, 'items_page': items_page });
     load_pagination();
 
 }
 
 
-function ajaxForSearchScroll(url, sData = undefined, total_prod = 0, items_page = 4) {
+function ajaxForSearchScroll(url, sData = undefined, module, total_prod = 0, items_page = 4) {
         let filters = sData;
-        print_scroll(url, { 'filters': filters, 'total_prod': total_prod, 'items_page': items_page });
+        print_scroll(url, { 'filters': filters, op:module, 'total_prod': total_prod, 'items_page': items_page });
         load_scroll();
 }
 
 
 function print_points() {
     let filters = JSON.parse(localStorage.getItem("filters")) || undefined;
-    ajaxPromise('POST', 'JSON', 'index.php?module=shop&op=load_buildings', { 'filters': filters, 'total_prod': 0, 'items_page': 100000 })
+    ajaxPromise('POST', 'JSON', 'index.php?module=shop', { 'filters': filters, 'total_prod': 0, 'items_page': 100000, op : 'load_buildings' })
         .then(function (data) {
             mapBox_all(data);//
         })
@@ -32,7 +32,7 @@ function load_pagination() {
 
     let filters = JSON.parse(localStorage.getItem("filters")) || undefined;
 
-    ajaxPromise("POST", "JSON", 'index.php?module=shop&op=total_prod', { 'filters': filters })
+    ajaxPromise("POST", "JSON", 'index.php?module=shop', { 'filters': filters, op: 'total_prod'})
         .then(function (data) {
             let total_prod = data[0].total;
 
@@ -76,7 +76,7 @@ function load_pagination() {
                 let page = $(this).attr("value");
                 // localStorage.setItem('page', page);
                 let offset_prod = (page - 1) * 9;
-                print_buildings("index.php?module=shop&op=load_buildings", { 'filters': filters, 'total_prod': offset_prod, 'items_page': 9 });
+                print_buildings("index.php?module=shop", { 'filters': filters, 'total_prod': offset_prod, 'items_page': 9, op: 'load_buildings' });
                 window.scrollTo(0, 0);
                 $(this).addClass("active");
                 $(".page").not(this).removeClass("active");
@@ -97,7 +97,7 @@ function load_scroll() {
 
 
 
-    ajaxPromise("POST", "JSON", "index.php?module=shop&op=total_prod", { 'filters': filters })
+    ajaxPromise("POST", "JSON", "index.php?module=shop", { 'filters': filters, op: 'total_prod'})
         .then(function (data) {
             let total_prod = data[0].total;
             let total_cliks = Math.ceil(total_prod / 4);
@@ -122,9 +122,9 @@ function load_scroll() {
                 localStorage.setItem("cliks", cliks);
 
                 let offset_prod = (cliks) * 4;
-                print_scroll("index.php?module=shop&op=load_buildings", { 'filters': filters, 'total_prod': offset_prod, 'items_page': 4 });
+                print_scroll("index.php?module=shop", { 'filters': filters, 'total_prod': offset_prod, 'items_page': 4, op: 'load_buildings' });
                 if (cliks >= total_cliks - 1) {
-                    print_scroll("index.php?module=shop&op=view_refill", { 'filters': filters, 'items_page': extra_buildings });
+                    print_scroll("index.php?module=shop", { 'filters': filters, 'items_page': extra_buildings, op: 'load_buildings'});
                     $(".div_button_scroll").empty();
                 }
 
@@ -152,7 +152,7 @@ function clicks() {
 
 function loadDetails(id_building) {
     console.log("loadDetails");
-    ajaxPromise("POST", "JSON", "index.php?module=shop&op=details_building", { id_building: id_building })
+    ajaxPromise("POST", "JSON", "index.php?module=shop", { id_building: id_building, op: 'details_building'})
         .then(function (data) {
 
             $("#content_shop_building").hide();
@@ -170,7 +170,7 @@ function loadDetails(id_building) {
 
                 let id = id_building;
 
-                ajaxPromise("POST", "JSON", "index.php?module=shop&op=count_click_details", { id: id })
+                ajaxPromise("POST", "JSON", "index.php?module=shop", { id: id, op: 'count_click_details'})
                     .then(function (data) {
 
                     })
@@ -191,13 +191,7 @@ function loadDetails(id_building) {
                 }
                 localStorage.setItem("idsArray", JSON.stringify(idsArray));
 
-
-
             }
-
-
-
-
 
 
             $("<div></div>")
@@ -280,8 +274,9 @@ function loadDetails(id_building) {
             });
 
             filters = JSON.parse(localStorage.getItem("filters")) || undefined;
+            console.log(filters);
 
-            ajaxForSearchScroll("index.php?module=shop&op=load_buildings", filters);
+            ajaxForSearchScroll("index.php?module=shop", filters, 'load_buildings');
 
             have_like(data[0].id_building);
             load_menu();
@@ -307,7 +302,7 @@ function shopAll() {
 
 function printFilters() {
 
-    ajaxPromise("POST", "JSON", "index.php?module=shop&op=filters_table")
+    ajaxPromise("POST", "JSON", "index.php?module=shop", {op: 'filters_table'})
         .then(function (data) {
             localStorage.removeItem("data_filters_table");
             localStorage.setItem("data_filters_table", JSON.stringify(data));
@@ -634,7 +629,7 @@ function recharge_filters() {
     console.log("recharge_filters");
     console.table(filters);
 
-    ajaxForSearch("index.php?module=shop&op=load_buildings", filters);
+    ajaxForSearch("index.php?module=shop", filters, 'load_buildings');
 }
 
 function filter_button() {
@@ -792,7 +787,7 @@ function count_click_details() {
         let id = $(this).attr("id");
 
 
-        ajaxPromise("POST", "JSON", "index.php?module=shop&op=count_click_details", { id: id })
+        ajaxPromise("POST", "JSON", "index.php?module=shop", { id: id, op: 'count_click_details'})
             .then(function (data) {
 
             })
@@ -965,7 +960,7 @@ function click_like_building() {
 
 
 
-        ajaxPromise("POST", "JSON", "index.php?module=shop&op=action_like", { "id_building": id })
+        ajaxPromise("POST", "JSON", "index.php?module=shop", { "id_building": id, op: 'action_like' })
             .then(function (data) {
 
                 console.table(data[0].message);
@@ -1002,7 +997,7 @@ function click_like_building() {
 
 async function find_likes_user() {
 
-    await ajaxPromise("POST", "JSON", "index.php?module=shop&op=likes_user")
+    await ajaxPromise("POST", "JSON", "index.php?module=shop", { op : "likes_user" })
         .then(function (data) {
 
 
@@ -1038,7 +1033,7 @@ async function find_likes_user() {
 
 async function get_all_table() {
 
-    await ajaxPromise("POST", "JSON", "index.php?module=shop&op=table_likes")
+    await ajaxPromise("POST", "JSON", "index.php?module=shop", {op: 'table_likes'})
         .then(function (data) {
 
             localStorage.setItem('all_likes_table', JSON.stringify(data));
