@@ -43,7 +43,7 @@ function carrousel_type() {
 }
 
 function carrousel_city() {
-    ajaxPromise('GET', 'JSON', 'index.php?module=home', {op: "carrusel_city" })
+    ajaxPromise('GET', 'JSON', friendlyURL('?module=home'), {op: "carrusel_city" })
         .then(function (data) {
             for (row in data) {
                 $('<swiper-slide></swiper-slide>').attr('class', "element_city").attr('id', data[row].id_city).appendTo(".carrousel_list3")
@@ -65,7 +65,7 @@ function carrousel_city() {
 }
 
 function most_viewed() {
-    ajaxPromise('GET', 'JSON', 'index.php?module=home', {op: "most_viewed" })
+    ajaxPromise('GET', 'JSON', friendlyURL('index.php?module=home'), {op: "most_viewed" })
         .then(function (data) {
             for (row in data[0]) {
                 $('<swiper-slide></swiper-slide>').attr('class', "element_lasts_views").attr('id', data[0][row].id_building).appendTo(".carrousel_list4")
@@ -129,7 +129,7 @@ function lasts_views() {
     console.log(lasts_views);
     if (lasts_views != null) {
 
-        ajaxPromise('POST', 'JSON', 'index.php?module=home&op=lasts_views', { lasts_views: lasts_views, op: "lasts_views"})
+        ajaxPromise('POST', 'JSON', friendlyURL('?module=home'), { lasts_views: lasts_views, op: "lasts_views"})
             .then(function (data) {
                 for (row in data[0]) {
                     $('<swiper-slide></swiper-slide>').attr('class', "element_lasts_views").attr('id', data[0][row].id_building).appendTo(".carrousel_list5")
@@ -197,7 +197,7 @@ function clicks() {
         localStorage.removeItem('city');
         localStorage.setItem('operations', this.getAttribute('id'));
         setTimeout(function () {
-            window.location.href = 'index.php?module=shop';
+            window.location.href = friendlyURL('?module=shop');
         }, 200);
     });
 
@@ -209,7 +209,7 @@ function clicks() {
 
         localStorage.setItem('type', this.getAttribute('id'));
         setTimeout(function () {
-            window.location.href = 'index.php?module=shop';
+            window.location.href = friendlyURL('?module=shop');
         }, 200);
     });
 
@@ -222,7 +222,7 @@ function clicks() {
         localStorage.setItem('city', this.getAttribute('id'));
 
         setTimeout(function () {
-            window.location.href = 'index.php?module=shop';
+            window.location.href = friendlyURL('?module=shop');
         }, 200);
     });
 
@@ -238,7 +238,7 @@ function clicks() {
         localStorage.removeItem('id_details');
         localStorage.setItem('id_details', this.getAttribute('id'));
         setTimeout(function () {
-            window.location.href = 'index.php?module=shop&op=view';
+            window.location.href = friendlyURL('?module=shop');
         }, 200);
     });
 
@@ -246,7 +246,7 @@ function clicks() {
         localStorage.removeItem('id_details');
         localStorage.setItem('id_details', this.getAttribute('id'));
         setTimeout(function () {
-            window.location.href = 'index.php?module=shop';
+            window.location.href = friendlyURL('?module=shop');
         }, 200);
     });
 }
@@ -256,7 +256,7 @@ function prepare_filters() {
     localStorage.removeItem("price");
     localStorage.removeItem("order");
 
-    ajaxPromise("POST", "JSON", "index.php?module=shop", {op: "filters_table" })
+    ajaxPromise("POST", "JSON", friendlyURL('?module=shop'), {op: "filters_table" })
         .then(function (data) {
             localStorage.removeItem("data_filters_table");
             localStorage.setItem("data_filters_table", JSON.stringify(data));

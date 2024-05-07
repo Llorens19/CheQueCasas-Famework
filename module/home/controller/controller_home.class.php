@@ -21,7 +21,6 @@
             echo json_encode(common::load_model('home_model', 'get_most_viewed'));
         }
 
-        
         function lasts_views() {
             echo json_encode(common::load_model('home_model', 'get_lasts_views', $_POST["lasts_views"]));
         }
