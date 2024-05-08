@@ -64,11 +64,6 @@ minPopup.options.maxWidth = '450px';
 
 
 marker.setPopup(minPopup).setLngLat([data[0][row].longitude, data[0][row].latitude]).addTo(map);
-
-    
-    
-        
-
             
         marker.setPopup(minPopup)
             .setLngLat([data[0][row].longitude, data[0][row].latitude])
@@ -155,8 +150,6 @@ function map_search() {
 
                 // Muestra las coordenadas en la consola
                 if (data.features.length > 0) {
-                    console.log("Coordenadas del polígono:");
-                    console.log(data.features[0].geometry.coordinates[0]);
                     localStorage.setItem('poligon', JSON.stringify(data.features[0].geometry.coordinates[0]));
                 }
             }
@@ -169,7 +162,7 @@ function check_points(){
 
     poligon = JSON.parse(localStorage.getItem('poligon'));
 
-    ajaxPromise('POST', 'JSON', 'index.php?module=maps&op=points')
+    ajaxPromise('POST', 'JSON', friendlyURL('?module=maps'), {op:"points"})
     .then(function(data) {
         console.log(data);
         let in_poligon = [];
@@ -199,7 +192,6 @@ function check_points(){
 function map_search_buttons() {
     $(document).on("click", ".accept_poligon_map", function () {
         check_points();
-        console.log("click_mapasasasasasa");
         $("#exampleModal").modal("hide");
     });
 }
