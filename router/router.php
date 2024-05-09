@@ -71,7 +71,7 @@ class router
                         $this->nameModule = (string) $row->name; //Guardamos el nombre del módulo
 
                         error_log("Cargamos el módulo: " . $this->nameModule . " y la función: " . $this->uriFunction); //Mostramos un mensaje en el log
-                        return new $controllerName; // Devolvemos el controlador que queremos cargar 
+                        return $controllerName::getInstance(); // Devolvemos el controlador que queremos cargar 
                     }
                 }
             }

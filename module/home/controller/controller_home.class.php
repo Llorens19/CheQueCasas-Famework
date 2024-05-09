@@ -1,5 +1,20 @@
 <?php
     class controller_home {
+
+        static $_instance;
+
+        public static function getInstance()
+        {
+            if (!(self::$_instance instanceof self)) {
+                self::$_instance = new self(); // Si no existe lo crea
+            }
+            return self::$_instance;
+        }
+
+        function __construct() {
+
+        }
+
         function view() {
             error_log("cargamos modulo home");
             common::load_view('top_page_home.html', VIEW_PATH_HOME . 'home.html');

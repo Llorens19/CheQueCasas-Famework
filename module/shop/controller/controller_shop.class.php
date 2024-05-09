@@ -1,9 +1,19 @@
 <?php
-
-
-
     class controller_shop {
 
+        static $_instance;
+
+        public static function getInstance()
+            {
+                if (!(self::$_instance instanceof self)) {
+                    self::$_instance = new self(); // Si no existe lo crea
+                }
+                return self::$_instance;
+            }
+    
+            function __construct() {
+    
+            }
 
 
         function view() {
