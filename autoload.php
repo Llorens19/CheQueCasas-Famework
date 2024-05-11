@@ -30,8 +30,7 @@ function loadClasses($className)
         if (in_array($module, (array) $row->uri)) { //Si el módulo que queremos cargar está en la lista
 
             if (file_exists($modulePath . 'model/' . $option . '/' . $className . '.class.singleton.php')) {
-                set_include_path($modulePath . 'model/' . $option . '/');
-                spl_autoload($className);
+                include_once($modulePath . 'model/' . $option . '/' . $className . '.class.singleton.php');
 
                 error_log("////////////////////////////////////");
                 error_log($modulePath . 'model/' . $option . '/' . $className . '.class.singleton.php');
@@ -41,13 +40,10 @@ function loadClasses($className)
 
 
     if (file_exists($modelPath . $className . '.class.singleton.php')) {
-        set_include_path($modelPath);
-        spl_autoload($className);
+        include_once($modelPath . $className . '.class.singleton.php');
     }
 
-
     if (file_exists($utilsPath . $className . '.inc.php')) {
-        set_include_path($utilsPath);
-        spl_autoload($className);
+        include_once($utilsPath . $className . '.inc.php');
     }
 }
