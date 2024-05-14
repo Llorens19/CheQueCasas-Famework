@@ -27,7 +27,7 @@ function login() {
                 }
             }).catch(function(textStatus) {
                 if (console && console.log) {
-                    console.log("La solicitud ha fallado: " + textStatus);
+                    console.error("Error login", textStatus);
                 }
             });
     }

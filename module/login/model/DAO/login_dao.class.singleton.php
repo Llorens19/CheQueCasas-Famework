@@ -44,28 +44,21 @@ class login_dao
 			$surname = NULL;
 		}
 
-		$sql = "   INSERT INTO `user`(`name`,`surname`,`tlf`,`username`, `password`, `email`, `type_user`, `avatar`, `active`, `token_email`) 
-		VALUES ('$name','$surname',$tlf,'$username','$hashed_pass','$email','client','$avatar', $active, '$token_email')";
-
-		$stmt = $db->ejecutar($sql);
-		return $db->listar($stmt);
+		$sql = "INSERT INTO `user`(`name`,`surname`,`tlf`,`username`, `password`, `email`, `type_user`, `avatar`, `active`, `token_email`) 
+		VALUES ('$name','$surname',$tlf,'$username','$hashed_pass','$email','client','$avatar', '$active', '$token_email')";
+		error_log($sql);
+		return $stmt = $db->ejecutar($sql);
 	}
-
 	function select_user($db, $username)
 	{
 		$sql = "SELECT * FROM user WHERE username='$username'";
-
-		error_log($sql);
 
 		$stmt = $db->ejecutar($sql);
 		$res = $db->listar($stmt);
 
 		if ($res) {
-			error_log("mmmmmmmmmmmmmmmmmmmmmmmm");
-			
-			return $res; // Return the object directly
+			return $res; 
 		} else {
-			error_log("xxxxxxxxxxxxxxxxxxxxxxxxxx");
 			return "error_user";
 		}
 	}

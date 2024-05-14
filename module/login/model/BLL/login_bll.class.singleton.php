@@ -25,8 +25,6 @@ class login_bll
 
 	public function get_register_BLL($args)
 	{
-		error_log("************************************************************");
-		error_log("entra en el regiser");
 		try {
 
 			$check = $this->dao->select_email($this->db, $args[0][0]);
@@ -62,6 +60,17 @@ class login_bll
 				$avatar = "https://i.pravatar.cc/500?u=$hashavatar";
 
 				$rdo = $this->dao->insert_user($this->db, $args[2][0], $args[2][1], $args[2][3], $args[2][4], $args[2][5], 0, $token_email, $avatar, $hashed_pass);
+
+				$message = [
+					'type' => 'validate',
+					'token' => $token_email,
+					'email' =>  $args[2][1]
+				];
+
+				$email = json_decode(mail::send_email($message), true); //Enviamos el email de verificación
+				if (!empty($email)) {
+					return "ok";
+				}
 			} catch (Exception $e) {
 				return "error";
 			}

@@ -11,7 +11,7 @@ function load_type(array_filters) {
             }
         })
         .catch(function (error) {
-            console.log('Error:', error);
+            console.error('Error:', error);
             //window.location.href = "index.php?modules=exception&op=503&error=fail_load_brands&type=503";
         });
 }
@@ -24,7 +24,7 @@ function load_operation (array_filters) {
                 $('<option value="' + data[row].id_operations + '">' + data[row].n_operations + '</option>').appendTo('.operations')
             }
         }).catch(function () {
-            console.log('error');
+            console.error('error');
             //window.location.href = "index.php?modules=exception&op=503&error=fail_load_brands&type=503";
         });
 }
@@ -52,7 +52,7 @@ function load_autocomplete(array_filters) {
         });
 
     }).catch(function (error) {
-        console.log(error);
+        console.error(error);
         //$('.search_auto').fadeOut(500);
     });
 }

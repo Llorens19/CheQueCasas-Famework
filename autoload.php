@@ -10,14 +10,9 @@ function loadClasses($className)
     $classExplode = explode('_', $className);
     $module = $classExplode[0];
     $option = '';
-    error_log("444444444444444444444444444444444444444444444444444");
-    error_log($className);
-    error_log($module);
-
 
     if (isset($classExplode[1])) {
         $option = $classExplode[1];
-        error_log($option);
     }
 
     $modulePath = SITE_ROOT . 'module/' . $module . '/';
@@ -31,9 +26,6 @@ function loadClasses($className)
 
             if (file_exists($modulePath . 'model/' . $option . '/' . $className . '.class.singleton.php')) {
                 include_once($modulePath . 'model/' . $option . '/' . $className . '.class.singleton.php');
-
-                error_log("////////////////////////////////////");
-                error_log($modulePath . 'model/' . $option . '/' . $className . '.class.singleton.php');
             }
         }
     }

@@ -28,13 +28,11 @@ class router
     function __construct()
     {    //Si no cargamos ningun módulo, forzamos el home
         if (isset($_GET['module'])) {
-            error_log("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH" . $_GET['module']);
             $this->uriModule = $_GET['module'];
         } else {
             $this->uriModule = 'home';
         }
         if (isset($_POST['op'])) {
-            error_log("YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY" . $_POST['op']);
             $this->uriFunction = ($_POST['op'] === "") ? 'view' : $_POST['op'];
         } else
         if (isset($_GET['op'])) {   //Si no cargamos ninguna función, forzamos la de view
@@ -58,7 +56,6 @@ class router
     //Cargamos el módulo que queremos cargar
     private function loadModule()
     {
-        error_log("modulooooooooooo");
         if (file_exists('resources/modules.xml')) { //Si existe el archivo de módulos
             $modules = simplexml_load_file('resources/modules.xml'); //Cargamos los módulos
             foreach ($modules as $row) { //Recorremos los módulos
@@ -69,8 +66,6 @@ class router
                         require_once($path); //Lo cargamos
                         $controllerName = 'controller_' . (string) $row->name; //Guardamos el nombre del controlador
                         $this->nameModule = (string) $row->name; //Guardamos el nombre del módulo
-
-                        error_log("Cargamos el módulo: " . $this->nameModule . " y la función: " . $this->uriFunction); //Mostramos un mensaje en el log
                         return $controllerName::getInstance(); // Devolvemos el controlador que queremos cargar 
                     }
                 }

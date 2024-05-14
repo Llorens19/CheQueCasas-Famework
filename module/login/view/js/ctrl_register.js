@@ -1,6 +1,7 @@
 function register() {
     if (validate_register() != 0) {
         var data = {
+            op: 'register',
             name: document.getElementById('register_name').value,
             surname: document.getElementById('register_surname').value,
             tlf: document.getElementById('register_tlf').value,
@@ -11,26 +12,27 @@ function register() {
 
         console.table(data);
 
-        ajaxPromise( 'POST', 'JSON', 'index.php?module=login&op=register',data)
+        ajaxPromise('POST', 'JSON', 'index.php?module=login', data)
             .then(function (result) {
-                if (result == "error_email") {
+                console.log("result");
+                if (result === "error_email") {
                     document.getElementById('error_register_username').innerHTML = " ";
                     document.getElementById('error_register_email').innerHTML = "El email ya esta en uso, intentalo con otro";
-                
-                } else if (result == "error_username") {
+
+                } else if (result === "error_username") {
                     document.getElementById('error_register_username').innerHTML = "El usuario ya esta en uso, intentalo con otro";
                     document.getElementById('error_register_email').innerHTML = " ";
-                } else if (result == "error_email_username") {
+                } else if (result === "error_email_username") {
                     document.getElementById('error_register_username').innerHTML = "El usuario ya esta en uso, intentalo con otro";
                     document.getElementById('error_register_email').innerHTML = "El email ya esta en uso, intentalo con otro";
                 } else {
-                    // toastr.success("Registery succesfully");
                     location.reload();
                 }
+
             }).catch(function (textStatus) {
-                if (console && console.log) {
-                    console.log("La solicitud ha fallado: " + textStatus);
-                }
+
+                console.error("Error register", textStatus);
+
             });
     }
 }
@@ -144,7 +146,7 @@ function validate_register() {
         } else {
             document.getElementById('error_register_tlf').innerHTML = "";
         }
-    }   
+    }
 
 
 
