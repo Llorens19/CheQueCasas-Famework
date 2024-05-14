@@ -17,7 +17,9 @@ class controller_login
 
     function register()
     {
-        error_log("register");
+        error_log("************************************************************");
+		error_log("entra en el controler regiser");
+
         echo json_encode(common::load_model('login_model', 'get_register', [
             [$_POST['email']],
             [$_POST['username']],

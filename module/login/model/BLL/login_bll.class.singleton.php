@@ -25,8 +25,8 @@ class login_bll
 
 	public function get_register_BLL($args)
 	{
-
-
+		error_log("************************************************************");
+		error_log("entra en el regiser");
 		try {
 
 			$check = $this->dao->select_email($this->db, $args[0][0]);
@@ -55,7 +55,13 @@ class login_bll
 		// Si no existe el email creará el usuario
 		if ($check_email && $check_username) {
 			try {
-				$rdo = $this->dao->insert_user($this->db, $args[2][0], $args[2][1], $args[2][2], $args[2][3], $args[2][4], $args[2][5]);
+				$token_email = common::generate_Token_secure(20);
+
+				$hashed_pass = password_hash($args[2][2], PASSWORD_DEFAULT, ['cost' => 12]);
+				$hashavatar = md5(strtolower(trim($args[2][1])));
+				$avatar = "https://i.pravatar.cc/500?u=$hashavatar";
+
+				$rdo = $this->dao->insert_user($this->db, $args[2][0], $args[2][1], $args[2][3], $args[2][4], $args[2][5], 0, $token_email, $avatar, $hashed_pass);
 			} catch (Exception $e) {
 				return "error";
 			}
@@ -120,62 +126,58 @@ class login_bll
 
 		$json = decode_access_token($args);
 
-        $rdo = $this->dao->select_data_user($this->db, $json['username']);
-        return $rdo;
-
+		$rdo = $this->dao->select_data_user($this->db, $json['username']);
+		return $rdo;
 	}
 	public function get_actividad_BLL($args)
 	{
 
 		if (!isset($args)) {
-            return "inactivo";
-        } else {
-            if ((time() - $args) >= 180) { //1800s=30min //
-                return "inactivo";
-                
-            } else {
-                return "activo";
-            }
-        }
+			return "inactivo";
+		} else {
+			if ((time() - $args) >= 180) { //1800s=30min //
+				return "inactivo";
+			} else {
+				return "activo";
+			}
+		}
 	}
 	public function get_controluser_BLL($args)
 	{
 
 		$access_token_dec = decode_access_token($args[0][0]);
-        $refresh_token_dec = decode_refresh_token($args[0][1]);
+		$refresh_token_dec = decode_refresh_token($args[0][1]);
 
-        if (
-            isset($args[1][0]) && ($args[1][0]) == $access_token_dec['username']
-            && ($args[1][0]) == $refresh_token_dec['username']
-        ) {
+		if (
+			isset($args[1][0]) && ($args[1][0]) == $access_token_dec['username']
+			&& ($args[1][0]) == $refresh_token_dec['username']
+		) {
 
 
 
-            if ($access_token_dec['exp'] < time() && $refresh_token_dec['exp'] > time()) { //comprobamos si el tiempo desesíon del tokes es menor que el tiempo de expiración
+			if ($access_token_dec['exp'] < time() && $refresh_token_dec['exp'] > time()) { //comprobamos si el tiempo desesíon del tokes es menor que el tiempo de expiración
 
-                $new_access_token = create_access_token($refresh_token_dec['username']);
-                return $new_access_token;
-            }
+				$new_access_token = create_access_token($refresh_token_dec['username']);
+				return $new_access_token;
+			}
 
-            if ($refresh_token_dec['exp'] < time()) { //comprobamos si el tiempo desesíon del tokes es menor que el tiempo de expiración
-               return "Refresh_caducado";
-            }
+			if ($refresh_token_dec['exp'] < time()) { //comprobamos si el tiempo desesíon del tokes es menor que el tiempo de expiración
+				return "Refresh_caducado";
+			}
 
-            if ($access_token_dec['exp'] > time() && $refresh_token_dec['exp'] > time()) { //comprobamos si el tiempo desesíon del tokes es menor que el tiempo de expiración
+			if ($access_token_dec['exp'] > time() && $refresh_token_dec['exp'] > time()) { //comprobamos si el tiempo desesíon del tokes es menor que el tiempo de expiración
 
-                return "Correct_User";
-            }
-            exit();
-        } else {
-            return "Wrong_User";
-        }
-
+				return "Correct_User";
+			}
+			exit();
+		} else {
+			return "Wrong_User";
+		}
 	}
 
 	public function get_refresh_cookie_BLL()
 	{
 		session_regenerate_id();
-        return "Done";
+		return "Done";
 	}
-
 }

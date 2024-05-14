@@ -33,7 +33,7 @@ class login_dao
 		return $db->listar($stmt);
 	}
 
-	function insert_user($db, $username, $email, $password, $name, $surname, $tlf)
+	function insert_user($db, $username, $email, $name, $surname, $tlf, $active, $token_email, $avatar, $hashed_pass )
 	{
 
 		if ($tlf == "") {
@@ -44,12 +44,8 @@ class login_dao
 			$surname = NULL;
 		}
 
-
-		$hashed_pass = password_hash($password, PASSWORD_DEFAULT, ['cost' => 12]);
-		$hashavatar = md5(strtolower(trim($email)));
-		$avatar = "https://i.pravatar.cc/500?u=$hashavatar";
-		$sql = "   INSERT INTO `user`(`name`,`surname`,`tlf`,`username`, `password`, `email`, `type_user`, `avatar`) 
-		VALUES ('$name','$surname',$tlf,'$username','$hashed_pass','$email','client','$avatar')";
+		$sql = "   INSERT INTO `user`(`name`,`surname`,`tlf`,`username`, `password`, `email`, `type_user`, `avatar`, `active`, `token_email`) 
+		VALUES ('$name','$surname',$tlf,'$username','$hashed_pass','$email','client','$avatar', $active, '$token_email')";
 
 		$stmt = $db->ejecutar($sql);
 		return $db->listar($stmt);
