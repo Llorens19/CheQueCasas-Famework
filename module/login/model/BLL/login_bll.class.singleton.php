@@ -103,14 +103,20 @@ class login_bll
 			if ($rdo == "error_user") {
 				return "error_user";
 			} else {
-				if (password_verify($args[1][0], $rdo[0]['password'])) { //Si la contraseña es correcta creamos el token
+				if (password_verify($args[1][0], $rdo[0]['password']) && $rdo[0]['active'] == 1) { //Si la contraseña es correcta creamos el token
 
 					$tokens = [];
 					$tokens[0] = create_access_token($rdo[0]["username"]);
 					$tokens[1] = create_refresh_token($rdo[0]["username"]);
 					$_SESSION['username'] = $rdo[0]['username']; //Guardamos el usario 
 					$_SESSION['tiempo'] = time(); //Guardamos el tiempo que se logea
+					session_regenerate_id(); //Regeneramos la sesión
 					return $tokens;
+
+				} else if (password_verify($args[1][0], $rdo[0]['password']) &&$rdo[0]['active'] == 0) {
+					
+					return "error_active";
+
 				} else {
 					return "error_passwd";
 				}
