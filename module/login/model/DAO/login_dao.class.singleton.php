@@ -14,13 +14,26 @@ class login_dao
 		return self::$_instance;
 	}
 
+	public function select_verify_email($db, $token_email){
 
+		$sql = "SELECT token_email FROM user WHERE token_email = '$token_email'";
+
+		$stmt = $db->ejecutar($sql);
+		return $db->listar($stmt);
+	} 
+
+	public function update_verify_email($db, $token_email){
+
+		$sql = "UPDATE user SET active = 1, token_email= '' WHERE token_email = '$token_email'";
+
+		$stmt = $db->ejecutar($sql);
+		return "update";
+	}
 
 
 	function select_email($db, $email)
 	{
 		$sql = "SELECT email FROM user WHERE email='$email'";
-
 		$stmt = $db->ejecutar($sql);
 		return $db->listar($stmt);
 	}
@@ -35,7 +48,6 @@ class login_dao
 
 	function insert_user($db, $username, $email, $name, $surname, $tlf, $active, $token_email, $avatar, $hashed_pass )
 	{
-
 		if ($tlf == "") {
 			$tlf = 'NULL';
 		}

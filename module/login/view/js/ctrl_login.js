@@ -1,16 +1,16 @@
 function login() {
     console.log("login");
     if (validate_login() != 0) {
-        var data = 
-            { 
-                username: document.getElementById('login_username').value,
-                password: document.getElementById('login_password').value
-            };
+        var data =
+        {
+            username: document.getElementById('login_username').value,
+            password: document.getElementById('login_password').value
+        };
 
-            console.table(data);
+        console.table(data);
 
         ajaxPromise('POST', 'JSON', 'index.php?module=login&op=login', data)
-            .then(function(result) {
+            .then(function (result) {
                 console.log(result);
                 if (result == "error_user") {
                     document.getElementById('error_username_log').innerHTML = "El usario no existe,asegurase de que lo a escrito correctamente"
@@ -25,7 +25,7 @@ function login() {
 
                     location.reload();
                 }
-            }).catch(function(textStatus) {
+            }).catch(function (textStatus) {
                 if (console && console.log) {
                     console.error("Error login", textStatus);
                 }
@@ -34,7 +34,7 @@ function login() {
 }
 
 function key_login() {
-    $("#login").keypress(function(e) {
+    $("#login").keypress(function (e) {
         var code = (e.keyCode ? e.keyCode : e.which);
         if (code == 13) {
             e.preventDefault();
@@ -44,7 +44,7 @@ function key_login() {
 }
 
 function button_login() {
-    $('#login').on('click', function(e) {
+    $('#login').on('click', function (e) {
         e.preventDefault();
         login();
     });
@@ -77,7 +77,32 @@ function validate_login() {
     }
 }
 
-$(document).ready(function() {
+function load_content() {
+    let path = window.location.pathname.split('/');
+
+    if (path[5] === 'recover') {
+        window.location.href = friendlyURL("?module=login&op=recover_view");
+        localStorage.setItem("token_email", path[6]);
+    } else if (path[5] === 'verify') {
+        ajaxPromise(friendlyURL("?module=login&op=verify_email"), 'POST', 'JSON', { token_email: path[6] })
+            .then(function (data) {
+                toastr.options.timeOut = 3000;
+                toastr.success('Email verified');
+                setTimeout('window.location.href = friendlyURL("?module=home&op=view")', 1000);
+            })
+            .catch(function () {
+                console.log('Error: verify email error');
+            });
+    } else if (path[4] === 'view') {
+        $(".login-wrap").show();
+        $(".forget_html").hide();
+    } else if (path[4] === 'recover_view') {
+        load_form_new_password();
+    }
+}
+
+$(document).ready(function () {
+    load_content();
     key_login();
     button_login();
 });

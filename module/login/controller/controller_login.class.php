@@ -27,6 +27,9 @@ class controller_login
     {
         echo json_encode(common::load_model('login_model', 'get_login', [[$_POST['username']],[$_POST['password']]]));
     }
+    function verify_email() {
+        echo json_encode(common::load_model('login_model', 'get_verify_email', $_POST['token_email']));
+    }
 
     function logout()
     {

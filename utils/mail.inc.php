@@ -8,12 +8,12 @@ class mail
         switch ($email['type']) {
             case 'contact';
                 $email['title'] = 'Email verification';
-                $email['message'] = "<h2>Email verification.</h2><a href='http://localhost/Ejercicios/Framework_PHP_OO_MVC/index.php?module=contact&op=view'>Click here for verify your email.</a>";
+                $email['message'] = "<h2>Email verification.</h2><a href='http://localhost/CheQueHabitaculos_MVC/CheQueCasas_Framework/index.php?module=login&op=verify/$email[token]'>Click here for verify your email.</a>";
                 break;
             case 'validate';
               
                 $email['title'] = 'Email verification';
-                $email['message'] = "<h2>Email verification.</h2><a href='http://localhost/Ejercicios/Framework_PHP_OO_MVC/module/login/verify/$email[token]'>Click here for verify your email.</a>";
+                $email['message'] = "<h2>Email verification.</h2><a href='http://localhost/CheQueHabitaculos_MVC/CheQueCasas_Framework/login/verify/$email[token]'>Click here for verify your email.</a>";
                 break;
             case 'recover';
                 
