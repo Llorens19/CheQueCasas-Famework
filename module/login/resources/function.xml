@@ -36,4 +36,9 @@
         <uri>refresh_cookie</uri>
     </function>
 
+    <function>
+        <name>verify_email</name>
+        <uri>verify_email</uri>
+    </function>
+
 </functions>

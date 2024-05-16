@@ -5,7 +5,7 @@ function carrousel_operations() {
                 $('<div></div>').attr('class', "element_operations col-lg-3 col-md-6 service-item d-flex").attr('id', data[row].id_operations).appendTo(".carrousel_list")
                     .html(
                         "<div class='icon flex-shrink-0'>" +
-                        "<img src='" + data[row].img_operations + "' class='img-operations'></div>" +
+                        "<img src='" + absoluteURL(data[row].img_operations) + "' class='img-operations'></div>" +
                         "<div>" +
                         "<h4 class='title'>" + data[row].n_operations + "</h4>" +
                         "</div>"
@@ -27,7 +27,7 @@ function carrousel_type() {
                 $('<div></div>').attr('class', "card element_type").attr('id', data[row].id_type).appendTo(".carrousel_list2")
                     .html(
 
-                        "<img src='" + data[row].img_type + "' class='card-img-top'>" +
+                        "<img src='" + absoluteURL(data[row].img_type) + "' class='card-img-top'>" +
                         "<div class='card-body'>" +
                         "<h5 class='card-title'>" + data[row].n_type + "</h5>" +
                         "<p class='card-text'>Lorem ipsum dolor sit amet, consde ctetur adipi scing elit.</p>" +
@@ -50,7 +50,7 @@ function carrousel_city() {
                     .html(
 
                         "<div class='card' >" +
-                        "<img src='view/img/home/city/" + data[row].img_city + "' class='card-img-top'>" +
+                        "<img src='" + absoluteURL('view/img/home/city/' + data[row].img_city) + "' class='card-img-top'>" +
                         "<div class='card-body mx-auto'>" +
                         "<h5 class='card-title '>" + data[row].n_city + "</h5>" +
                         "</div>" +
@@ -83,7 +83,7 @@ function most_viewed() {
                             for (let row_images in data[1]) {
                                 if (data[1][row_images].id_building == data[0][row].id_building && first_image == false) {
 
-                                    image = "<img src='view/img/shop/test/" + data[1][row_images].url_image + "' class='img-control-secundary' >";
+                                    image = "<img src='" + absoluteURL('view/img/shop/test/' + data[1][row_images].url_image) + "' class='img-control-secundary' >";
                                     first_image = true;
                                 }
                             }
@@ -147,7 +147,7 @@ function lasts_views() {
                                 for (let row_images in data[1]) {
                                     if (data[1][row_images].id_building == data[0][row].id_building && first_image == false) {
 
-                                        image = "<img src='view/img/shop/test/" + data[1][row_images].url_image + "' class='img-control-secundary' >";
+                                        image = "<img src='" + absoluteURL('view/img/shop/test/' + data[1][row_images].url_image) + "' class='img-control-secundary' >";
                                         first_image = true;
                                     }
                                 }

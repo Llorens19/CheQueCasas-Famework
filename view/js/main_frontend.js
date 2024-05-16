@@ -12,6 +12,11 @@ async function ajaxPromise(sType, sTData, sUrl, sData = undefined) {
     }
 };
 
+function absoluteURL(url){
+
+return "http://localhost/CheQueHabitaculos_MVC/CheQueCasas_Framework/" + url;
+}
+
 
 function friendlyURL(url) {
     var link = "";

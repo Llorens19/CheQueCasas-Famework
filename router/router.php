@@ -28,15 +28,20 @@ class router
     function __construct()
     {    //Si no cargamos ningun módulo, forzamos el home
         if (isset($_GET['module'])) {
+            
+
             $this->uriModule = $_GET['module'];
+
         } else {
+
             $this->uriModule = 'home';
         }
         if (isset($_POST['op'])) {
 
             if($_POST['op'] == 'verify' ){
 
-
+                $this->uriFunction  = 'view';
+                $this->uriModule = 'home';
             }else{
 
                 $this->uriFunction = ($_POST['op'] === "") ? 'view' : $_POST['op'];
@@ -44,9 +49,18 @@ class router
             }
 
 
-        } else if (isset($_GET['op'])) {   //Si no cargamos ninguna función, forzamos la de view
+        } else if (isset($_GET['op'])) {  
+
+            if($_GET['op'] == 'verify' ){
+
+                $this->uriFunction  = 'view';
+                $this->uriModule = 'home';
+            }else{
+            
+            //Si no cargamos ninguna función, forzamos la de view
 
             $this->uriFunction = ($_GET['op'] === "") ? 'view' : $_GET['op'];
+            }
             
         }  else {
             $this->uriFunction = 'view';
