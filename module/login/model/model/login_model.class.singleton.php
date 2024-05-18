@@ -44,6 +44,8 @@
             return $this -> bll -> get_refresh_cookie_BLL();
         }
 
-
+        public function get_recover_email($args) {
+            return $this -> bll -> get_recover_email_BBL($args);
+        }
 
     }

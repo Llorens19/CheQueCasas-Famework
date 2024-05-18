@@ -33,23 +33,6 @@ function login() {
     }
 }
 
-function key_login() {
-    $("#login").keypress(function (e) {
-        var code = (e.keyCode ? e.keyCode : e.which);
-        if (code == 13) {
-            e.preventDefault();
-            login();
-        }
-    });
-}
-
-function button_login() {
-    $('#login').on('click', function (e) {
-        e.preventDefault();
-        login();
-    });
-}
-
 function validate_login() {
     var error = false;
 
@@ -104,8 +87,83 @@ function load_content() {
     }
 }
 
+
+function send_recover_password() {
+    if (validate_recover_password() != 0) {
+        var data = $('#recover_email_form').serialize();
+        $.ajax({
+            url: friendlyURL('?module=login&op=send_recover_email'),
+            dataType: 'json',
+            type: "POST",
+            data: data,
+        }).done(function (data) {
+            if (data == "error") {
+                $("#error_email_forg").html("The email doesn't exist");
+            } else {
+                toastr.options.timeOut = 3000;
+                toastr.success("Email sended");
+                setTimeout('window.location.href = friendlyURL("?module=login&op=view")', 1000);
+            }
+        }).fail(function (textStatus) {
+            console.log('Error: Recover password error');
+        });
+    }
+}
+
+function load_form_recover_password() {
+    $(".login-wrap").hide();
+    $(".forget_html").show();
+    $('html, body').animate({ scrollTop: $(".forget_html") });
+    click_recover_password();
+}
+
+function click_recover_password() {
+    $(".forget_html").keypress(function (e) {
+        var code = (e.keyCode ? e.keyCode : e.which);
+        if (code == 13) {
+            e.preventDefault();
+            send_recover_password();
+        }
+    });
+
+    $('#button_recover').on('click', function (e) {
+        e.preventDefault();
+        send_recover_password();
+    });
+}
+
+
+function click_login() {
+
+    $("#login_password").keypress(function (e) {
+        var code = (e.keyCode ? e.keyCode : e.which);
+        if (code == 13) {
+            e.preventDefault();
+            login();
+        }
+    });
+
+    $('#login').on('click', function (e) {
+        e.preventDefault();
+        login();
+    });
+
+    $('#recover_password').on('click', function (e) {
+        e.preventDefault();
+        load_form_recover_password();
+    });
+
+    $('#google').on('click', function (e) {
+        social_login('google');
+    });
+
+    $('#github').on('click', function (e) {
+        social_login('github');
+    });
+}
+
+
 $(document).ready(function () {
     load_content();
-    key_login();
-    button_login();
+    click_login();
 });

@@ -19,9 +19,10 @@ class login_bll
 		return self::$_instance;
 	}
 
-	public function get_verify_email_BLL($args) {
-		if($this -> dao -> select_verify_email($this->db, $args)){
-			$this -> dao -> update_verify_email($this->db, $args);
+	public function get_verify_email_BLL($args)
+	{
+		if ($this->dao->select_verify_email($this->db, $args)) {
+			$this->dao->update_verify_email($this->db, $args);
 			return 'verify';
 		} else {
 			return 'fail';
@@ -106,7 +107,7 @@ class login_bll
 	{
 
 		try {
-			$rdo = $this->dao->select_user($this->db, $args[0][0]);
+			$rdo = $this->dao->select_user_login($this->db, $args[0][0]);
 			if ($rdo == "error_user") {
 				return "error_user";
 			} else {
@@ -119,11 +120,9 @@ class login_bll
 					$_SESSION['tiempo'] = time(); //Guardamos el tiempo que se logea
 					session_regenerate_id(); //Regeneramos la sesión
 					return $tokens;
+				} else if (password_verify($args[1][0], $rdo[0]['password']) && $rdo[0]['active'] == 0) {
 
-				} else if (password_verify($args[1][0], $rdo[0]['password']) &&$rdo[0]['active'] == 0) {
-					
 					return "error_active";
-
 				} else {
 					return "error_passwd";
 				}
@@ -194,6 +193,29 @@ class login_bll
 			exit();
 		} else {
 			return "Wrong_User";
+		}
+	}
+
+
+	public function get_recover_email_BBL($args)
+	{
+		$user = $this->dao->select_recover_password($this->db, $args);
+		$token_email = common::generate_Token_secure(20);
+
+		if (!empty($user)) {
+			$this->dao->update_recover_password($this->db, $args, $token_email);
+			$message = [
+				'type' => 'recover',
+				'token' => $token_email,
+				'email' =>  $args
+			];
+
+			$email = json_decode(mail::send_email($message), true);
+			if (!empty($email)) {
+				return;
+			}
+		} else {
+			return 'error';
 		}
 	}
 

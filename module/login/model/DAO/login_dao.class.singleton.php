@@ -46,6 +46,7 @@ class login_dao
 		return $db->listar($stmt);
 	}
 
+
 	function insert_user($db, $username, $email, $name, $surname, $tlf, $active, $token_email, $avatar, $hashed_pass )
 	{
 		if ($tlf == "") {
@@ -75,6 +76,20 @@ class login_dao
 		}
 	}
 
+	function select_user_login($db, $username)
+	{
+		$sql = "SELECT * FROM user WHERE username='$username' and active = 1";
+
+		$stmt = $db->ejecutar($sql);
+		$res = $db->listar($stmt);
+
+		if ($res) {
+			return $res; 
+		} else {
+			return "error_user";
+		}
+	}
+
 
 	function select_data_user($db, $username)
 	{
@@ -84,4 +99,21 @@ class login_dao
 		$stmt = $db->ejecutar($sql);
 		return $db->listar($stmt);
 	}
+
+
+	public function select_recover_password($db, $email){
+		$sql = "SELECT email FROM user WHERE email = '$email' AND password NOT LIKE ('')";
+
+		$stmt = $db->ejecutar($sql);
+		return $db->listar($stmt);
+	}
+
+	public function update_recover_password($db, $email, $token_email){
+		$sql = "UPDATE user SET token_email= '$token_email', active = 0 WHERE `email` = '$email'";
+		
+		$stmt = $db->ejecutar($sql);
+		return "ok";
+	}
+
+
 }

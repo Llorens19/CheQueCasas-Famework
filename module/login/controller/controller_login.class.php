@@ -56,4 +56,8 @@ class controller_login
     {
         echo json_encode(common::load_model('login_model', 'get_refresh_cookie'));
     }
+
+    function send_recover_email() {
+        echo json_encode(common::load_model('login_model', 'get_recover_email', $_POST['email']));
+    }
 }
