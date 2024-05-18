@@ -89,52 +89,39 @@ function load_content() {
 
 
 function send_recover_password() {
-    if (validate_recover_password() != 0) {
+    if (validate_mail_recover_password() != 0) {
         var data = $('#recover_email_form').serialize();
-        $.ajax({
-            url: friendlyURL('?module=login&op=send_recover_email'),
-            dataType: 'json',
-            type: "POST",
-            data: data,
-        }).done(function (data) {
-            if (data == "error") {
-                $("#error_email_forg").html("The email doesn't exist");
-            } else {
-                toastr.options.timeOut = 3000;
-                toastr.success("Email sended");
-                setTimeout('window.location.href = friendlyURL("?module=login&op=view")', 1000);
-            }
-        }).fail(function (textStatus) {
-            console.log('Error: Recover password error');
-        });
+
+        ajaxPromise('POST', 'JSON', '?module=login&op=send_recover_email', data)
+            .then(function (data) {
+                if (data == "error") {
+                    $("#error_email_forg").html("Este Correo no esta registrado");
+                } else {
+    
+    
+                    $("<div></div>")
+                    .attr("class", "d-flex flex-column justify-content-center align-items-center full-height")
+                    .html(`
+                    <div class="text-center">
+                        <h5>Email de recuperación enviado.</h5>
+                        <img src='` + absoluteURL("view/img/login/mensaje.gif") + `'style = "height: 100px; width: auto;" alt="Imagen de verificación" class="img-fluid my-3">
+                        <h5>Por favor, revisa tu bandeja de entrada.</h5>
+                    </div>
+    
+                    `).appendTo(".login_modal_content");
+    
+                }
+            })
+            .catch(function (textStatus) {
+                console.log('Error: Recover password error');
+            });
     }
 }
 
-function load_form_recover_password() {
-    $(".login-wrap").hide();
-    $(".forget_html").show();
-    $('html, body').animate({ scrollTop: $(".forget_html") });
-    click_recover_password();
-}
-
-function click_recover_password() {
-    $(".forget_html").keypress(function (e) {
-        var code = (e.keyCode ? e.keyCode : e.which);
-        if (code == 13) {
-            e.preventDefault();
-            send_recover_password();
-        }
-    });
-
-    $('#button_recover').on('click', function (e) {
-        e.preventDefault();
-        send_recover_password();
-    });
-}
 
 
 function click_login() {
-
+    console.log("recover_button");
     $("#login_password").keypress(function (e) {
         var code = (e.keyCode ? e.keyCode : e.which);
         if (code == 13) {
@@ -148,8 +135,9 @@ function click_login() {
         login();
     });
 
-    $('#recover_password').on('click', function (e) {
+    $('. recover_button').on('click', function (e) {
         e.preventDefault();
+
         load_form_recover_password();
     });
 
@@ -160,10 +148,102 @@ function click_login() {
     $('#github').on('click', function (e) {
         social_login('github');
     });
+
+    $(".recover_input").keypress(function (e) {
+        var code = (e.keyCode ? e.keyCode : e.which);
+        if (code == 13) {
+            e.preventDefault();
+            send_recover_password();
+        }
+    });
+
+    $('.recover_button').on('click', function (e) {
+        e.preventDefault();
+        send_recover_password();
+    });
+    
 }
 
 
+function validate_mail_recover_password(){
+    var mail_exp = /^[a-zA-Z0-9_\.\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-\.]+$/;
+    var error = false;
+
+    if(document.getElementById('email_forg').value.length === 0){
+		document.getElementById('error_email_forg').innerHTML = "Tienes que escribir un correo";
+		error = true;
+	}else{
+        if(!mail_exp.test(document.getElementById('email_forg').value)){
+            document.getElementById('error_email_forg').innerHTML = "El formato del mail es invalido"; 
+            error = true;
+        }else{
+            document.getElementById('error_email_forg').innerHTML = "";
+        }
+    }
+	
+    if(error == true){
+        return 0;
+    }
+}
+
+
+
+
+
+
+
 $(document).ready(function () {
-    load_content();
     click_login();
+    
+    load_content();
+    
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// $("<div></div>").attr("class", "recover_div").appendTo(".login_modal_content").html(`
+            
+            
+// <form id="recover__form" method="POST">
+
+//     <!-- Email input -->
+//     <div class="form-outline mb-4">
+//         <label class="form-label" for="login_username">Email or username</label>
+//         <input type="email" id="login_username" class="form-control" />
+//         <span id="error_login_username" class="error"></span>
+
+//     </div>
+
+//     <!-- Password input -->
+//     <div class="form-outline mb-4">
+//         <label class="form-label" for="login_password">Contraseña</label>
+//         <input type="password" id="login_password" class="form-control" />
+//         <span id="error_login_password" class="error"></span>
+
+//     </div>
+
+
+
+
+
+//     <!-- Botod de login -->
+//     <button type="submit" id="login" class="btn btn-primary btn-block mb-4">Sign in</button>
+
+// </form>
+// `);
+
+
+
+
