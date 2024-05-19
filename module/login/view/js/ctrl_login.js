@@ -60,32 +60,6 @@ function validate_login() {
     }
 }
 
-function load_content() {
-    console.log("load_content");
-    let path = window.location.pathname.split('/');
-
-    console.table(path);
-
-    if (path[4] === 'recover') {
-        window.location.href = friendlyURL("?module=login&op=recover_view");
-        localStorage.setItem("token_email", path[5]);
-    } else if (path[4] === 'verify') {
-        ajaxPromise('POST', 'JSON', friendlyURL("?module=login&op=verify_email"), { token_email: path[5] })
-            .then(function (data) {
-                //toastr.options.timeOut = 3000;
-                //toastr.success('Email verified');
-            })
-            .catch(function () {
-                console.error('Error: verify email error');
-            });
-    } else if (path[4] === 'view') {
-        $(".login-wrap").show();
-        $(".forget_html").hide();
-    } else if (path[4] === 'recover_view') {
-        load_form_new_password();
-    }
-}
-
 
 function send_recover_password() {
     if (validate_mail_recover_password() != 0) {
@@ -189,9 +163,127 @@ function validate_mail_recover_password(){
     }
 }
 
+function load_form_new_password(){
+    token_email = localStorage.getItem('token_email');
+    localStorage.removeItem('token_email');
+    console.log(token_email);
+    ajaxPromise('POST', 'JSON', friendlyURL('?module=login'), { token_email: token_email, op: 'verify_token'})
+
+        .then(function (data) {
+            if (data == "verify") {
+                charge_recover();
+                click_new_password(token_email);
+            } else {
+                console.log("error");
+            }
+        
+        })
+        .catch(function (textStatus) {
+            console.error("Error: Verify token error", textStatus);
+        });
+}
+
+function click_new_password(token_email){
+    $(".recover_html").keypress(function(e) {
+        var code = (e.keyCode ? e.keyCode : e.which);
+        if(code==13){
+            e.preventDefault();
+            send_new_password(token_email);
+        }
+    });
+
+    $('#button_set_pass').on('click', function(e) {
+        e.preventDefault();
+        send_new_password(token_email);
+    }); 
+}
+
+function send_new_password(token_email){
+    if(validate_new_password() != 0){
+        var data = {token_email: token_email, password : $('#recover_password').val(), op: 'new_password'};
+
+        ajaxPromise('POST', 'JSON', friendlyURL("?module=login"), data)
+            .then(function (data) {
+                if (data == "done") {
+                    // toastr.options.timeOut = 3000;
+                    // toastr.success('New password changed');
+                    setTimeout('window.location.href = friendlyURL("?module=login&op=view")', 1000);
+                } else {
+                    // toastr.options.timeOut = 3000;
+                    // toastr.error('Error seting new password');
+                }
+            })
+            .catch(function (textStatus) {
+                console.error("Error: New password error");
+            });
+    }
+}
+
+function load_content() {
+    console.log("load_content");
+    let path = window.location.pathname.split('/');
+
+    console.table(path);
+
+    if (path[4] === 'recover') {
+        console.log("recover");
+
+        load_form_new_password();
+
+        localStorage.setItem("token_email", path[5]);
+
+    } else if (path[4] === 'verify') {
+        ajaxPromise('POST', 'JSON', friendlyURL("?module=login&op=verify_email"), { token_email: path[5] })
+            .then(function (data) {
+                //toastr.options.timeOut = 3000;
+                //toastr.success('Email verified');
+            })
+            .catch(function () {
+                console.error('Error: verify email error');
+            });
+    }
+}
 
 
 
+function charge_recover(){
+
+    $(".modal_login_body").empty();  
+
+        $(`<div></div>`).attr("class", "recover_div").appendTo(".modal_login_body").html(`
+                        
+        <form id="new_password__form" method="POST">
+
+            <!-- Email input -->
+            <div class="form-outline mb-4">
+                <label class="form-label" for="recover_password">Email or username</label>
+                <input type="password" id="recover_password" class="form-control" />
+                <span id="error_recover_password" class="error"></span>
+
+            </div>
+
+            <!-- Password input -->
+            <div class="form-outline mb-4">
+                <label class="form-label" for="recover_password_repeat">Contraseña</label>
+                <input type="password" id="recover_password_repeat" class="form-control" />
+                <span id="error_recover_password_repeat" class="error"></span>
+
+            </div>
+
+            <button type="submit" id="recover" class="btn btn-primary btn-block mb-4">Sign in</button>
+            <button id="recover_exit" class="btn btn-primary btn-block mb-4" style="float: right;">Salir</button>
+
+        </form>
+        `);
+
+        $("#loginModal").modal("show");
+
+        $("#recover_exit").on('click', function (e) {
+            e.preventDefault();
+            window.location.href = friendlyURL("?module=home");
+        }
+        );
+}
 
 
 
@@ -200,52 +292,3 @@ $(document).ready(function () {
     load_content();
     
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// $("<div></div>").attr("class", "recover_div").appendTo(".login_modal_content").html(`
-            
-            
-// <form id="recover__form" method="POST">
-
-//     <!-- Email input -->
-//     <div class="form-outline mb-4">
-//         <label class="form-label" for="login_username">Email or username</label>
-//         <input type="email" id="login_username" class="form-control" />
-//         <span id="error_login_username" class="error"></span>
-
-//     </div>
-
-//     <!-- Password input -->
-//     <div class="form-outline mb-4">
-//         <label class="form-label" for="login_password">Contraseña</label>
-//         <input type="password" id="login_password" class="form-control" />
-//         <span id="error_login_password" class="error"></span>
-
-//     </div>
-
-
-
-
-
-//     <!-- Botod de login -->
-//     <button type="submit" id="login" class="btn btn-primary btn-block mb-4">Sign in</button>
-
-// </form>
-// `);
-
-
-
-

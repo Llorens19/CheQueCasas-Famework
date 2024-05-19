@@ -48,4 +48,8 @@
             return $this -> bll -> get_recover_email_BBL($args);
         }
 
+        public function get_verify_token($args) {
+            return $this -> bll -> get_verify_token_BLL($args);
+        }
+
     }

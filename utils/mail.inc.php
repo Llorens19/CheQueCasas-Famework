@@ -18,7 +18,7 @@ class mail
             case 'recover';
                 
                 $email['title'] = 'Recover password';
-                $email['message'] = "<a href='http://localhost/Ejercicios/Framework_PHP_OO_MVC/module/login/recover/$email[token]'>Click here for recover your password.</a>";
+                $email['message'] = "<a href='http://localhost/CheQueHabitaculos_MVC/CheQueCasas_Framework/login/recover/$email[token]'>Click here for recover your password.</a>";
                 break;
         }
         return self::send_mail_resend($email);

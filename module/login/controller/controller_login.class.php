@@ -62,4 +62,8 @@ class controller_login
         error_log("Entra en send_recover_email");
         echo json_encode(common::load_model('login_model', 'get_recover_email', $_POST['email']));
     }
+
+    function verify_token() {
+        echo json_encode(common::load_model('login_model', 'get_verify_token', $_POST['token_email']));
+    }
 }

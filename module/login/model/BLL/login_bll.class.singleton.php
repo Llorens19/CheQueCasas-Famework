@@ -224,4 +224,11 @@ class login_bll
 		session_regenerate_id();
 		return "Done";
 	}
+
+	public function get_verify_token_BLL($args) {
+		if($this -> dao -> select_verify_email($this->db, $args)){
+			return 'verify';
+		}
+		return 'fail';
+	}
 }

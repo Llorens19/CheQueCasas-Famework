@@ -38,7 +38,7 @@ class router
         }
         if (isset($_POST['op'])) {
 
-            if($_POST['op'] == 'verify' ){
+            if($_POST['op'] == 'verify' or $_POST['op'] == 'recover'){
 
                 $this->uriFunction  = 'view';
                 $this->uriModule = 'home';
@@ -51,7 +51,7 @@ class router
 
         } else if (isset($_GET['op'])) {  
 
-            if($_GET['op'] == 'verify' ){
+            if($_GET['op'] == 'verify' or $_GET['op'] == 'recover'){
 
                 $this->uriFunction  = 'view';
                 $this->uriModule = 'home';

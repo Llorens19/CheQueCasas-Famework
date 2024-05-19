@@ -162,223 +162,8 @@ function load_menu() {
 
         $(".login_bar").empty();
 
-        $("<div></div>").attr("class", "modal fade loginModal").attr("id", "loginModal").attr("tabindex", "-1")
-            .attr("aria-labelledby", "loginModalLabel").attr("aria-hidden", "true").attr("style", " top: 80px;").appendTo(".header_div")
-            .html(`
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="loginModalLabel">Login/Register</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
 
-                    <div class="modal-body modal_login_body">
-
-
-
-                        <!-- Botones -->
-                        <ul class="nav nav-pills nav-justified mb-3 buttons_modal_login" id="ex1" role="tablist">
-                            <li class="nav-item" role="presentation">
-                                <a class="nav-link active" id="tab-login" data-bs-toggle="pill" href="#pills-login" role="tab" aria-controls="pills-login" aria-selected="true">Login</a>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <a class="nav-link " id="tab-register" data-bs-toggle="pill" href="#pills-register" role="tab" aria-controls="pills-register" aria-selected="false">Register</a>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <a class="nav-link" id="tab-recover" data-bs-toggle="pill" href="#pills-recover" role="tab" aria-controls="pills-recover" aria-selected="false">Recover</a>
-                            </li>
-                        </ul>
-
-
-
-
-
-                        <!-- Pills content -->
-                        <div class="tab-content login_modal_content">
-
-
-
-                            <!-- ////////////////////////////////////login//////////////////////////////////////////////// -->
-                            
-                            <div class="tab-pane fade show active" id="pills-login" role="tabpanel" aria-labelledby="tab-login">
-                                <form id="login__form" method="POST">
-
-
-                                    <!-- Social login -->
-                                    <div class="text-center mb-3">
-                                        <p>Sign in with:</p>
-                                        <button type="button" class="btn btn-link btn-floating mx-1">
-                                            <i class="fab fa-facebook-f"></i>
-                                        </button>
-
-                                        <button type="button" class="btn btn-link btn-floating mx-1">
-                                            <i class="fab fa-google"></i>
-                                        </button>
-
-                                        <button type="button" class="btn btn-link btn-floating mx-1">
-                                            <i class="fab fa-twitter"></i>
-                                        </button>
-
-                                        <button type="button" class="btn btn-link btn-floating mx-1">
-                                            <i class="fab fa-github"></i>
-                                        </button>
-                                    </div>
-
-
-
-                                    <!-- login normal -->
-                                    <p class="text-center">or:</p>
-
-                                    <!-- Email input -->
-                                    <div class="form-outline mb-4">
-                                        <label class="form-label" for="login_username">Email or username</label>
-                                        <input type="email" id="login_username" class="form-control" />
-                                        <span id="error_login_username" class="error"></span>
-
-                                    </div>
-
-                                    <!-- Password input -->
-                                    <div class="form-outline mb-4">
-                                        <label class="form-label" for="login_password">Contraseña</label>
-                                        <input type="password" id="login_password" class="form-control" />
-                                        <span id="error_login_password" class="error"></span>
-
-                                    </div>
-
-                                    <!--Recuerdame -->
-                                    <!-- Botod de login -->
-                                    <button type="submit" id="login" class="btn btn-primary btn-block mb-4">Sign in</button>
-
-                                    <!-- Register buttons -->
-                                    <div class="text-center">
-                                        <p>Not a member? <a href="#!">Register</a></p>
-                                    </div>
-                                </form>
-                            </div>
-
-
-                            <!-- ///////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-                            <!-- register -->
-                            <!-- ///////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-
-
-                            <div class="tab-pane fade" id="pills-register" role="tabpanel" aria-labelledby="tab-register">
-
-
-                                <form id="register__form" method="post">
-                                    <!-- <div class="text-center mb-3">
-                                        <p>Sign up with:</p>
-                                        <button type="button" class="btn btn-link btn-floating mx-1">
-                                            <i class="fab fa-facebook-f"></i>
-                                        </button>
-
-                                        <button type="button" class="btn btn-link btn-floating mx-1">
-                                            <i class="fab fa-google"></i>
-                                        </button>
-
-                                        <button type="button" class="btn btn-link btn-floating mx-1">
-                                            <i class="fab fa-twitter"></i>
-                                        </button>
-
-                                        <button type="button" class="btn btn-link btn-floating mx-1">
-                                            <i class="fab fa-github"></i>
-                                        </button>
-                                    </div>
-
-                                    <p class="text-center">or:</p> -->
-
-                                    <!-- Name input -->
-                                    <div class="form-outline mb-3 row">
-                                        <div class="col-md-4 ">
-                                            <label class="form-label" for="register_name">Nombre</label>
-                                            <input type="text" id="register_name" class="form-control" />
-                                            <span id="error_register_name" class="error"></span>
-                                        </div>
-
-                                        <div class="col-md-8">
-                                            <label class="form-label" for="register_surname">Apellidos</label>
-                                            <input type="text" id="register_surname" class="form-control" />
-                                            <span id="error_register_surname" class="error"></span>
-                                        </div>
-                                    </div>
-
-                                    <!-- Username input -->
-                                    <div class="form-outline mb-3 row">
-                                        <div class="col-md-7 ">
-                                            <label class="form-label" for="register_username">Nombre de Usuario</label>
-                                            <input type="text" id="register_username" class="form-control" />
-
-                                            <span id="error_register_username" class="error"></span>
-                                        </div>
-                                        <div class="col-md-5">
-                                            <label class="form-label" for="register_tlf">Teléfono</label>
-                                            <input type="text" id="register_tlf" class="form-control" />
-
-                                            <span id="error_register_tlf" class="error"></span>
-                                        </div>
-                                    </div>
-
-                                    <!-- Email input -->
-                                    <div class="form-outline mb-3">
-                                        <label class="form-label" for="register_email">Email</label>
-                                        <input type="email" id="register_email" class="form-control" />
-
-                                        <span id="error_register_email" class="error"></span>
-                                    </div>
-
-                                    <!-- Password input -->
-                                    <div class="form-outline mb-3">
-                                        <label class="form-label" for="register_password">Contraseña</label>
-                                        <input type="password" id="register_password" class="form-control" />
-
-                                        <span id="error_register_password" class="error"></span>
-                                    </div>
-
-                                    <!-- Repeat Password input -->
-                                    <div class="form-outline mb-3">
-                                        <label class="form-label" for="register_password_repeat">Repite la Contraseña</label>
-                                        <input type="password" id="register_password_repeat" class="form-control" />
-
-                                        <span id="error_register_password_repeat" class="error"></span>
-                                    </div>
-
-                                    <!-- Checkbox -->
-                                    <div class="form-check d-flex justify-content-center mb-3">
-                                        <input class="form-check-input me-2" type="checkbox" value="" id="registerCheck" checked aria-describedby="registerCheckHelpText" />
-                                        <label class="form-check-label" for="registerCheck">
-                                            I have read and agree to the terms
-                                        </label>
-                                    </div>
-
-                                    <!-- Submit button -->
-                                    <button type="submit" id="register" class="btn btn-primary btn-block mb-3">Sign in</button>
-                                </form>
-                            </div>
-
-
-                            <!-- ////////////////////////////////////recover//////////////////////////////////////////////// -->
-                            <div class="tab-pane fade" id="pills-recover" role="tabpanel" aria-labelledby="tab-recover">
-                                <form id="recover__form" method="POST">
-                                    <div class="form-outline mb-4">
-                                        <label class="form-label" for="recover_email">Email</label>
-                                        <input type="email" id="recover_email" class="form-control  recover_input" />
-                                        <span id="error_recover_email" class="error"></span>
-                                    </div>
-                                    <button type="submit" id="recover" class="btn btn-primary btn-block mb-3 recover_button">Recover</button>
-                                </form>
-                            </div>
-
-                        </div>
-                        <!-- Pills content -->
-                    </div>
-                </div>
-            </div>
-    `);
-
-
-
-
-
+        load_login_modal();
 
         $("<div></div>").attr("class", "ms-2 login_button").appendTo(".login_bar").html(
             `<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal">Login/Register</button>`);
@@ -416,6 +201,237 @@ function click_shop() {
         localStorage.removeItem('total_prod');
     });
 }
+
+function load_login_modal(){
+
+    const modal = $("#loginModal");
+    if (modal.length) {
+        modal.remove();
+    }
+
+
+    $("<div></div>").attr("class", "modal fade loginModal").attr("id", "loginModal").attr("tabindex", "-1")
+    .attr("aria-labelledby", "loginModalLabel").attr("aria-hidden", "true").attr("style", " top: 80px;").appendTo(".header_div")
+    .html(`
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="loginModalLabel">Login/Register</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body modal_login_body">
+
+
+
+                <!-- Botones -->
+                <ul class="nav nav-pills nav-justified mb-3 buttons_modal_login" id="ex1" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link active" id="tab-login" data-bs-toggle="pill" href="#pills-login" role="tab" aria-controls="pills-login" aria-selected="true">Login</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link " id="tab-register" data-bs-toggle="pill" href="#pills-register" role="tab" aria-controls="pills-register" aria-selected="false">Register</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" id="tab-recover" data-bs-toggle="pill" href="#pills-recover" role="tab" aria-controls="pills-recover" aria-selected="false">Recover</a>
+                    </li>
+                </ul>
+
+
+
+
+
+                <!-- Pills content -->
+                <div class="tab-content login_modal_content">
+
+
+
+                    <!-- ////////////////////////////////////login//////////////////////////////////////////////// -->
+                    
+                    <div class="tab-pane fade show active" id="pills-login" role="tabpanel" aria-labelledby="tab-login">
+                        <form id="login__form" method="POST">
+
+
+                            <!-- Social login -->
+                            <div class="text-center mb-3">
+                                <p>Sign in with:</p>
+                                <button type="button" class="btn btn-link btn-floating mx-1">
+                                    <i class="fab fa-facebook-f"></i>
+                                </button>
+
+                                <button type="button" class="btn btn-link btn-floating mx-1">
+                                    <i class="fab fa-google"></i>
+                                </button>
+
+                                <button type="button" class="btn btn-link btn-floating mx-1">
+                                    <i class="fab fa-twitter"></i>
+                                </button>
+
+                                <button type="button" class="btn btn-link btn-floating mx-1">
+                                    <i class="fab fa-github"></i>
+                                </button>
+                            </div>
+
+
+
+                            <!-- login normal -->
+                            <p class="text-center">or:</p>
+
+                            <!-- Email input -->
+                            <div class="form-outline mb-4">
+                                <label class="form-label" for="login_username">Email or username</label>
+                                <input type="email" id="login_username" class="form-control" />
+                                <span id="error_login_username" class="error"></span>
+
+                            </div>
+
+                            <!-- Password input -->
+                            <div class="form-outline mb-4">
+                                <label class="form-label" for="login_password">Contraseña</label>
+                                <input type="password" id="login_password" class="form-control" />
+                                <span id="error_login_password" class="error"></span>
+
+                            </div>
+
+                            <!--Recuerdame -->
+                            <!-- Botod de login -->
+                            <button type="submit" id="login" class="btn btn-primary btn-block mb-4">Sign in</button>
+
+                            <!-- Register buttons -->
+                            <div class="text-center">
+                                <p>Not a member? <a href="#!">Register</a></p>
+                            </div>
+                        </form>
+                    </div>
+
+
+                    <!-- ///////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+                    <!-- register -->
+                    <!-- ///////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+
+                    <div class="tab-pane fade" id="pills-register" role="tabpanel" aria-labelledby="tab-register">
+
+
+                        <form id="register__form" method="post">
+                            <!-- <div class="text-center mb-3">
+                                <p>Sign up with:</p>
+                                <button type="button" class="btn btn-link btn-floating mx-1">
+                                    <i class="fab fa-facebook-f"></i>
+                                </button>
+
+                                <button type="button" class="btn btn-link btn-floating mx-1">
+                                    <i class="fab fa-google"></i>
+                                </button>
+
+                                <button type="button" class="btn btn-link btn-floating mx-1">
+                                    <i class="fab fa-twitter"></i>
+                                </button>
+
+                                <button type="button" class="btn btn-link btn-floating mx-1">
+                                    <i class="fab fa-github"></i>
+                                </button>
+                            </div>
+
+                            <p class="text-center">or:</p> -->
+
+                            <!-- Name input -->
+                            <div class="form-outline mb-3 row">
+                                <div class="col-md-4 ">
+                                    <label class="form-label" for="register_name">Nombre</label>
+                                    <input type="text" id="register_name" class="form-control" />
+                                    <span id="error_register_name" class="error"></span>
+                                </div>
+
+                                <div class="col-md-8">
+                                    <label class="form-label" for="register_surname">Apellidos</label>
+                                    <input type="text" id="register_surname" class="form-control" />
+                                    <span id="error_register_surname" class="error"></span>
+                                </div>
+                            </div>
+
+                            <!-- Username input -->
+                            <div class="form-outline mb-3 row">
+                                <div class="col-md-7 ">
+                                    <label class="form-label" for="register_username">Nombre de Usuario</label>
+                                    <input type="text" id="register_username" class="form-control" />
+
+                                    <span id="error_register_username" class="error"></span>
+                                </div>
+                                <div class="col-md-5">
+                                    <label class="form-label" for="register_tlf">Teléfono</label>
+                                    <input type="text" id="register_tlf" class="form-control" />
+
+                                    <span id="error_register_tlf" class="error"></span>
+                                </div>
+                            </div>
+
+                            <!-- Email input -->
+                            <div class="form-outline mb-3">
+                                <label class="form-label" for="register_email">Email</label>
+                                <input type="email" id="register_email" class="form-control" />
+
+                                <span id="error_register_email" class="error"></span>
+                            </div>
+
+                            <!-- Password input -->
+                            <div class="form-outline mb-3">
+                                <label class="form-label" for="register_password">Contraseña</label>
+                                <input type="password" id="register_password" class="form-control" />
+
+                                <span id="error_register_password" class="error"></span>
+                            </div>
+
+                            <!-- Repeat Password input -->
+                            <div class="form-outline mb-3">
+                                <label class="form-label" for="register_password_repeat">Repite la Contraseña</label>
+                                <input type="password" id="register_password_repeat" class="form-control" />
+
+                                <span id="error_register_password_repeat" class="error"></span>
+                            </div>
+
+                            <!-- Checkbox -->
+                            <div class="form-check d-flex justify-content-center mb-3">
+                                <input class="form-check-input me-2" type="checkbox" value="" id="registerCheck" checked aria-describedby="registerCheckHelpText" />
+                                <label class="form-check-label" for="registerCheck">
+                                    I have read and agree to the terms
+                                </label>
+                            </div>
+
+                            <!-- Submit button -->
+                            <button type="submit" id="register" class="btn btn-primary btn-block mb-3">Sign in</button>
+                        </form>
+                    </div>
+
+
+                    <!-- ////////////////////////////////////recover//////////////////////////////////////////////// -->
+                    <div class="tab-pane fade" id="pills-recover" role="tabpanel" aria-labelledby="tab-recover">
+                        <form id="recover__form" method="POST">
+                            <div class="form-outline mb-4">
+                                <label class="form-label" for="recover_email">Email</label>
+                                <input type="email" id="recover_email" class="form-control  recover_input" />
+                                <span id="error_recover_email" class="error"></span>
+                            </div>
+                            <button type="submit" id="recover" class="btn btn-primary btn-block mb-3 recover_button">Recover</button>
+                        </form>
+                    </div>
+
+                </div>
+                <!-- Pills content -->
+            </div>
+        </div>
+    </div>
+`);
+
+
+
+}
+
+
+
+
+
+
 
 $(document).ready(function () {
     load_menu();
