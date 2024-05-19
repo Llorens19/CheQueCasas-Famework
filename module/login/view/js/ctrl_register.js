@@ -1,6 +1,6 @@
 function register() {
     if (validate_register() != 0) {
-        var data = {
+        let data = {
             op: 'register',
             name: document.getElementById('register_name').value,
             surname: document.getElementById('register_surname').value,
@@ -39,7 +39,7 @@ function register() {
 
 function key_register() {
     $("#register").keypress(function (e) {
-        var code = (e.keyCode ? e.keyCode : e.which);
+        let code = (e.keyCode ? e.keyCode : e.which);
         if (code == 13) {
             e.preventDefault();
             register();
@@ -55,12 +55,12 @@ function button_register() {
 }
 
 function validate_register() {
-    var username_exp = /^(?=.{5,}$)(?=.*[a-zA-Z0-9]).*$/;
-    var mail_exp = /^[a-zA-Z0-9_\.\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-\.]+$/;
-    var pssswd_exp = /^(?=.{8,}$)(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).*$/;
+    let username_exp = /^(?=.{5,}$)(?=.*[a-zA-Z0-9]).*$/;
+    let mail_exp = /^[a-zA-Z0-9_\.\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-\.]+$/;
+    let pssswd_exp = /^(?=.{8,}$)(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).*$/;
     let tlf = /^[0-9]{9}$/;
     let name = /^[a-zA-Z\s]{3,30}$/;
-    var error = false;
+    let error = false;
 
     if (document.getElementById('register_username').value.length === 0) {
         document.getElementById('error_register_username').innerHTML = "Tienes que escribir el usuario";

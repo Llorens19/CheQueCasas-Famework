@@ -270,7 +270,7 @@ class shop_dao
         SET building.views = building.views + 1 WHERE building.id_building = '$id'";
 
 		$stmt = $db->ejecutar($sql);
-		return $db->listar($stmt);
+		return "ok";
 	}
 
 

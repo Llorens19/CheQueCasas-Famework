@@ -255,6 +255,7 @@ function loadDetails(id_building) {
 
             }
 
+            console.log(data);
 
             $("<div></div>")
                 .attr({ id: data[1].id_image, class: "carrousel-details " }).attr("style", "margin-top: 20vh;")
@@ -276,19 +277,19 @@ function loadDetails(id_building) {
 
             $("<div></div>")
                 .attr({
-                    id: data[0].id_building,
+                    id: data[0][0].id_building,
                     class: "details col-lg-10 mx-auto row mt-4",
                 })
                 .appendTo(".details-shop")
                 .html(
                     "<div class='col-lg-6 my-4'>" +
                     "<h3>Detalles de la Vivienda</h3>" +
-                    "<p class='fst-italic'><strong>Tipo de Propiedad:</strong> Casa</p>" +
-                    "<p><strong>Habitaciones:</strong>  " + data[0].room_number + " </p>" +
-                    "<p><strong>Baños:</strong>  " + data[0].bathroom_number + "</p>" +
-                    "<p><strong>Garaje:</strong>  " + data[0].garage + "</p>" +
-                    "<p><strong>Ubicación:</strong>  " + data[0].n_city + "</p>" +
-                    "<p><strong>Superficie:</strong> " + data[0].m2 + " m2</p>" +
+                    "<p class='fst-italic'><strong>Tipo de Propiedad:</strong>" +data[0][0].n_type+"</p>" +
+                    "<p><strong>Habitaciones:</strong>  " + data[0][0].room_number + " </p>" +
+                    "<p><strong>Baños:</strong>  " + data[0][0].bathroom_number + "</p>" +
+                    "<p><strong>Garaje:</strong>  " + data[0][0].garage + "</p>" +
+                    "<p><strong>Ubicación:</strong>  " + data[0][0].n_city + "</p>" +
+                    "<p><strong>Superficie:</strong> " + data[0][0].m2 + " m2</p>" +
                     "<p><strong>Descripción:</strong> Esta encantadora casa cuenta con amplias habitaciones y un hermoso jardín. Ideal para familias.</p>" +
                     "<button class='btn btn-primary back'>Volver</button>" +
                     "<div class='col-md-12 row justify-content-end buttons_card_shop'>" +
@@ -801,10 +802,10 @@ function highlight(filter) {
 }
 
 function scrollbar_price() {
-    var precioMinimoInput = $("#precioMinimo");
-    var precioMaximoInput = $("#precioMaximo");
-    var rangoPrecioInput = $("#rangoPrecio");
-    var rangoPrecioSlider = $("#rangoPrecioSlider");
+    let precioMinimoInput = $("#precioMinimo");
+    let precioMaximoInput = $("#precioMaximo");
+    let rangoPrecioInput = $("#rangoPrecio");
+    let rangoPrecioSlider = $("#rangoPrecioSlider");
 
     rangoPrecioSlider.slider({
         range: true,
@@ -822,16 +823,16 @@ function scrollbar_price() {
         precioMaximoInput.val(max);
     }
     precioMinimoInput.change(function () {
-        var min = parseInt($(this).val()) || 0;
-        var max = parseInt(precioMaximoInput.val()) || 1000;
+        let min = parseInt($(this).val()) || 0;
+        let max = parseInt(precioMaximoInput.val()) || 1000;
         min = Math.min(min, max);
 
         rangoPrecioSlider.slider("values", 0, min);
         actualizarCampos(min, max);
     });
     precioMaximoInput.change(function () {
-        var min = parseInt(precioMinimoInput.val()) || 0;
-        var max = parseInt($(this).val()) || 1000;
+        let min = parseInt(precioMinimoInput.val()) || 0;
+        let max = parseInt($(this).val()) || 1000;
         max = Math.max(min, max);
 
         rangoPrecioSlider.slider("values", 1, max);

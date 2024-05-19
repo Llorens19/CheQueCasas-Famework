@@ -1,7 +1,7 @@
 function login() {
     console.log("login");
     if (validate_login() != 0) {
-        var data =
+        let data =
         {
             username: document.getElementById('login_username').value,
             password: document.getElementById('login_password').value
@@ -37,7 +37,7 @@ function login() {
 }
 
 function validate_login() {
-    var error = false;
+    let error = false;
 
     if (document.getElementById('login_username').value.length === 0) {
         document.getElementById('error_login_username').innerHTML = "Tienes que escribir el usuario";
@@ -66,7 +66,7 @@ function validate_login() {
 
 function send_recover_password() {
     if (validate_mail_recover_password() != 0) {
-        var data =
+        let data =
         {
             email: document.getElementById('recover_email').value,
             op: 'send_recover_email'
@@ -109,7 +109,7 @@ function send_recover_password() {
 
 function click_login() {
     $("#login_password").keypress(function (e) {
-        var code = (e.keyCode ? e.keyCode : e.which);
+        let code = (e.keyCode ? e.keyCode : e.which);
         if (code == 13) {
             e.preventDefault();
             login();
@@ -130,7 +130,7 @@ function click_login() {
     });
 
     $(".recover_input").keypress(function (e) {
-        var code = (e.keyCode ? e.keyCode : e.which);
+        let code = (e.keyCode ? e.keyCode : e.which);
         if (code == 13) {
             e.preventDefault();
             send_recover_password();
@@ -146,8 +146,8 @@ function click_login() {
 
 
 function validate_mail_recover_password() {
-    var mail_exp = /^[a-zA-Z0-9_\.\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-\.]+$/;
-    var error = false;
+    let mail_exp = /^[a-zA-Z0-9_\.\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-\.]+$/;
+    let error = false;
 
     if (document.getElementById('recover_email').value.length === 0) {
         document.getElementById('error_recover_email').innerHTML = "Tienes que escribir un correo";
@@ -198,7 +198,7 @@ function click_new_password(token_email) {
 function send_new_password(token_email) {
     if (validate_new_password() != 0) {
         console.log("send_new_password", token_email);
-        var data = { token_email: token_email, password: $('#recover_password').val(), op: 'new_password' };
+        let data = { token_email: token_email, password: $('#recover_password').val(), op: 'new_password' };
 
         ajaxPromise('POST', 'JSON', friendlyURL("?module=login"), data)
             .then(function (data) {
