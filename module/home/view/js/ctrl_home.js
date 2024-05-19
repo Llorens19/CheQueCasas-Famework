@@ -2,12 +2,12 @@ function carrousel_operations() {
     ajaxPromise('GET', 'JSON', friendlyURL('?module=home'), {op: "carrusel_operations" })
         .then(function (data) {
             for (row in data) {
-                $('<div></div>').attr('class', "element_operations col-lg-3 col-md-6 service-item d-flex").attr('id', data[row].id_operations).appendTo(".carrousel_list")
+                $('<div></div>').attr('class', "element_operations col-lg-3 col-md-6 service-item d-flex ").attr('id', data[row].id_operations).appendTo(".carrousel_list")
                     .html(
                         "<div class='icon flex-shrink-0'>" +
-                        "<img src='" + absoluteURL(data[row].img_operations) + "' class='img-operations'></div>" +
+                        "<img src='" + absoluteURL(data[row].img_operations) + "' class='img-operations my-2'></div>" +
                         "<div>" +
-                        "<h4 class='title'>" + data[row].n_operations + "</h4>" +
+                        "<h4 class='title my-4'>" + data[row].n_operations + "</h4>" +
                         "</div>"
                     );
             }

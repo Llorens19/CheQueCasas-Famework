@@ -308,14 +308,14 @@ function printFilters() {
             localStorage.setItem("data_filters_table", JSON.stringify(data));
 
             $("<div></div>").attr("class", "col-md-1").appendTo(".shop_filters").html(`
-                <button class="btn btn-primary delete_button">Borrar</button>
+                <button class="btn btn-primary delete_button col-md-12">Borrar</button>
             `);
 
 
             $("<div></div>").attr("class", "col-md-1").appendTo(".shop_filters").html(`
             
             <div>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+            <button type="button" class="btn btn-primary col-md-12" data-toggle="modal" data-target="#exampleModal">
                 Zona
             </button>
             </div>
@@ -441,7 +441,7 @@ function printFilters() {
 
                 switch (data[0][row].id_type_filter) {
                     case "1": //tipo selec
-                        $("<div></div>").attr("class", "col-md-2").appendTo(".shop_filters").html(
+                        $("<div></div>").attr("class", "col-md-1").appendTo(".shop_filters").html(
                             "<select class='form-select " + data[0][row].n_table + "' id='" + data[0][row].n_table + "'>" +
                             (function () {
                                 let options = [];
@@ -463,7 +463,7 @@ function printFilters() {
 
                     case "2": //tipo radio button
 
-                        $("<div></div>").attr("class", "col-md-2").appendTo(".shop_filters").html(
+                        $("<div></div>").attr("class", "col-md-1").appendTo(".shop_filters").html(
                             "<div>" +
                             "<button type='button' class=' col-md-12  btn btn-light " + data[0][row].n_table + "' data-toggle='modal' data-target='#modal_" + data[0][row].n_table + "'> " + data[0][row].text_filter + "</button>" +
                             "</div>"

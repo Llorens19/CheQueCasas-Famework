@@ -299,7 +299,7 @@ section {
     font-size: 30px;
     margin: 0;
     font-weight: 700;
-    color: #fff;
+    color: #ffffff;
     font-family: var(--font-primary);
 }
 
@@ -2006,11 +2006,16 @@ div.features-item {
 
 
 .img-operations {
-    width: 100px;
+    width: 70px;
+
 }
 
 .element_operations:hover {
-    background-color: #00000027;
+
+    border-radius: 5px;
+    box-shadow: 0 0 1px rgb(0, 0, 0);
+  
+    background-color: #ffffff30;
 }
 
 
@@ -2034,7 +2039,7 @@ div.features-item {
     animation: none !important;
     outline: none !important;
     box-shadow: none !important;
-    background-color: #00000027;
+    background-color: #ffffffb9;
 
 
 }
@@ -2080,7 +2085,6 @@ div.features-item {
     padding: 20px;
     margin: 20px;
     border-radius: 5px;
-    background-color: #ffffff;
     box-shadow: 0 0 1px rgb(0, 0, 0);
     transition: 0.3s;
 }
