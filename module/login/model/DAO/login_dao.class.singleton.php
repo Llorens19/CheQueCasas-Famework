@@ -78,8 +78,9 @@ class login_dao
 
 	function select_user_login($db, $username)
 	{
-		$sql = "SELECT * FROM user WHERE username='$username' and active = 1";
-
+		$sql = "SELECT * FROM user WHERE username='$username'";
+		error_log("/*/**/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*");
+		error_log($sql);
 		$stmt = $db->ejecutar($sql);
 		$res = $db->listar($stmt);
 
@@ -116,7 +117,9 @@ class login_dao
 	}
 
 	public function update_new_passwoord($db, $token_email, $password){
-		$sql = "UPDATE user SET password= '$password', token_email= '', active = 1 WHERE token_email = $token_email";
+		$sql = "UPDATE user SET password= '$password', token_email= '', active = '1' WHERE token_email = '$token_email'";
+
+		error_log($sql);
 		$stmt = $db->ejecutar($sql);
 		return "ok";
 	}

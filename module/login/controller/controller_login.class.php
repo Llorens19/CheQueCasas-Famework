@@ -26,6 +26,7 @@ class controller_login
     }
     function login()
     {
+        error_log("Entra en login");
         echo json_encode(common::load_model('login_model', 'get_login', [[$_POST['username']],[$_POST['password']]]));
     }
     function verify_email() {
@@ -68,6 +69,7 @@ class controller_login
     }
 
      function new_password() {
+        error_log("Entra en new_password");
             echo json_encode(common::load_model('login_model', 'get_new_password', [$_POST['token_email'], $_POST['password']]));
         }  
     

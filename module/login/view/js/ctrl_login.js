@@ -13,10 +13,13 @@ function login() {
             .then(function (result) {
                 console.log(result);
                 if (result == "error_user") {
-                    document.getElementById('error_username_log').innerHTML = "El usario no existe,asegurase de que lo a escrito correctamente"
+                    document.getElementById('error_login_username').innerHTML = "El usario no existe."
                 } else if (result == "error_passwd") {
-                    document.getElementById('error_passwd_log').innerHTML = "La contraseña es incorrecta"
+                    document.getElementById('error_login_password').innerHTML = "La contraseña es incorrecta"
+                } else if (result == "error_active") {
+                    document.getElementById('error_login_username').innerHTML = "El usuario no esta activo"
                 } else {
+                    console.log("result", result);
                     localStorage.removeItem("access_token");
                     localStorage.removeItem("refresh_token");
                     localStorage.setItem("access_token", result[0]);
@@ -71,25 +74,25 @@ function send_recover_password() {
         console.table(data);
         ajaxPromise('POST', 'JSON', friendlyURL('?module=login'), data)
             .then(function (data) {
-            console.table("*/*/*/*/*/*/*/*/*/*/*/*/**/*");
+                console.table("*/*/*/*/*/*/*/*/*/*/*/*/**/*");
                 if (data == "error") {
-                    $("#error_email_forg").html("Este Correo no esta registrado");
+                    $("#error_recover_email").html("Este Correo no esta registrado");
                 } else {
-                    
+
                     $(".modal_login_body").empty();
 
                     $("<div></div>")
-                    .attr("class", "d-flex flex-column justify-content-center align-items-center full-height")
-                    .html(`
+                        .attr("class", "d-flex flex-column justify-content-center align-items-center full-height")
+                        .html(`
                     <div class="text-center">
-                        <h6>Email de recuperación enviado a <strong>`+ data +`</strong></h6>
+                        <h6>Email de recuperación enviado a <strong>`+ data + `</strong></h6>
                      
                         <img src='` + absoluteURL("view/img/login/mensaje.gif") + `'style = "height: 100px; width: auto;" alt="Imagen de verificación" class="img-fluid my-3">
                         <h6>Por favor, revisa tu bandeja de entrada.</h6>
                     </div>
     
                     `).appendTo(".modal_login_body");
-                    
+
                     setTimeout(() => {
                         window.location.href = friendlyURL("?module=home");
                     }, 2000);
@@ -138,76 +141,72 @@ function click_login() {
         e.preventDefault();
         send_recover_password();
     });
-    
+
 }
 
 
-function validate_mail_recover_password(){
+function validate_mail_recover_password() {
     var mail_exp = /^[a-zA-Z0-9_\.\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-\.]+$/;
     var error = false;
 
-    if(document.getElementById('recover_email').value.length === 0){
-		document.getElementById('error_recover_email').innerHTML = "Tienes que escribir un correo";
-		error = true;
-	}else{
-        if(!mail_exp.test(document.getElementById('recover_email').value)){
-            document.getElementById('error_recover_email').innerHTML = "El formato del mail es invalido"; 
+    if (document.getElementById('recover_email').value.length === 0) {
+        document.getElementById('error_recover_email').innerHTML = "Tienes que escribir un correo";
+        error = true;
+    } else {
+        if (!mail_exp.test(document.getElementById('recover_email').value)) {
+            document.getElementById('error_recover_email').innerHTML = "El formato del mail es invalido";
             error = true;
-        }else{
+        } else {
             document.getElementById('error_recover_email').innerHTML = "";
         }
     }
-	
-    if(error == true){
+
+    if (error == true) {
         return 0;
     }
 }
 
-function load_form_new_password(){
+function load_form_new_password() {
     token_email = localStorage.getItem('token_email');
     localStorage.removeItem('token_email');
     console.log(token_email);
-    ajaxPromise('POST', 'JSON', friendlyURL('?module=login'), { token_email: token_email, op: 'verify_token'})
+    ajaxPromise('POST', 'JSON', friendlyURL('?module=login'), { token_email: token_email, op: 'verify_token' })
 
         .then(function (data) {
             if (data == "verify") {
-                charge_recover();
-                click_new_password(token_email);
+                setTimeout(function() {
+                    charge_recover();
+                    click_new_password(token_email);
+                }, 1000);
             } else {
                 console.log("error");
             }
-        
+
         })
         .catch(function (textStatus) {
             console.error("Error: Verify token error", textStatus);
         });
 }
 
-function click_new_password(token_email){
-    $(".recover_html").keypress(function(e) {
-        var code = (e.keyCode ? e.keyCode : e.which);
-        if(code==13){
-            e.preventDefault();
-            send_new_password(token_email);
-        }
-    });
-
-    $('#button_set_pass').on('click', function(e) {
+function click_new_password(token_email) {
+    $('#change_password_button').on('click', function (e) {
         e.preventDefault();
         send_new_password(token_email);
-    }); 
+    });
 }
 
-function send_new_password(token_email){
-    if(validate_new_password() != 0){
-        var data = {token_email: token_email, password : $('#recover_password').val(), op: 'new_password'};
+function send_new_password(token_email) {
+    if (validate_new_password() != 0) {
+        console.log("send_new_password", token_email);
+        var data = { token_email: token_email, password: $('#recover_password').val(), op: 'new_password' };
 
         ajaxPromise('POST', 'JSON', friendlyURL("?module=login"), data)
             .then(function (data) {
+                console.log(data);
                 if (data == "done") {
                     // toastr.options.timeOut = 3000;
                     // toastr.success('New password changed');
-                    setTimeout('window.location.href = friendlyURL("?module=login&op=view")', 1000);
+                    setTimeout('window.location.href = friendlyURL("?module=home")', 1000);
                 } else {
                     // toastr.options.timeOut = 3000;
                     // toastr.error('Error seting new password');
@@ -245,18 +244,17 @@ function load_content() {
 }
 
 
+function charge_recover() {
 
-function charge_recover(){
+    $(".modal_login_body").empty();
 
-    $(".modal_login_body").empty();  
-
-        $(`<div></div>`).attr("class", "recover_div").appendTo(".modal_login_body").html(`
+    $(`<div></div>`).attr("class", "recover_div").appendTo(".modal_login_body").html(`
                         
         <form id="new_password__form" method="POST">
 
             <!-- Email input -->
             <div class="form-outline mb-4">
-                <label class="form-label" for="recover_password">Email or username</label>
+                <label class="form-label" for="recover_password">Nueva Contraseña</label>
                 <input type="password" id="recover_password" class="form-control" />
                 <span id="error_recover_password" class="error"></span>
 
@@ -264,25 +262,72 @@ function charge_recover(){
 
             <!-- Password input -->
             <div class="form-outline mb-4">
-                <label class="form-label" for="recover_password_repeat">Contraseña</label>
+                <label class="form-label" for="recover_password_repeat">Repite la Contraseña</label>
                 <input type="password" id="recover_password_repeat" class="form-control" />
                 <span id="error_recover_password_repeat" class="error"></span>
 
             </div>
 
-            <button type="submit" id="recover" class="btn btn-primary btn-block mb-4">Sign in</button>
+            <button type="submit" id="change_password_button" class="btn btn-primary btn-block mb-4">Aceptar</button>
             <button id="recover_exit" class="btn btn-primary btn-block mb-4" style="float: right;">Salir</button>
 
         </form>
         `);
 
-        $("#loginModal").modal("show");
+    $("#loginModal").modal("show");
 
-        $("#recover_exit").on('click', function (e) {
-            e.preventDefault();
-            window.location.href = friendlyURL("?module=home");
+    $("#recover_exit").on('click', function (e) {
+        e.preventDefault();
+        window.location.href = friendlyURL("?module=home");
+    }
+    );
+}
+
+
+function validate_new_password() {
+    let error = false;
+    let pssswd_exp = /^(?=.{8,}$)(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).*$/;
+
+    if (document.getElementById('recover_password').value.length === 0) {
+        document.getElementById('error_recover_password').innerHTML = "Tienes que escribir la contraseña";
+        error = true;
+    } else {
+
+        if (document.getElementById('recover_password').value.length < 8) {
+            document.getElementById('error_recover_password').innerHTML = "La password tiene que tener 8 caracteres como minimo";
+            error = true;
+        } else {
+            if (!pssswd_exp.test(document.getElementById('recover_password').value)) {
+                document.getElementById('error_recover_password').innerHTML = "Debe de contener minimo 8 caracteres, mayusculas, minusculas y simbolos especiales";
+                error = true;
+            } else {
+                document.getElementById('error_recover_password').innerHTML = "";
+            }
         }
-        );
+    }
+
+    if (document.getElementById('recover_password_repeat').value.length === 0) {
+        document.getElementById('error_recover_password_repeat').innerHTML = "Tienes que repetir la contraseña";
+        error = true;
+    } else {
+        if (document.getElementById('recover_password_repeat').value.length < 8) {
+            document.getElementById('error_recover_password_repeat').innerHTML = "La password tiene que tener 8 caracteres como minimo";
+            error = true;
+        } else {
+            if (document.getElementById('recover_password_repeat').value === document.getElementById('recover_password').value) {
+                document.getElementById('error_recover_password_repeat').innerHTML = "";
+            } else {
+                document.getElementById('error_recover_password_repeat').innerHTML = "La password's no coinciden";
+                error = true;
+            }
+        }
+    }
+
+
+
+    if (error == true) {
+        return 0;
+    }
 }
 
 
@@ -290,5 +335,5 @@ function charge_recover(){
 $(document).ready(function () {
     click_login();
     load_content();
-    
+
 });
