@@ -70,7 +70,7 @@ function launch_search(){
     $(document).on('change', '.type', function () {
         //$('.search_operations').empty();
         array_filters[0][1] = $(this).val();
-        console.table(array_filters);
+        //console.table(array_filters);
         load_operation(array_filters);
         localStorage.setItem('array_filters_search', JSON.stringify(array_filters));
     });
@@ -78,7 +78,7 @@ function launch_search(){
     $(document).on('change', '.operations', function () {
         //$('.search_type').empty();
         array_filters[1][1] = $(this).val();
-        console.table(array_filters);
+        //console.table(array_filters);
         load_type(array_filters);
         localStorage.setItem('array_filters_search', JSON.stringify(array_filters));
     });
@@ -93,11 +93,15 @@ function launch_search(){
 
     $('.search').on('click', function () {
         let array_filters = JSON.parse(localStorage.getItem('array_filters_search'));
+
+        console.log(array_filters);
         localStorage.removeItem('array_filters_search');
-        
-        localStorage.setItem('city', array_filters[2][1]);
-        localStorage.setItem('type', array_filters[0][1]);
-        localStorage.setItem('operations', array_filters[1][1]);
+        $("#autocom").val();
+        console.log($("#autocom").val());
+
+        localStorage.setItem('city', $("#autocom").val() || '%');
+        localStorage.setItem('type', $('.type').val() || '%');
+        localStorage.setItem('operations', $('.operations').val() || '%');
         window.location.href = 'index.php?module=shop&op=view';
         localStorage.setItem('copy_city', '%');
 

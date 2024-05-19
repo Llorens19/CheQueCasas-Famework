@@ -63,10 +63,10 @@ class shop_dao
 	public static function select_buildings($db, $filters, $total_prod, $items_page)
 	{
 
-		$sql = "SELECT * FROM building";
+		$sql = "SELECT * FROM building inner join city on building.id_city = city.id_city";
 
 		foreach ($filters as $column) {
-			if ($column[0] === "price" || $column[0] === "order" || $column[0] === "in_poligon") {
+			if ($column[0] === "price" || $column[0] === "order" || $column[0] === "in_poligon"  || $column[0] === "city") {
 				continue;
 			}
 			$sql .= ", $column[0]";
@@ -76,10 +76,10 @@ class shop_dao
 
 
 		foreach ($filters as $column) {
-			if ($column[0] === "price" || $column[0] === "order" || $column[0] === "in_poligon") {
+			if ($column[0] === "price" || $column[0] === "order" || $column[0] === "in_poligon" && $column[0] === "city") {
 				continue;
 			}
-			if ($column[0] !== "price" && $column[0] !== "order" && $column[0] !== "in_poligon") {
+			if ($column[0] !== "price" && $column[0] !== "order" && $column[0] !== "in_poligon" && $column[0] !== "city") {
 				$sql .= " AND building.id_" . $column[0] . " LIKE " . $column[0] .  ".id_" . $column[0];
 			}
 		}
@@ -90,6 +90,11 @@ class shop_dao
 		foreach ($filters as $column) {
 			if ($column[0] === "price") {
 				$sql .= " AND building.price  BETWEEN " . $column[1][0] .  " AND " . $column[1][1];
+				continue;
+			}
+
+			if ($column[0] === "city") {
+				$sql .= " AND (building.id_city like '" . $column[1] . "' or n_city like '" . $column[1] . "')";
 				continue;
 			}
 
@@ -140,10 +145,13 @@ class shop_dao
 				}
 			}
 		}
+
+
 		if (isset($order)) {
 			$sql .= $order;
 		}
 
+		error_log("SQL: " . $sql);
 
 		$sql .= " LIMIT $total_prod, $items_page";
 
@@ -158,10 +166,10 @@ class shop_dao
 
 		$sql = "SELECT *
         FROM building
-        WHERE id_building NOT IN (SELECT id_building FROM building";
+        WHERE id_building NOT IN (SELECT id_building FROM building inner join city on building.id_city = city.id_city ";
 
 		foreach ($filters as $column) {
-			if ($column[0] === "price" || $column[0] === "order" || $column[0] === "in_poligon") {
+			if ($column[0] === "price" || $column[0] === "order" || $column[0] === "in_poligon"  || $column[0] === "city") {
 				continue;
 			}
 			$sql .= ", $column[0]";
@@ -171,10 +179,10 @@ class shop_dao
 
 
 		foreach ($filters as $column) {
-			if ($column[0] === "price" || $column[0] === "order" || $column[0] === "in_poligon") {
+			if ($column[0] === "price" || $column[0] === "order" || $column[0] === "in_poligon" && $column[0] === "city") {
 				continue;
 			}
-			if ($column[0] !== "price" && $column[0] !== "order" && $column[0] !== "in_poligon") {
+			if ($column[0] !== "price" && $column[0] !== "order" && $column[0] !== "in_poligon" && $column[0] !== "city") {
 				$sql .= " AND building.id_" . $column[0] . " LIKE " . $column[0] .  ".id_" . $column[0];
 			}
 		}
@@ -185,6 +193,11 @@ class shop_dao
 		foreach ($filters as $column) {
 			if ($column[0] === "price") {
 				$sql .= " AND building.price  BETWEEN " . $column[1][0] .  " AND " . $column[1][1];
+				continue;
+			}
+
+			if ($column[0] === "city") {
+				$sql .= " AND (building.id_city like '" . $column[1] . "' or n_city like '" . $column[1] . "')";
 				continue;
 			}
 
@@ -236,9 +249,10 @@ class shop_dao
 			}
 		}
 
-
-
 		$sql .= " )";
+
+		error_log("SQL: " . $sql);
+
 		if (isset($order)) {
 			$sql .= $order;
 		}
@@ -291,10 +305,10 @@ class shop_dao
 
 	public static function total_prod($db, $filters)
 	{
-		$sql = "SELECT COUNT(*) as total FROM building";
+		$sql = "SELECT COUNT(*) as total FROM building inner join city on building.id_city = city.id_city";
 
 		foreach ($filters as $column) {
-			if ($column[0] === "price" || $column[0] === "order" || $column[0] === "in_poligon") {
+			if ($column[0] === "price" || $column[0] === "order" || $column[0] === "in_poligon"  || $column[0] === "city") {
 				continue;
 			}
 			$sql .= ", $column[0]";
@@ -304,10 +318,10 @@ class shop_dao
 
 
 		foreach ($filters as $column) {
-			if ($column[0] === "price" || $column[0] === "order" || $column[0] === "in_poligon") {
+			if ($column[0] === "price" || $column[0] === "order" || $column[0] === "in_poligon" && $column[0] === "city") {
 				continue;
 			}
-			if ($column[0] !== "price" && $column[0] !== "order" && $column[0] !== "in_poligon") {
+			if ($column[0] !== "price" && $column[0] !== "order" && $column[0] !== "in_poligon" && $column[0] !== "city") {
 				$sql .= " AND building.id_" . $column[0] . " LIKE " . $column[0] .  ".id_" . $column[0];
 			}
 		}
@@ -318,6 +332,11 @@ class shop_dao
 		foreach ($filters as $column) {
 			if ($column[0] === "price") {
 				$sql .= " AND building.price  BETWEEN " . $column[1][0] .  " AND " . $column[1][1];
+				continue;
+			}
+
+			if ($column[0] === "city") {
+				$sql .= " AND (building.id_city like '" . $column[1] . "' or n_city like '" . $column[1] . "')";
 				continue;
 			}
 
@@ -350,6 +369,22 @@ class shop_dao
 					$sql .= " OR  " . $column[0] . ".id_" . $column[0] . " LIKE '" . $value . "'";
 				}
 				$sql .= ")";
+			}
+
+			if ($column[0] === "order") {
+				$order = " ";
+
+				if ($column[1] === "1") {
+					$order = " ORDER BY building.m2 ASC";
+				} elseif ($column[1] === "2") {
+					$order = " ORDER BY building.m2 DESC";
+				} elseif ($column[1] === "3") {
+					$order = " ORDER BY building.price ASC";
+				} elseif ($column[1] === "4") {
+					$order = " ORDER BY building.price DESC";
+				} else {
+					$order = " ";
+				}
 			}
 		}
 
