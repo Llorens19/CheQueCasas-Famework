@@ -74,7 +74,6 @@ function load_content() {
             .then(function (data) {
                 //toastr.options.timeOut = 3000;
                 //toastr.success('Email verified');
-                //setTimeout('window.location.href = friendlyURL("?module=home&op=view")', 1000);
             })
             .catch(function () {
                 console.error('Error: verify email error');
@@ -90,26 +89,37 @@ function load_content() {
 
 function send_recover_password() {
     if (validate_mail_recover_password() != 0) {
-        var data = $('#recover_email_form').serialize();
-
-        ajaxPromise('POST', 'JSON', '?module=login&op=send_recover_email', data)
+        var data =
+        {
+            email: document.getElementById('recover_email').value,
+            op: 'send_recover_email'
+        };
+        console.table(data);
+        ajaxPromise('POST', 'JSON', friendlyURL('?module=login'), data)
             .then(function (data) {
+            console.table("*/*/*/*/*/*/*/*/*/*/*/*/**/*");
                 if (data == "error") {
                     $("#error_email_forg").html("Este Correo no esta registrado");
                 } else {
-    
-    
+                    
+                    $(".modal_login_body").empty();
+
                     $("<div></div>")
                     .attr("class", "d-flex flex-column justify-content-center align-items-center full-height")
                     .html(`
                     <div class="text-center">
-                        <h5>Email de recuperación enviado.</h5>
+                        <h6>Email de recuperación enviado a <strong>`+ data +`</strong></h6>
+                     
                         <img src='` + absoluteURL("view/img/login/mensaje.gif") + `'style = "height: 100px; width: auto;" alt="Imagen de verificación" class="img-fluid my-3">
-                        <h5>Por favor, revisa tu bandeja de entrada.</h5>
+                        <h6>Por favor, revisa tu bandeja de entrada.</h6>
                     </div>
     
-                    `).appendTo(".login_modal_content");
-    
+                    `).appendTo(".modal_login_body");
+                    
+                    setTimeout(() => {
+                        window.location.href = friendlyURL("?module=home");
+                    }, 2000);
+
                 }
             })
             .catch(function (textStatus) {
@@ -121,7 +131,6 @@ function send_recover_password() {
 
 
 function click_login() {
-    console.log("recover_button");
     $("#login_password").keypress(function (e) {
         var code = (e.keyCode ? e.keyCode : e.which);
         if (code == 13) {
@@ -133,12 +142,6 @@ function click_login() {
     $('#login').on('click', function (e) {
         e.preventDefault();
         login();
-    });
-
-    $('. recover_button').on('click', function (e) {
-        e.preventDefault();
-
-        load_form_recover_password();
     });
 
     $('#google').on('click', function (e) {
@@ -169,15 +172,15 @@ function validate_mail_recover_password(){
     var mail_exp = /^[a-zA-Z0-9_\.\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-\.]+$/;
     var error = false;
 
-    if(document.getElementById('email_forg').value.length === 0){
-		document.getElementById('error_email_forg').innerHTML = "Tienes que escribir un correo";
+    if(document.getElementById('recover_email').value.length === 0){
+		document.getElementById('error_recover_email').innerHTML = "Tienes que escribir un correo";
 		error = true;
 	}else{
-        if(!mail_exp.test(document.getElementById('email_forg').value)){
-            document.getElementById('error_email_forg').innerHTML = "El formato del mail es invalido"; 
+        if(!mail_exp.test(document.getElementById('recover_email').value)){
+            document.getElementById('error_recover_email').innerHTML = "El formato del mail es invalido"; 
             error = true;
         }else{
-            document.getElementById('error_email_forg').innerHTML = "";
+            document.getElementById('error_recover_email').innerHTML = "";
         }
     }
 	
@@ -194,7 +197,6 @@ function validate_mail_recover_password(){
 
 $(document).ready(function () {
     click_login();
-    
     load_content();
     
 });

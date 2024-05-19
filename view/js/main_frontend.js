@@ -361,7 +361,7 @@ function load_menu() {
                                 <form id="recover__form" method="POST">
                                     <div class="form-outline mb-4">
                                         <label class="form-label" for="recover_email">Email</label>
-                                        <input type="email" id="recover_email" class="form-control  recover_button" />
+                                        <input type="email" id="recover_email" class="form-control  recover_input" />
                                         <span id="error_recover_email" class="error"></span>
                                     </div>
                                     <button type="submit" id="recover" class="btn btn-primary btn-block mb-3 recover_button">Recover</button>

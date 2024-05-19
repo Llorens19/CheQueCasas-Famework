@@ -17,6 +17,7 @@ class controller_login
 
     function register()
     {
+       
         echo json_encode(common::load_model('login_model', 'get_register', [
             [$_POST['email']],
             [$_POST['username']],
@@ -58,6 +59,7 @@ class controller_login
     }
 
     function send_recover_email() {
+        error_log("Entra en send_recover_email");
         echo json_encode(common::load_model('login_model', 'get_recover_email', $_POST['email']));
     }
 }

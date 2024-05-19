@@ -212,7 +212,7 @@ class login_bll
 
 			$email = json_decode(mail::send_email($message), true);
 			if (!empty($email)) {
-				return;
+				return $args;
 			}
 		} else {
 			return 'error';

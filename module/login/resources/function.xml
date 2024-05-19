@@ -41,4 +41,9 @@
         <uri>verify_email</uri>
     </function>
 
+    <function>
+        <name>send_recover_email</name>
+        <uri>send_recover_email</uri>
+    </function>
+
 </functions>
