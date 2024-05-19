@@ -115,5 +115,10 @@ class login_dao
 		return "ok";
 	}
 
+	public function update_new_passwoord($db, $token_email, $password){
+		$sql = "UPDATE user SET password= '$password', token_email= '', active = 1 WHERE token_email = $token_email";
+		$stmt = $db->ejecutar($sql);
+		return "ok";
+	}
 
 }

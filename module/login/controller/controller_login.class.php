@@ -66,4 +66,9 @@ class controller_login
     function verify_token() {
         echo json_encode(common::load_model('login_model', 'get_verify_token', $_POST['token_email']));
     }
+
+     function new_password() {
+            echo json_encode(common::load_model('login_model', 'get_new_password', [$_POST['token_email'], $_POST['password']]));
+        }  
+    
 }

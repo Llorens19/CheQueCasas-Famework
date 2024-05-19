@@ -231,4 +231,12 @@ class login_bll
 		}
 		return 'fail';
 	}
+
+	public function get_new_password_BLL($args) {
+		$hashed_pass = password_hash($args[1], PASSWORD_DEFAULT, ['cost' => 12]);
+		if($this -> dao -> update_new_passwoord($this->db, $args[0], $hashed_pass)){
+			return 'done';
+		}
+		return 'fail';
+	}
 }
