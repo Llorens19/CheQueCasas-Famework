@@ -1,22 +1,22 @@
 function ajaxForSearch(url, sData = undefined, module, total_prod = 0, items_page = 9) {
     localStorage.setItem('page', 1);
     let filters = sData;
-    print_buildings(url, { 'filters': filters, op:module,'total_prod': total_prod, 'items_page': items_page });
+    print_buildings(url, { 'filters': filters, op: module, 'total_prod': total_prod, 'items_page': items_page });
     load_pagination();
 
 }
 
 
 function ajaxForSearchScroll(url, sData = undefined, module, total_prod = 0, items_page = 4) {
-        let filters = sData;
-        print_scroll(url, { 'filters': filters, op:module, 'total_prod': total_prod, 'items_page': items_page });
-        load_scroll();
+    let filters = sData;
+    print_scroll(url, { 'filters': filters, op: module, 'total_prod': total_prod, 'items_page': items_page });
+    load_scroll();
 }
 
 
 function print_points() {
     let filters = JSON.parse(localStorage.getItem("filters")) || undefined;
-    ajaxPromise('POST', 'JSON', friendlyURL('?module=shop'), { 'filters': filters, 'total_prod': 0, 'items_page': 100000, op : 'load_buildings' })
+    ajaxPromise('POST', 'JSON', friendlyURL('?module=shop'), { 'filters': filters, 'total_prod': 0, 'items_page': 100000, op: 'load_buildings' })
         .then(function (data) {
             mapBox_all(data);//
         })
@@ -29,10 +29,9 @@ function print_points() {
 }
 
 function load_pagination() {
-
     let filters = JSON.parse(localStorage.getItem("filters")) || undefined;
 
-    ajaxPromise("POST", "JSON", friendlyURL('?module=shop'), { 'filters': filters, op: 'total_prod'})
+    ajaxPromise("POST", "JSON", friendlyURL('?module=shop'), { 'filters': filters, op: 'total_prod' })
         .then(function (data) {
             let total_prod = data[0].total;
 
@@ -43,25 +42,26 @@ function load_pagination() {
                 <nav aria-label="Page navigation example">
                     <ul class="pagination">
                         <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Previous">
+                            <a class="page-link page_down" aria-label="Previous">
                                 <span aria-hidden="true">&laquo;</span>
                             </a>
                         </li>
 
-                        `+ (function () {
-                        let buton_pages = [];
+                        ` + (function () {
+                        let button_pages = [];
                         let pages = Math.ceil(total_prod / 9);
+                        localStorage.setItem("total_pages", pages);
                         for (let page = 1; page <= pages; page++) {
 
-                            buton_pages.push(
+                            button_pages.push(
                                 `<li class="page-item"><a class="page-link page" value = '` + page + `'>` + page + `</a></li>`
                             );
 
                         }
-                        return buton_pages.join("");
+                        return button_pages.join("");
                     })() +
                     `<li class="page-item">
-                            <a class="page-link" href="#" aria-label="Next">
+                            <a class="page-link page_up" aria-label="Next">
                                 <span aria-hidden="true">&raquo;</span>
                             </a>
                         </li>
@@ -69,27 +69,89 @@ function load_pagination() {
                 </nav>
             `);
 
+            $(".page").each(function () {
+                if ($(this).attr("value") === "1") {
+                    $(this).addClass("active");
+                }
+            });
 
+            disable_buttons(1, Math.ceil(total_prod / 9));
 
+            $(".page_down").click(function () {
+                let page = parseInt(localStorage.getItem("page")) || 1;
+
+                if (page <= 1) {
+                    return;
+                }
+
+                page = page - 1;
+                localStorage.setItem("page", page);
+
+                let offset_prod = (page - 1) * 9;
+                print_buildings(friendlyURL('?module=shop'), { 'filters': filters, 'total_prod': offset_prod, 'items_page': 9, op: 'load_buildings' });
+
+                window.scrollTo(0, 0);
+
+                $(".page").eq(page - 1).addClass("active");
+                $(".page").not($(".page").eq(page - 1)).removeClass("active");
+
+                disable_buttons(page, Math.ceil(total_prod / 9));
+            });
+
+            $(".page_up").click(function () {
+                let page = parseInt(localStorage.getItem("page")) || 1;
+                let total_pages = parseInt(localStorage.getItem("total_pages"));
+
+                if (page < total_pages) {
+                    page = page + 1;
+                    localStorage.setItem("page", page);
+                    let offset_prod = (page - 1) * 9;
+                    print_buildings(friendlyURL('?module=shop'), { 'filters': filters, 'total_prod': offset_prod, 'items_page': 9, op: 'load_buildings' });
+
+                    window.scrollTo(0, 0);
+
+                    $(".page").eq(page - 1).addClass("active");
+                    $(".page").not($(".page").eq(page - 1)).removeClass("active");
+
+                    disable_buttons(page, total_pages);
+                }
+            });
 
             $(".page").click(function () {
                 let page = $(this).attr("value");
-                // localStorage.setItem('page', page);
+                localStorage.setItem("page", page);
                 let offset_prod = (page - 1) * 9;
                 print_buildings(friendlyURL('?module=shop'), { 'filters': filters, 'total_prod': offset_prod, 'items_page': 9, op: 'load_buildings' });
+
                 window.scrollTo(0, 0);
+
                 $(this).addClass("active");
                 $(".page").not(this).removeClass("active");
+
+                disable_buttons(parseInt(page), Math.ceil(total_prod / 9));
             });
-
-
 
         })
         .catch(function () {
             console.error("error en ajaxForSearch");
-            //window.location.href = "index.php?module=ctrl_exceptions&op=503&type=503&lugar=Function ajxForSearch SHOP";
         });
 }
+
+function disable_buttons(currentPage, totalPages) {
+    if (currentPage <= 1) {
+        $(".page_down").parent().addClass("disabled");
+    } else {
+        $(".page_down").parent().removeClass("disabled");
+    }
+
+    if (currentPage >= totalPages) {
+        $(".page_up").parent().addClass("disabled");
+    } else {
+        $(".page_up").parent().removeClass("disabled");
+    }
+}
+
+
 
 function load_scroll() {
 
@@ -97,7 +159,7 @@ function load_scroll() {
 
 
 
-    ajaxPromise("POST", "JSON", friendlyURL('?module=shop'), { 'filters': filters, op: 'total_prod'})
+    ajaxPromise("POST", "JSON", friendlyURL('?module=shop'), { 'filters': filters, op: 'total_prod' })
         .then(function (data) {
             let total_prod = data[0].total;
             let total_cliks = Math.ceil(total_prod / 4);
@@ -152,7 +214,7 @@ function clicks() {
 
 function loadDetails(id_building) {
     console.log("loadDetails");
-    ajaxPromise("POST", "JSON", friendlyURL('?module=shop'), { id_building: id_building, op: 'details_building'})
+    ajaxPromise("POST", "JSON", friendlyURL('?module=shop'), { id_building: id_building, op: 'details_building' })
         .then(function (data) {
 
             $("#content_shop_building").hide();
@@ -170,7 +232,7 @@ function loadDetails(id_building) {
 
                 let id = id_building;
 
-                ajaxPromise("POST", "JSON", friendlyURL('?module=shop'), { id: id, op: 'count_click_details'})
+                ajaxPromise("POST", "JSON", friendlyURL('?module=shop'), { id: id, op: 'count_click_details' })
                     .then(function (data) {
 
                     })
@@ -302,7 +364,7 @@ function shopAll() {
 
 function printFilters() {
 
-    ajaxPromise("POST", "JSON", friendlyURL('?module=shop'), {op: 'filters_table'})
+    ajaxPromise("POST", "JSON", friendlyURL('?module=shop'), { op: 'filters_table' })
         .then(function (data) {
             localStorage.removeItem("data_filters_table");
             localStorage.setItem("data_filters_table", JSON.stringify(data));
@@ -787,7 +849,7 @@ function count_click_details() {
         let id = $(this).attr("id");
 
 
-        ajaxPromise("POST", "JSON", friendlyURL('?module=shop'), { id: id, op: 'count_click_details'})
+        ajaxPromise("POST", "JSON", friendlyURL('?module=shop'), { id: id, op: 'count_click_details' })
             .then(function (data) {
 
             })
@@ -848,7 +910,7 @@ function print_buildings(url, sData) {
 
     Promise.all([find_likes_user(), get_all_table()])
         .then(
-            
+
             ajaxPromise("POST", "JSON", url, sData)
                 .then(function (data) {
                     $(".details-shop").hide();
@@ -856,7 +918,7 @@ function print_buildings(url, sData) {
                     $(".list_buildings").empty();
                     if (data == "error") {
                         $("<div></div>")
-                            .attr( "class", "list_content_shop row gy-4 align-items-center card_shop"
+                            .attr("class", "list_content_shop row gy-4 align-items-center card_shop"
                             )
                             .appendTo(".list_buildings")
                             .html(
@@ -972,14 +1034,14 @@ function click_like_building() {
 
                     let valor = parseInt($(".count_likes" + id).text());
 
-                    $(".count_likes" + id).text(valor +1);
+                    $(".count_likes" + id).text(valor + 1);
 
                 } else if (data[0].message == "remove") {
                     console.table("Borramos");
                     $(".img_" + id).attr("src", "view/img/shop/img_card/sin_megusta.png");
                     let valor = parseInt($(".count_likes" + id).text());
 
-                    $(".count_likes" + id).text(valor -1);
+                    $(".count_likes" + id).text(valor - 1);
 
                 }
 
@@ -997,7 +1059,7 @@ function click_like_building() {
 
 async function find_likes_user() {
 
-    await ajaxPromise("POST", "JSON", friendlyURL('?module=shop'), { op : "likes_user" })
+    await ajaxPromise("POST", "JSON", friendlyURL('?module=shop'), { op: "likes_user" })
         .then(function (data) {
 
 
@@ -1033,7 +1095,7 @@ async function find_likes_user() {
 
 async function get_all_table() {
 
-    await ajaxPromise("POST", "JSON", friendlyURL('?module=shop'), {op: 'table_likes'})
+    await ajaxPromise("POST", "JSON", friendlyURL('?module=shop'), { op: 'table_likes' })
         .then(function (data) {
 
             localStorage.setItem('all_likes_table', JSON.stringify(data));
