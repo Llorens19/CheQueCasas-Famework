@@ -73,4 +73,7 @@ class controller_login
             echo json_encode(common::load_model('login_model', 'get_new_password', [$_POST['token_email'], $_POST['password']]));
         }  
     
+    function save_phone() {
+        echo json_encode(common::load_model('login_model', 'get_save_phone', [$_POST['username'], $_POST['phone']]));
+    }
 }

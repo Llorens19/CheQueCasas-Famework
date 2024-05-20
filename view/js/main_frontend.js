@@ -91,7 +91,8 @@ function load_menu() {
                                 <div class="my-3 mx-3">
                                     <div class="card">
                                         <div class="card-body">
-                                            <p class="card-text"><strong>Nmobre:</strong> `+ data[0].name + `</p>
+                                        <p class="card-text"><strong>Username:</strong> `+ data[0].username + `</p>
+                                            <p class="card-text"><strong>Nombre:</strong> `+ data[0].name + `</p>
                                             <p class="card-text"><strong>Apellidos:</strong> `+ data[0].surname + `</p>
                                             <p class="card-text"><strong>Email:</strong> `+ data[0].email + `</p>
                                             <p class="card-text"><strong>Teléfono:</strong> `+ data[0].tlf + `</p>
@@ -117,7 +118,7 @@ function load_menu() {
                         
                         if (phone_regex.test(phone)) {
     
-                            ajaxPromise('POST', 'JSON', friendlyURL('?module=login'), { phone: phone, op: 'save_phone' })
+                            ajaxPromise('POST', 'JSON', friendlyURL('?module=login'), { phone: phone, username: data[0].username, op: 'save_phone'})
                                 .then(function (data) {
                                     console.log(data);
                                     

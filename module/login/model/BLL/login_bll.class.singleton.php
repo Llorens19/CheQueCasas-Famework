@@ -239,4 +239,12 @@ class login_bll
 		}
 		return 'fail';
 	}
+
+	public function get_save_phone_BLL($args) {
+		if($this -> dao -> update_phone($this->db, $args[0], $args[1])){
+			return 'done';
+		}
+		return 'fail';
+	}
+	
 }

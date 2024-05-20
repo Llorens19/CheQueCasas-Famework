@@ -56,4 +56,8 @@
             return $this -> bll -> get_new_password_BLL($args);
         }
 
+        public function get_save_phone($args) {
+            return $this -> bll -> get_save_phone_BLL($args);
+        }
+
     }

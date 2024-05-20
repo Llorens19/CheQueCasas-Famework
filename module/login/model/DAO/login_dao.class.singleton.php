@@ -124,4 +124,11 @@ class login_dao
 		return "ok";
 	}
 
+	public function update_phone( $db, $username, $tlf){
+		$sql = "UPDATE user SET tlf = '$tlf' WHERE username = '$username'";
+		
+		$stmt = $db->ejecutar($sql);
+		return "ok";
+	}
+
 }

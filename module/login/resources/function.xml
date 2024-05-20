@@ -56,5 +56,10 @@
         <uri>new_password</uri>
     </function>
 
+    <function>
+        <name>save_phone</name>
+        <uri>save_phone</uri>  
+    </function>
+
 
 </functions>
