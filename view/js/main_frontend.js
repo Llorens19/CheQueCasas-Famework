@@ -110,6 +110,29 @@ function load_menu() {
                     </div>`);
 
 
+                    $(".save_phone").on("click", function () {
+
+                        let phone_regex = /^[9|6|7][0-9]{8}$/;
+                        let phone = $(".phone_number").val();
+                        
+                        if (phone_regex.test(phone)) {
+    
+                            ajaxPromise('POST', 'JSON', friendlyURL('?module=login'), { phone: phone, op: 'save_phone' })
+                                .then(function (data) {
+                                    console.log(data);
+                                    
+
+                                    
+                                }).catch(function () {
+                                    console.log("Error al guardar el teléfono");
+                                });
+                        } else {
+                            document.getElementById('error_phone_number').innerHTML ="Introduce un teléfono válido";
+                        }
+                    });
+    
+
+
 
                 $("<div></div>").attr("class", "ms-2 loged_button").appendTo(".login_bar").html(
                     `<button class="btn btn-primary logout" >Cerrar Sesión</button>`);
