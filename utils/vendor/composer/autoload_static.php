@@ -14,6 +14,10 @@ class ComposerStaticInit73696f53ff987dece1d863b6c5c4a418
     );
 
     public static $prefixLengthsPsr4 = array (
+        'T' => 
+        array (
+            'Twilio\\' => 7,
+        ),
         'R' => 
         array (
             'Resend\\' => 7,
@@ -32,14 +36,18 @@ class ComposerStaticInit73696f53ff987dece1d863b6c5c4a418
     );
 
     public static $prefixDirsPsr4 = array (
+        'Twilio\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/twilio/sdk/src/Twilio',
+        ),
         'Resend\\' => 
         array (
             0 => __DIR__ . '/..' . '/resend/resend-php/src',
         ),
         'Psr\\Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/http-message/src',
-            1 => __DIR__ . '/..' . '/psr/http-factory/src',
+            0 => __DIR__ . '/..' . '/psr/http-factory/src',
+            1 => __DIR__ . '/..' . '/psr/http-message/src',
         ),
         'Psr\\Http\\Client\\' => 
         array (
