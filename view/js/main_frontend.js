@@ -54,7 +54,7 @@ function load_menu() {
     console.log(token);
     if (token) {
         console.log("dentro");
-        ajaxPromise('POST', 'JSON', friendlyURL('?module=login'), { 'token': token, op: 'data_user'})
+        ajaxPromise('POST', 'JSON', friendlyURL('?module=login'), { 'token': token, op: 'data_user' })
             .then(function (data) {
                 console.log(data[0]);
 
@@ -71,14 +71,14 @@ function load_menu() {
                     .appendTo(".login_bar").html(`
 
 
-                    <div class="modal-dialog modal-dialog-centered modal-sm">
+                    <div class="modal-dialog modal-dialog-centered ">
                         <div class="modal-content modal-dialog-centered modal-dialog-scrollable">
 
                             <div class="modal-header">
                                 <h5 class="modal-title" id="userModalLabel">Datos de usuario</h5>
                             </div>
     
-                            <div class="modal-body ">
+                            <div class="modal-body col-md-12">
                                 <div class="text-center">
                                     <div class="user-photo round_img">
                                         <img src="`+ data[0].avatar + `">
@@ -95,17 +95,20 @@ function load_menu() {
                                             <p class="card-text"><strong>Apellidos:</strong> `+ data[0].surname + `</p>
                                             <p class="card-text"><strong>Email:</strong> `+ data[0].email + `</p>
                                             <p class="card-text"><strong>Teléfono:</strong> `+ data[0].tlf + `</p>
+                                            <button type="button" class="btn btn-primary col-md-12"  data-dismiss="modal" data-toggle="modal" data-target="#phoneVerificationModal" >Activar 2fa</button>
+                                            
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="d-flex">
-                                    <button type="button" class="btn btn-secondary offset-md-8 col-md-4" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-secondary offset-md-10 col-md-2" data-dismiss="modal">Close</button>
                                 </div>
 
                             </div>
                         </div>
-                    </div>`)
+                    </div>`);
+
 
 
                 $("<div></div>").attr("class", "ms-2 loged_button").appendTo(".login_bar").html(
@@ -137,6 +140,8 @@ function load_menu() {
 
                     $("<div></div>").attr("class", "col-md-2 delete_building").appendTo(".buttons_card_shop")
                         .html("<button type='button' class='btn btn-link'><img src='view/img/shop/img_card/borrar.png' style='height: 50px;' alt='Me gusta'></button>");
+
+
 
 
 
@@ -202,7 +207,7 @@ function click_shop() {
     });
 }
 
-function load_login_modal(){
+function load_login_modal() {
 
     const modal = $("#loginModal");
     if (modal.length) {
@@ -211,8 +216,8 @@ function load_login_modal(){
 
 
     $("<div></div>").attr("class", "modal fade loginModal").attr("id", "loginModal").attr("tabindex", "-1")
-    .attr("aria-labelledby", "loginModalLabel").attr("aria-hidden", "true").attr("style", " top: 80px;").appendTo(".header_div")
-    .html(`
+        .attr("aria-labelledby", "loginModalLabel").attr("aria-hidden", "true").attr("style", " top: 80px;").appendTo(".header_div")
+        .html(`
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
