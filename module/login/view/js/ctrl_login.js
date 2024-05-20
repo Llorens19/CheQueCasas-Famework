@@ -4,12 +4,13 @@ function login() {
         let data =
         {
             username: document.getElementById('login_username').value,
-            password: document.getElementById('login_password').value
+            password: document.getElementById('login_password').value,
+            op: 'login'
         };
 
         console.table(data);
 
-        ajaxPromise('POST', 'JSON', 'index.php?module=login&op=login', data)
+        ajaxPromise('POST', 'JSON', friendlyURL('?module=login'), data)
             .then(function (result) {
                 console.log(result);
                 if (result == "error_user") {
@@ -86,7 +87,6 @@ function send_recover_password() {
                         .html(`
                     <div class="text-center">
                         <h6>Email de recuperación enviado a <strong>`+ data + `</strong></h6>
-                     
                         <img src='` + absoluteURL("view/img/login/mensaje.gif") + `'style = "height: 100px; width: auto;" alt="Imagen de verificación" class="img-fluid my-3">
                         <h6>Por favor, revisa tu bandeja de entrada.</h6>
                     </div>
@@ -174,7 +174,7 @@ function load_form_new_password() {
 
         .then(function (data) {
             if (data == "verify") {
-                setTimeout(function() {
+                setTimeout(function () {
                     charge_recover();
                     click_new_password(token_email);
                 }, 1000);
@@ -232,7 +232,7 @@ function load_content() {
         localStorage.setItem("token_email", path[5]);
 
     } else if (path[4] === 'verify') {
-        ajaxPromise('POST', 'JSON', friendlyURL("?module=login&op=verify_email"), { token_email: path[5] })
+        ajaxPromise('POST', 'JSON', friendlyURL("?module=login"), { token_email: path[5], op :' verify_email' })
             .then(function (data) {
                 //toastr.options.timeOut = 3000;
                 //toastr.success('Email verified');
@@ -333,7 +333,10 @@ function validate_new_password() {
 
 
 $(document).ready(function () {
-    click_login();
-    load_content();
+    console.log("ready");
+    setTimeout(function () {
+        click_login();
+        load_content();
+    }, 500);
 
 });

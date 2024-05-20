@@ -1,6 +1,6 @@
 
 function load_type(array_filters) {
-    ajaxPromise( 'POST', 'JSON', 'index.php?module=search&op=search_type', {array_filters: array_filters})
+    ajaxPromise( 'POST', 'JSON', friendlyURL('?module=search'), {array_filters: array_filters, op: 'search_type'})
         .then(function (data) {
             $('.type').empty();
             
@@ -16,7 +16,7 @@ function load_type(array_filters) {
         });
 }
 function load_operation (array_filters) {
-    ajaxPromise( 'POST', 'JSON', 'index.php?module=search&op=search_operations', {array_filters: array_filters})
+    ajaxPromise( 'POST', 'JSON', friendlyURL('?module=search'), {array_filters: array_filters, op: 'search_operations'})
         .then(function (data) {
             $('.operations').empty();
             $('<option>Operación</option>').attr('value', '%').appendTo('.operations')
@@ -34,7 +34,7 @@ function load_operation (array_filters) {
 function load_autocomplete(array_filters) {
     console.log('dentro de load_autocomplete');
     console.table(array_filters);
-    ajaxPromise( 'POST', 'JSON', 'index.php?module=search&op=autocomplete', {array_filters: array_filters})
+    ajaxPromise( 'POST', 'JSON', friendlyURL('?module=search'), {array_filters: array_filters, op:'autocomplete'})
     .then(function (data) {
         console.log('dentro de load_autocomplete');
         $('.search_auto').empty();
@@ -102,7 +102,7 @@ function launch_search(){
         localStorage.setItem('city', $("#autocom").val() || '%');
         localStorage.setItem('type', $('.type').val() || '%');
         localStorage.setItem('operations', $('.operations').val() || '%');
-        window.location.href = 'index.php?module=shop&op=view';
+        window.location.href = friendlyURL('?module=shop');
         localStorage.setItem('copy_city', '%');
 
     });

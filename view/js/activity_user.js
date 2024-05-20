@@ -4,7 +4,7 @@ function protecturl() {
 
     if(access_token !=0 && refresh_token != 0){
 
-    ajaxPromise('POST', 'JSON', 'index.php?module=login&op=controluser', { 'access_token': access_token, 'refresh_token': refresh_token})
+    ajaxPromise('POST', 'JSON', friendlyURL('?module=login'), { 'access_token': access_token, 'refresh_token': refresh_token, op: 'controluser'})
         .then(function (data) {
             if (data == "Correct_User") {
 
@@ -32,7 +32,7 @@ function protecturl() {
 function control_activity() {
     let access_token = localStorage.getItem('access_token');
     if (access_token) {
-        ajaxPromise('POST', 'JSON', 'index.php?module=login&op=actividad')
+        ajaxPromise('POST', 'JSON', friendlyURL('?module=login'), {op: 'actividad'})
             .then(function (response) {
                 if (response == "inactivo") {
                     console.log("usuario INACTIVO");
@@ -60,7 +60,7 @@ function control_activity() {
 // }
 
 function refresh_cookie() {
-    ajaxPromise('POST', 'JSON', 'index.php?module=login&op=refresh_cookie')
+    ajaxPromise('POST', 'JSON', friendlyURL('?module=login'), {op: 'refresh_cookie'})
         .then(function (response) {
             console.log("Refresh cookie correctly");
         });
@@ -69,11 +69,11 @@ function refresh_cookie() {
 function logout_auto() {
 
     //toastr.warning("Se ha cerrado la cuenta por seguridad!!");
-    ajaxPromise('POST', 'JSON', 'index.php?module=login&op=logout')
+    ajaxPromise('POST', 'JSON', friendlyURL('?module=login'), { 'op': 'logout' })
         .then(function (data) {
             localStorage.removeItem('access_token');
             localStorage.removeItem('refresh_token');
-            window.location.href = "index.php?module=home&op=view";
+            window.location.href = friendlyURL("?module=home");
         }).catch(function () {
             console.log('Something has occured');
         });

@@ -12,7 +12,7 @@ function register() {
 
         console.table(data);
 
-        ajaxPromise('POST', 'JSON', 'index.php?module=login', data)
+        ajaxPromise('POST', 'JSON', friendlyURL('?module=login'), data)
             .then(function (result) {
                 console.log("result");
                 if (result === "error_email") {
@@ -147,10 +147,6 @@ function validate_register() {
             document.getElementById('error_register_tlf').innerHTML = "";
         }
     }
-
-
-
-
 
     if (error == true) {
         return 0;

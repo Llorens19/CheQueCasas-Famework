@@ -156,7 +156,7 @@ class login_bll
 		if (!isset($args)) {
 			return "inactivo";
 		} else {
-			if ((time() - $args) >= 180) { //1800s=30min //
+			if ((time() - $args) >= 60) { //1800s=30min //
 				return "inactivo";
 			} else {
 				return "activo";

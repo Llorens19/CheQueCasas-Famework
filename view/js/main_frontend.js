@@ -36,15 +36,15 @@ function friendlyURL(url) {
 }
 
 
-$(document).on("click", '.shop_building_all', function () {
-    var filters = [];
-    localStorage.removeItem('filters');
-    filters.push({ "no": ["no"] });
-    localStorage.setItem('filters', JSON.stringify(filters));
-    setTimeout(function () {
-        window.location.href = 'index.php?page=controller_shop&op=list';
-    }, 1000);
-});
+// $(document).on("click", '.shop_building_all', function () {
+//     var filters = [];
+//     localStorage.removeItem('filters');
+//     filters.push({ "no": ["no"] });
+//     localStorage.setItem('filters', JSON.stringify(filters));
+//     setTimeout(function () {
+//         window.location.href = '?page=controller_shop&op=list';
+//     }, 1000);
+// });
 
 
 
@@ -54,7 +54,7 @@ function load_menu() {
     console.log(token);
     if (token) {
         console.log("dentro");
-        ajaxPromise('POST', 'JSON', 'index.php?module=login&op=data_user', { 'token': token })
+        ajaxPromise('POST', 'JSON', friendlyURL('?module=login'), { 'token': token, op: 'data_user'})
             .then(function (data) {
                 console.log(data[0]);
 
