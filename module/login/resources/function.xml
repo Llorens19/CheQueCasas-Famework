@@ -61,5 +61,9 @@
         <uri>save_phone</uri>  
     </function>
 
+    <function>
+        <name>send_sms</name>
+        <uri>send_sms</uri>  
+    </function>
 
 </functions>

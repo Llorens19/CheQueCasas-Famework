@@ -5,7 +5,7 @@ use Twilio\Rest\Client;
 
 class OTP
 {
-    public static function send_email($content)
+    public static function send_sms($content)
     {
         return self::send_OTP_twilio($content);
     }
@@ -19,10 +19,10 @@ class OTP
         $twilio = new Client($sid, $token);
 
         $message = $twilio->messages->create(
-        "+34658311725", 
+            $OTP['OTP_PHONE'], 
         array(
             "from" => "+14013133624", 
-            "body" => $values['token'] 
+            "body" => $values['code'] 
         )
     );
     return $message->sid;

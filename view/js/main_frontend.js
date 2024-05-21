@@ -110,28 +110,91 @@ function load_menu() {
                         </div>
                     </div>`);
 
-
-                    $(".save_phone").on("click", function () {
-
-                        let phone_regex = /^[9|6|7][0-9]{8}$/;
-                        let phone = $(".phone_number").val();
-                        
-                        if (phone_regex.test(phone)) {
-    
-                            ajaxPromise('POST', 'JSON', friendlyURL('?module=login'), { phone: phone, username: data[0].username, op: 'save_phone'})
-                                .then(function (data) {
-                                    console.log(data);
+                $("<div></div>").attr("class", "modal fade").attr("id", "phoneVerificationModal").attr("tabindex", "-1")
+                    .attr("aria-labelledby", "phoneVerificationModalLabel").attr("aria-hidden", "true").appendTo(".login_bar").html(`
+                        <div class="modal-dialog modal-dialog-centered modal-sm">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="phoneVerificationModalLabel">Verifica tu Teléfono</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body modal_phone_body">
+                                    <form id="phoneVerificationForm">
                                     
+                                        <div class="form-outline mb-4">
+                                            <label class="form-label" for="phone_number">Número de Teléfono</label>
+                                            <input type="email" id="phone_number" class="form-control phone_number" value = "`+ data[0].tlf +`" />
+                                            <span id="error_phone_number" class="error"></span>
 
+                                        </div>
+
+                                        <button type="button" class="btn btn-primary col-md-4 offset-lg-4 save_phone">Siguiente</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>`);
+
+
+
+                $(".save_phone").on("click", function () {
+
+                    let phone_regex = /^[9|6|7][0-9]{8}$/;
+                    let phone = $(".phone_number").val();
+
+                    if (phone_regex.test(phone)) {
+
+                        ajaxPromise('POST', 'JSON', friendlyURL('?module=login'), { phone: phone, username: data[0].username, op: 'save_phone' })
+                            .then(function (data) {
+                                document.getElementById('error_phone_number').innerHTML = "";
+                                console.log(data);
+
+
+
+
+                                $(".modal_phone_body").empty().html(`
+
+                                <form id="phone_code_form">
                                     
-                                }).catch(function () {
-                                    console.log("Error al guardar el teléfono");
-                                });
-                        } else {
-                            document.getElementById('error_phone_number').innerHTML ="Introduce un teléfono válido";
-                        }
-                    });
-    
+                                        <div class="form-outline mb-4">
+                                            <label class="form-label" for="phone_code">Número de Teléfono</label>
+                                            <input type="email" id="phone_code" class="form-control phone_code"/>
+                                            <span id="error_phone_code" class="error"></span>
+
+                                        </div>
+
+                                        <button type="button" class="btn btn-primary col-md-4 offset-lg-4 send_sms">Comprobar</button>
+                                    </form>`);
+
+                                    send_sms();
+
+
+                            }).catch(function () {
+                                console.log("Error al guardar el teléfono");
+                            });
+                    } else {
+                        document.getElementById('error_phone_number').innerHTML = "Introduce un teléfono válido";
+                    }
+                });
+
+
+                function send_sms() {
+                    console.log("send_sms");
+
+                    //let phone = $(".phone_code").val();
+
+                    ajaxPromise('POST', 'JSON', friendlyURL('?module=login'), { phone: 'phone', op: 'send_sms' })
+                        .then(function (data) {
+                            console.log(data);
+                            console.log("Código enviado", data);
+                            return data;
+                        }).catch(function () {
+                            console.error("Error al guardar el teléfono");
+                        });
+
+            }
+
 
 
 
@@ -451,9 +514,6 @@ function load_login_modal() {
         </div>
     </div>
 `);
-
-
-
 }
 
 

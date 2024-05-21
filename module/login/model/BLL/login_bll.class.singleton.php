@@ -156,7 +156,7 @@ class login_bll
 		if (!isset($args)) {
 			return "inactivo";
 		} else {
-			if ((time() - $args) >= 60) { //1800s=30min //
+			if ((time() - $args) >= 180) { //1800s=30min //
 				return "inactivo";
 			} else {
 				return "activo";
@@ -245,6 +245,28 @@ class login_bll
 			return 'done';
 		}
 		return 'fail';
+	}
+
+	function get_send_sms_BLL($args){
+
+		$code = rand(0, 9999);
+		error_log("789568925724803957243590734580972348059734890573489057349058");
+		
+
+		$code = str_pad($code, 4, '0', STR_PAD_LEFT);
+
+		error_log($code);
+
+		$obj = [
+			'phone' => $args,
+			'code' =>  $code
+		];
+
+		$res = json_decode(OTP::send_sms($obj), true);
+
+		
+			return $code;
+		
 	}
 	
 }

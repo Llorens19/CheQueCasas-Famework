@@ -154,6 +154,9 @@ function validate_register() {
 }
 
 $(document).ready(function () {
-    key_register();
-    button_register();
+
+    setTimeout(function () {
+        key_register();
+        button_register();
+    }, 500);
 });

@@ -60,4 +60,8 @@
             return $this -> bll -> get_save_phone_BLL($args);
         }
 
+        public function get_send_sms($args) {
+            return $this -> bll -> get_send_sms_BLL($args);
+        }
+
     }
