@@ -1,2 +1,4 @@
 # Ignore .ini files
 *.ini
+utils/composer.lock
+utils/vendor
