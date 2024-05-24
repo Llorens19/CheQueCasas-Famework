@@ -66,4 +66,9 @@
         <uri>send_sms</uri>  
     </function>
 
+    <function>
+        <name>verify_OTP</name>
+        <uri>verify_OTP</uri>   
+    </function>
+
 </functions>

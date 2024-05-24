@@ -125,7 +125,7 @@ function load_menu() {
                                     
                                         <div class="form-outline mb-4">
                                             <label class="form-label" for="phone_number">Número de Teléfono</label>
-                                            <input type="email" id="phone_number" class="form-control phone_number" value = "`+ data[0].tlf +`" />
+                                            <input type="email" id="phone_number" class="form-control phone_number" value = "`+ data[0].tlf + `" />
                                             <span id="error_phone_number" class="error"></span>
 
                                         </div>
@@ -142,6 +142,8 @@ function load_menu() {
 
                     let phone_regex = /^[9|6|7][0-9]{8}$/;
                     let phone = $(".phone_number").val();
+
+                    localStorage.setItem('phone', phone);
 
                     if (phone_regex.test(phone)) {
 
@@ -167,7 +169,9 @@ function load_menu() {
                                         <button type="button" class="btn btn-primary col-md-4 offset-lg-4 send_sms">Comprobar</button>
                                     </form>`);
 
-                                    send_sms();
+
+                                let code = send_sms(phone);
+                                compare();
 
 
                             }).catch(function () {
@@ -179,12 +183,12 @@ function load_menu() {
                 });
 
 
-                function send_sms() {
+                function send_sms(phone) {
                     console.log("send_sms");
 
                     //let phone = $(".phone_code").val();
 
-                    ajaxPromise('POST', 'JSON', friendlyURL('?module=login'), { phone: 'phone', op: 'send_sms' })
+                    ajaxPromise('POST', 'JSON', friendlyURL('?module=login'), { phone: phone, op: 'send_sms' })
                         .then(function (data) {
                             console.log(data);
                             console.log("Código enviado", data);
@@ -192,10 +196,50 @@ function load_menu() {
                         }).catch(function () {
                             console.error("Error al guardar el teléfono");
                         });
+                }
 
+                function compare(){
+                $(".send_sms").on("click", function () {
+
+                    let phone = localStorage.getItem('phone');
+                    let code = $(".phone_code").val();
+
+                    ajaxPromise('POST', 'JSON', friendlyURL('?module=login'), { phone :phone, code: code, op:'verify_OTP' })
+                        .then(function (data) {
+                            console.log(data);
+                            console.log("Código enviado", data);
+                            
+                            if(data== "done"){
+                                console.log("Código correcto"); 
+                                $('#phoneVerificationModal').modal('hide');
+                                active_2fa();
+                            }else{
+
+                                document.getElementById('error_phone_code').innerHTML = "Código incorrecto";
+
+                            }
+
+
+                        }).catch(function () {
+                            console.error("Error al guardar el teléfono");
+                        });
+                });
             }
 
 
+            // function active_2fa(){
+            
+            //     ajaxPromise('POST', 'JSON', friendlyURL('?module=login'), { op: 'active_2fa' })
+            //         .then(function (data) {
+            //             console.log(data);
+            //             console.log("Código enviado", data);
+            //             return data;
+            //         }).catch(function () {
+            //             console.error("Error al guardar el teléfono");
+            //         });
+
+            // }
+                
 
 
                 $("<div></div>").attr("class", "ms-2 loged_button").appendTo(".login_bar").html(

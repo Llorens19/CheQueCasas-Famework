@@ -64,4 +64,8 @@
             return $this -> bll -> get_send_sms_BLL($args);
         }
 
+        public function get_verify_OTP($args) {
+            return $this -> bll -> get_verify_OTP_BLL($args);
+        }
+
     }

@@ -118,6 +118,9 @@ class login_bll
 					$tokens[1] = create_refresh_token($rdo[0]["username"]);
 					$_SESSION['username'] = $rdo[0]['username']; //Guardamos el usario 
 					$_SESSION['tiempo'] = time(); //Guardamos el tiempo que se logea
+					error_log("///////////////////////////////////////");
+					error_log("Tiempo: " . $_SESSION['tiempo']);
+					error_log("Username: " . $_SESSION['username']);
 					session_regenerate_id(); //Regeneramos la sesión
 					return $tokens;
 				} else if (password_verify($args[1][0], $rdo[0]['password']) && $rdo[0]['active'] == 0) {
@@ -256,7 +259,7 @@ class login_bll
 		$code = str_pad($code, 4, '0', STR_PAD_LEFT);
 
 		error_log($code);
-
+		$insert = $this->dao->save_otp($this->db, $args, $code, $_SESSION['username']);
 		$obj = [
 			'phone' => $args,
 			'code' =>  $code
@@ -267,6 +270,16 @@ class login_bll
 		
 			return $code;
 		
+	}
+
+	function get_verify_OTP_BLL($args){
+
+		$check = $this->dao->get_OTP($this->db, $args[0], $_SESSION['username']);
+
+		if($check[0]['code_OTP'] == $args[1]){
+			return 'done';
+		}
+		return 'fail';
 	}
 	
 }

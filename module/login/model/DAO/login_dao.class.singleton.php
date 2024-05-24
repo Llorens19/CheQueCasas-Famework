@@ -131,4 +131,21 @@ class login_dao
 		return "ok";
 	}
 
+	function save_otp($db, $tlf, $code, $username)
+	{
+		$sql = "UPDATE user set code_OTP= '$code' where tlf = '$tlf' and username = '$username'";
+		error_log($sql);
+		$stmt = $db->ejecutar($sql);
+		return "ok";
+
+	}
+
+	function get_OTP($db, $tlf, $username)
+	{
+		$sql = "SELECT code_OTP FROM user WHERE tlf = '$tlf' and username = '$username'";
+		
+		$stmt = $db->ejecutar($sql);
+		return $db->listar($stmt);
+	}
+
 }

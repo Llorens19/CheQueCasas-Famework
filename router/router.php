@@ -83,7 +83,7 @@ class router
             $modules = simplexml_load_file('resources/modules.xml'); //Cargamos los módulos
             foreach ($modules as $row) { //Recorremos los módulos
                 if (in_array($this->uriModule, (array) $row->uri)) { //Si el módulo que queremos cargar está en la lista
-                    $path = MODULES_PATH . $row->name . '/controller/controller_' . (string) $row->name . '.class.php';
+                    $path = MODULES_PATH . $row->name . '/controller/controller_' . (string) $row->name . '.class.singleton.php';
 
                     if (file_exists($path)) { //Si existe el archivo del controlador
                         require_once($path); //Lo cargamos

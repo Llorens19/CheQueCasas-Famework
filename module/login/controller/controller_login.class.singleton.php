@@ -80,4 +80,8 @@ class controller_login
     function send_sms() {
         echo json_encode(common::load_model('login_model', 'get_send_sms', $_POST['phone']));
     }
+
+    function verify_OTP() {
+        echo json_encode(common::load_model('login_model', 'get_verify_OTP', [$_POST['phone'], $_POST['code']]));
+    }
 }
