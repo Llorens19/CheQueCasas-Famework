@@ -1,2 +1,2 @@
 <?php
-	require_once 'router/router.php'; // Incluimos el archivo router.php solo una vez
+	require_once 'router/router.class.singleton.php'; // Incluimos el archivo router.php solo una vez

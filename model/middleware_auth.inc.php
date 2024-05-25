@@ -1,9 +1,10 @@
 <?php
 
-include($_SERVER['DOCUMENT_ROOT'] . '/CheQueHabitaculos_MVC/CheQueCasas_Framework/model/JWT.php');
-function decode_access_token($token)
+include($_SERVER['DOCUMENT_ROOT'] . '/CheQueHabitaculos_MVC/CheQueCasas_Framework/model/JWT.class.php');
+class middleware{
+static function decode_access_token($token)
 {
-    require_once $_SERVER['DOCUMENT_ROOT'] . '/CheQueHabitaculos_MVC/CheQueCasas_Framework/model/JWT.php';
+    require_once $_SERVER['DOCUMENT_ROOT'] . '/CheQueHabitaculos_MVC/CheQueCasas_Framework/model/JWT.class.php';
 
     $jwt = parse_ini_file($_SERVER['DOCUMENT_ROOT'] . '/CheQueHabitaculos_MVC/CheQueCasas_Framework/utils/constants.ini');
     $secret = $jwt['JWT_SECRET'];
@@ -14,7 +15,7 @@ function decode_access_token($token)
     return $rt_token;
 }
 
-function decode_refresh_token($token)
+static function decode_refresh_token($token)
 {
     require_once $_SERVER['DOCUMENT_ROOT'] . '/CheQueHabitaculos_MVC/CheQueCasas_Framework/model/JWT.php';
 
@@ -28,7 +29,7 @@ function decode_refresh_token($token)
 }
 
 
-function create_access_token($username)
+static function create_access_token($username)
 {
     $jwt = parse_ini_file($_SERVER['DOCUMENT_ROOT'] . '/CheQueHabitaculos_MVC/CheQueCasas_Framework/utils/constants.ini');
     $header = $jwt['JWT_HEADER'];
@@ -41,7 +42,7 @@ function create_access_token($username)
 }
 
 
-function create_refresh_token($username)
+static function create_refresh_token($username)
 {
     $jwt = parse_ini_file($_SERVER['DOCUMENT_ROOT'] . '/CheQueHabitaculos_MVC/CheQueCasas_Framework/utils/constants.ini');
     $header = $jwt['JWT_HEADER'];
@@ -51,4 +52,5 @@ function create_refresh_token($username)
     $JWT = new JWT;
     $token = $JWT->encode($header, $payload, $secret);
     return $token;
+}
 }
