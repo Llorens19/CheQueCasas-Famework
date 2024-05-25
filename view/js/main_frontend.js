@@ -116,7 +116,7 @@ function load_menu() {
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="phoneVerificationModalLabel">Verifica tu Teléfono</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <button type="button" class="close close_verify_phone" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
@@ -198,48 +198,62 @@ function load_menu() {
                         });
                 }
 
-                function compare(){
-                $(".send_sms").on("click", function () {
+                function compare() {
+                    $(".send_sms").on("click", function () {
 
-                    let phone = localStorage.getItem('phone');
-                    let code = $(".phone_code").val();
+                        let phone = localStorage.getItem('phone');
+                        let code = $(".phone_code").val();
 
-                    ajaxPromise('POST', 'JSON', friendlyURL('?module=login'), { phone :phone, code: code, op:'verify_OTP' })
-                        .then(function (data) {
-                            console.log(data);
-                            console.log("Código enviado", data);
-                            
-                            if(data== "done"){
-                                console.log("Código correcto"); 
-                                $('#phoneVerificationModal').modal('hide');
-                                active_2fa();
-                            }else{
+                        ajaxPromise('POST', 'JSON', friendlyURL('?module=login'), { phone: phone, code: code, op: 'verify_OTP' })
+                            .then(function (data) {
+                                console.log(data);
+                                console.log("Código enviado", data);
 
-                                document.getElementById('error_phone_code').innerHTML = "Código incorrecto";
-
-                            }
-
-
-                        }).catch(function () {
-                            console.error("Error al guardar el teléfono");
-                        });
-                });
-            }
+                                if (data == "done") {
+                                    console.log("Código correcto");
+                                    $('.close_verify_phone').click();
+                                    // active_2fa();
+                                    new Noty({
+                                        text: 'Verificación 2fa activada.',
+                                        type: 'success',
+                                        layout: 'topRight',
+                                        timeout: 3000
+                                    }).show();
 
 
-            // function active_2fa(){
-            
-            //     ajaxPromise('POST', 'JSON', friendlyURL('?module=login'), { op: 'active_2fa' })
-            //         .then(function (data) {
-            //             console.log(data);
-            //             console.log("Código enviado", data);
-            //             return data;
-            //         }).catch(function () {
-            //             console.error("Error al guardar el teléfono");
-            //         });
+                                } else {
 
-            // }
-                
+                                    document.getElementById('error_phone_code').innerHTML = "Código incorrecto";
+                                    new Noty({
+                                        text: 'El pin no es correcto o ha caducado.',
+                                        type: 'error',
+                                        layout: 'topRight',
+                                        timeout: 3000
+                                    }).show();
+
+                                }
+
+
+                            }).catch(function () {
+                                console.error("Error al guardar el teléfono");
+                            });
+                    });
+                }
+
+
+                // function active_2fa(){
+
+                //     ajaxPromise('POST', 'JSON', friendlyURL('?module=login'), { op: 'active_2fa' })
+                //         .then(function (data) {
+                //             console.log(data);
+                //             console.log("Código enviado", data);
+                //             return data;
+                //         }).catch(function () {
+                //             console.error("Error al guardar el teléfono");
+                //         });
+
+                // }
+
 
 
                 $("<div></div>").attr("class", "ms-2 loged_button").appendTo(".login_bar").html(
@@ -314,7 +328,13 @@ function load_menu() {
 function click_logout() {
     $(document).on('click', '.logout', function () {
         localStorage.removeItem('total_prod');
-        // toastr.success("Logout succesfully");
+        new Noty({
+            text: 'Cuenta cerrada correctamente.',
+            type: 'success',
+            layout: 'topRight',
+            timeout: 3000
+        }).show();
+
         setTimeout('logout(); ', 1000);
     });
 }

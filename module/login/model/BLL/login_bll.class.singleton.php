@@ -114,8 +114,8 @@ class login_bll
 				if (password_verify($args[1][0], $rdo[0]['password']) && $rdo[0]['active'] == 1) { //Si la contraseña es correcta creamos el token
 
 					$tokens = [];
-					$tokens[0] = create_access_token($rdo[0]["username"]);
-					$tokens[1] = create_refresh_token($rdo[0]["username"]);
+					$tokens[0] = middleware::create_access_token($rdo[0]["username"]);
+					$tokens[1] = middleware::create_refresh_token($rdo[0]["username"]);
 					$_SESSION['username'] = $rdo[0]['username']; //Guardamos el usario 
 					$_SESSION['tiempo'] = time(); //Guardamos el tiempo que se logea
 					error_log("///////////////////////////////////////");
@@ -148,7 +148,7 @@ class login_bll
 	public function get_data_user_BLL($args)
 	{
 
-		$json = decode_access_token($args);
+		$json = middleware::decode_access_token($args);
 
 		$rdo = $this->dao->select_data_user($this->db, $json['username']);
 		return $rdo;
@@ -169,8 +169,8 @@ class login_bll
 	public function get_controluser_BLL($args)
 	{
 
-		$access_token_dec = decode_access_token($args[0][0]);
-		$refresh_token_dec = decode_refresh_token($args[0][1]);
+		$access_token_dec = middleware::decode_access_token($args[0][0]);
+		$refresh_token_dec = middleware::decode_refresh_token($args[0][1]);
 
 		if (
 			isset($args[1][0]) && ($args[1][0]) == $access_token_dec['username']
@@ -181,7 +181,7 @@ class login_bll
 
 			if ($access_token_dec['exp'] < time() && $refresh_token_dec['exp'] > time()) { //comprobamos si el tiempo desesíon del tokes es menor que el tiempo de expiración
 
-				$new_access_token = create_access_token($refresh_token_dec['username']);
+				$new_access_token = middleware::create_access_token($refresh_token_dec['username']);
 				return $new_access_token;
 			}
 
@@ -274,7 +274,8 @@ class login_bll
 
 		$check = $this->dao->get_OTP($this->db, $args[0], $_SESSION['username']);
 
-		if($check[0]['code_OTP'] == $args[1]){
+		if(!empty($check) and isset($check) and $check[0]['code_OTP'] == $args[1]){
+
 			return 'done';
 		}
 		return 'fail';

@@ -67,8 +67,6 @@ function refresh_cookie() {
 }
 
 function logout_auto() {
-
-    //toastr.warning("Se ha cerrado la cuenta por seguridad!!");
     ajaxPromise('POST', 'JSON', friendlyURL('?module=login'), { 'op': 'logout' })
         .then(function (data) {
             localStorage.removeItem('access_token');

@@ -133,7 +133,8 @@ class login_dao
 
 	function save_otp($db, $tlf, $code, $username)
 	{
-		$sql = "UPDATE user set code_OTP= '$code' where tlf = '$tlf' and username = '$username'";
+		$sql = "UPDATE user 
+		SET code_OTP = '$code', expire_OTP = NOW() + INTERVAL 1 MINUTE WHERE tlf = '$tlf' AND username = '$username'";
 		error_log($sql);
 		$stmt = $db->ejecutar($sql);
 		return "ok";
@@ -142,7 +143,7 @@ class login_dao
 
 	function get_OTP($db, $tlf, $username)
 	{
-		$sql = "SELECT code_OTP FROM user WHERE tlf = '$tlf' and username = '$username'";
+		$sql = "SELECT code_OTP FROM user WHERE tlf = '$tlf' and username = '$username' and expire_OTP > NOW()";
 		
 		$stmt = $db->ejecutar($sql);
 		return $db->listar($stmt);

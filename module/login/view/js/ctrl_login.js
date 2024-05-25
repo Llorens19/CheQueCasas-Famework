@@ -25,9 +25,18 @@ function login() {
                     localStorage.removeItem("refresh_token");
                     localStorage.setItem("access_token", result[0]);
                     localStorage.setItem("refresh_token", result[1]);
-                    // toastr.success("Loged succesfully");
 
-                    location.reload();
+                    new Noty({
+                        text: 'Logeado correctamente',
+                        type: 'success',
+                        layout: 'topRight',
+                        timeout: 3000
+                    }).show();
+
+
+                    setTimeout(function() {
+                        location.reload();
+                    }, 1000);
                 }
             }).catch(function (textStatus) {
                 if (console && console.log) {
@@ -204,12 +213,22 @@ function send_new_password(token_email) {
             .then(function (data) {
                 console.log(data);
                 if (data == "done") {
-                    // toastr.options.timeOut = 3000;
-                    // toastr.success('New password changed');
+                    new Noty({
+                        text: 'Contraseña cambiada.',
+                        type: 'success',
+                        layout: 'topRight',
+                        timeout: 3000
+                    }).show();
+
                     setTimeout('window.location.href = friendlyURL("?module=home")', 1000);
                 } else {
-                    // toastr.options.timeOut = 3000;
-                    // toastr.error('Error seting new password');
+                    new Noty({
+                        text: 'Exrror cambiando la contraseña.',
+                        type: 'error',
+                        layout: 'topRight',
+                        timeout: 3000
+                    }).show();
+
                 }
             })
             .catch(function (textStatus) {
@@ -234,8 +253,13 @@ function load_content() {
     } else if (path[4] === 'verify') {
         ajaxPromise('POST', 'JSON', friendlyURL("?module=login"), { token_email: path[5], op :' verify_email' })
             .then(function (data) {
-                //toastr.options.timeOut = 3000;
-                //toastr.success('Email verified');
+                new Noty({
+                    text: 'Email verificado.',
+                    type: 'success',
+                    layout: 'topRight',
+                    timeout: 3000
+                }).show();
+
             })
             .catch(function () {
                 console.error('Error: verify email error');
