@@ -276,9 +276,26 @@ class login_bll
 
 		if(!empty($check) and isset($check) and $check[0]['code_OTP'] == $args[1]){
 
+			$this->dao->active_2fa($this->db, $_SESSION['username']);
+
+
 			return 'done';
 		}
 		return 'fail';
 	}
+
+
+	function get_count_trys_BLL($args){
+		$this->dao->update_trys($this->db, $args);
+		return 'done';
+	}
+
+	function get_trys_BLL($args){
+		$trys = $this->dao->get_trys($this->db, $args);
+		
+		return $trys;
+	}
+
+
 	
 }

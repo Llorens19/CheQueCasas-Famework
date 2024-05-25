@@ -149,4 +149,29 @@ class login_dao
 		return $db->listar($stmt);
 	}
 
+	function active_2fa($db, $username)
+	{
+		$sql = "UPDATE user SET 2fa_active = 1 WHERE username = '$username'";
+
+		$stmt = $db->ejecutar($sql);
+		return "ok";
+	}
+
+	function update_trys($db, $username){
+
+		$sql = "UPDATE user SET login_trys = login_trys + 1 WHERE username = '$username'";
+		
+		$stmt = $db->ejecutar($sql);
+		return "ok";
+
+	}
+
+	function get_trys($db, $username){
+
+		$sql = "SELECT login_trys FROM user WHERE username = $username";
+		
+		$stmt = $db->ejecutar($sql);
+		return $db->listar($stmt);
+	}
+
 }

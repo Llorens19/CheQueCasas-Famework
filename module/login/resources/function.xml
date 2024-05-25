@@ -71,4 +71,14 @@
         <uri>verify_OTP</uri>   
     </function>
 
+    <function>
+        <name>count_trys</name>
+        <uri>count_trys</uri> 
+    </function>
+
+    <function>
+        <name>get_trys</name>
+        <uri>get_trys</uri> 
+    </function>
+
 </functions>

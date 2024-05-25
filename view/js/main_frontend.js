@@ -373,7 +373,7 @@ function load_login_modal() {
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="loginModalLabel">Login/Register</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close close_login_button" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
             <div class="modal-body modal_login_body">

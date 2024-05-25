@@ -1,14 +1,23 @@
 function login() {
     console.log("login");
     if (validate_login() != 0) {
+
+
+
+
+        username = document.getElementById('login_username').value;
+        password = document.getElementById('login_password').value;
+        
         let data =
         {
-            username: document.getElementById('login_username').value,
-            password: document.getElementById('login_password').value,
+            username: username,
+            password: password,
             op: 'login'
         };
 
-        console.table(data);
+        let user_tryes = get_trys(username);
+
+        if(user_tryes < 3){
 
         ajaxPromise('POST', 'JSON', friendlyURL('?module=login'), data)
             .then(function (result) {
@@ -17,6 +26,9 @@ function login() {
                     document.getElementById('error_login_username').innerHTML = "El usario no existe."
                 } else if (result == "error_passwd") {
                     document.getElementById('error_login_password').innerHTML = "La contraseña es incorrecta"
+
+                    count_trys(username);
+
                 } else if (result == "error_active") {
                     document.getElementById('error_login_username').innerHTML = "El usuario no esta activo"
                 } else {
@@ -43,6 +55,16 @@ function login() {
                     console.error("Error login", textStatus);
                 }
             });
+
+        }
+        else{
+
+            $(".close_login_button").click();
+            
+
+
+
+        }
     }
 }
 
@@ -74,6 +96,29 @@ function validate_login() {
 }
 
 
+function count_trys(username) {
+    ajaxPromise('POST', 'JSON', friendlyURL('?module=login'), {op: 'count_trys', username: username})
+        .then(function (data) {
+        })
+        .catch(function (textStatus) {
+            console.error('Error al incrementar el númerode intentos');
+        });
+}
+
+function get_trys(username) {
+    ajaxPromise('POST', 'JSON', friendlyURL('?module=login'), {op: 'get_trys', username: username})
+        .then(function (data) {
+            console.log(data);
+            return data;
+        })
+        .catch(function (textStatus) {
+            
+            console.error('Fallo al obtener el número de intentos');
+        });
+}
+
+
+
 function send_recover_password() {
     if (validate_mail_recover_password() != 0) {
         let data =
@@ -84,7 +129,6 @@ function send_recover_password() {
         console.table(data);
         ajaxPromise('POST', 'JSON', friendlyURL('?module=login'), data)
             .then(function (data) {
-                console.table("*/*/*/*/*/*/*/*/*/*/*/*/**/*");
                 if (data == "error") {
                     $("#error_recover_email").html("Este Correo no esta registrado");
                 } else {

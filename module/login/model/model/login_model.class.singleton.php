@@ -67,5 +67,13 @@
         public function get_verify_OTP($args) {
             return $this -> bll -> get_verify_OTP_BLL($args);
         }
+        
+        public function get_count_trys($args) {
+            return $this -> bll -> get_count_trys_BLL($args);
+        }   
+
+        public function get_trys($args) {
+            return $this -> bll -> get_trys_BLL($args);
+        }
 
     }

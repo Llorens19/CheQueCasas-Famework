@@ -84,4 +84,12 @@ class controller_login
     function verify_OTP() {
         echo json_encode(common::load_model('login_model', 'get_verify_OTP', [$_POST['phone'], $_POST['code']]));
     }
+
+    function count_trys(){
+        echo json_encode(common::load_model('login_model', 'get_count_trys', $_POST['username']));
+    }
+
+    function get_trys(){
+        echo json_encode(common::load_model('login_model', 'get_trys', $_POST['username']));
+    }
 }
