@@ -168,8 +168,8 @@ class login_dao
 
 	function get_trys($db, $username){
 
-		$sql = "SELECT login_trys FROM user WHERE username = $username";
-		
+		$sql = "SELECT login_trys FROM user WHERE username = '$username'";
+		error_log($sql);
 		$stmt = $db->ejecutar($sql);
 		return $db->listar($stmt);
 	}

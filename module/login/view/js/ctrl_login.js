@@ -1,4 +1,4 @@
-function login() {
+async function login() {
     console.log("login");
     if (validate_login() != 0) {
 
@@ -7,64 +7,74 @@ function login() {
 
         username = document.getElementById('login_username').value;
         password = document.getElementById('login_password').value;
-        
-        let data =
+
+        let data_imput =
         {
             username: username,
             password: password,
             op: 'login'
         };
 
-        let user_tryes = get_trys(username);
+        ajaxPromise('POST', 'JSON', friendlyURL('?module=login'), { op: 'get_trys', username: username })
+            .then(function (data) {
+                console.log(data[0].login_trys);
 
-        if(user_tryes < 3){
+                let user_trys = data[0].login_trys;
+                console.log(user_trys);
+                if (user_trys < 3) {
 
-        ajaxPromise('POST', 'JSON', friendlyURL('?module=login'), data)
-            .then(function (result) {
-                console.log(result);
-                if (result == "error_user") {
-                    document.getElementById('error_login_username').innerHTML = "El usario no existe."
-                } else if (result == "error_passwd") {
-                    document.getElementById('error_login_password').innerHTML = "La contraseña es incorrecta"
+                    ajaxPromise('POST', 'JSON', friendlyURL('?module=login'), data_imput)
+                        .then(function (result) {
+                            console.log(result);
+                            if (result == "error_user") {
+                                document.getElementById('error_login_username').innerHTML = "El usario no existe."
+                            } else if (result == "error_passwd") {
+                                document.getElementById('error_login_password').innerHTML = "La contraseña es incorrecta"
 
-                    count_trys(username);
+                                count_trys(username);
 
-                } else if (result == "error_active") {
-                    document.getElementById('error_login_username').innerHTML = "El usuario no esta activo"
-                } else {
-                    console.log("result", result);
-                    localStorage.removeItem("access_token");
-                    localStorage.removeItem("refresh_token");
-                    localStorage.setItem("access_token", result[0]);
-                    localStorage.setItem("refresh_token", result[1]);
+                            } else if (result == "error_active") {
+                                document.getElementById('error_login_username').innerHTML = "El usuario no esta activo"
+                            } else {
+                                console.log("result", result);
+                                localStorage.removeItem("access_token");
+                                localStorage.removeItem("refresh_token");
+                                localStorage.setItem("access_token", result[0]);
+                                localStorage.setItem("refresh_token", result[1]);
 
-                    new Noty({
-                        text: 'Logeado correctamente',
-                        type: 'success',
-                        layout: 'topRight',
-                        timeout: 3000
-                    }).show();
+                                new Noty({
+                                    text: 'Logeado correctamente',
+                                    type: 'success',
+                                    layout: 'topRight',
+                                    timeout: 3000
+                                }).show();
 
 
-                    setTimeout(function() {
-                        location.reload();
-                    }, 1000);
+                                setTimeout(function () {
+                                    location.reload();
+                                }, 1000);
+                            }
+                        }).catch(function (textStatus) {
+                            if (console && console.log) {
+                                console.error("Error login", textStatus);
+                            }
+                        });
+
                 }
-            }).catch(function (textStatus) {
-                if (console && console.log) {
-                    console.error("Error login", textStatus);
+                else {
+
+                    $(".close_login_button").click();
+
+
+
                 }
+
+            })
+            .catch(function (textStatus) {
+
+                console.error('Fallo al obtener el número de intentos');
             });
 
-        }
-        else{
-
-            $(".close_login_button").click();
-            
-
-
-
-        }
     }
 }
 
@@ -97,23 +107,11 @@ function validate_login() {
 
 
 function count_trys(username) {
-    ajaxPromise('POST', 'JSON', friendlyURL('?module=login'), {op: 'count_trys', username: username})
+    ajaxPromise('POST', 'JSON', friendlyURL('?module=login'), { op: 'count_trys', username: username })
         .then(function (data) {
         })
         .catch(function (textStatus) {
             console.error('Error al incrementar el númerode intentos');
-        });
-}
-
-function get_trys(username) {
-    ajaxPromise('POST', 'JSON', friendlyURL('?module=login'), {op: 'get_trys', username: username})
-        .then(function (data) {
-            console.log(data);
-            return data;
-        })
-        .catch(function (textStatus) {
-            
-            console.error('Fallo al obtener el número de intentos');
         });
 }
 
@@ -295,7 +293,7 @@ function load_content() {
         localStorage.setItem("token_email", path[5]);
 
     } else if (path[4] === 'verify') {
-        ajaxPromise('POST', 'JSON', friendlyURL("?module=login"), { token_email: path[5], op :' verify_email' })
+        ajaxPromise('POST', 'JSON', friendlyURL("?module=login"), { token_email: path[5], op: ' verify_email' })
             .then(function (data) {
                 new Noty({
                     text: 'Email verificado.',

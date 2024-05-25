@@ -295,7 +295,4 @@ class login_bll
 		
 		return $trys;
 	}
-
-
-	
 }
