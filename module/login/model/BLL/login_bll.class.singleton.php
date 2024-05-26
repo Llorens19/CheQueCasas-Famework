@@ -228,33 +228,37 @@ class login_bll
 		return "Done";
 	}
 
-	public function get_verify_token_BLL($args) {
-		if($this -> dao -> select_verify_email($this->db, $args)){
+	public function get_verify_token_BLL($args)
+	{
+		if ($this->dao->select_verify_email($this->db, $args)) {
 			return 'verify';
 		}
 		return 'fail';
 	}
 
-	public function get_new_password_BLL($args) {
+	public function get_new_password_BLL($args)
+	{
 		$hashed_pass = password_hash($args[1], PASSWORD_DEFAULT, ['cost' => 12]);
-		if($this -> dao -> update_new_passwoord($this->db, $args[0], $hashed_pass)){
+		if ($this->dao->update_new_passwoord($this->db, $args[0], $hashed_pass)) {
 			return 'done';
 		}
 		return 'fail';
 	}
 
-	public function get_save_phone_BLL($args) {
-		if($this -> dao -> update_phone($this->db, $args[0], $args[1])){
+	public function get_save_phone_BLL($args)
+	{
+		if ($this->dao->update_phone($this->db, $args[0], $args[1])) {
 			return 'done';
 		}
 		return 'fail';
 	}
 
-	function get_send_sms_BLL($args){
+	function get_send_sms_BLL($args)
+	{
 
 		$code = rand(0, 9999);
 		error_log("789568925724803957243590734580972348059734890573489057349058");
-		
+
 
 		$code = str_pad($code, 4, '0', STR_PAD_LEFT);
 
@@ -265,16 +269,16 @@ class login_bll
 			'code' =>  $code
 		];
 
-		$res = json_decode(OTP::send_sms($obj), true);
-			return $code;
-		
+		//$res = json_decode(OTP::send_sms($obj), true);
+		return $code;
 	}
 
-	function get_verify_OTP_BLL($args){
+	function get_verify_OTP_BLL($args)
+	{
 
 		$check = $this->dao->get_OTP($this->db, $args[0], $_SESSION['username']);
 
-		if(!empty($check) and isset($check) and $check[0]['code_OTP'] == $args[1]){
+		if (!empty($check) and isset($check) and $check[0]['code_OTP'] == $args[1]) {
 
 			$this->dao->active_2fa($this->db, $_SESSION['username']);
 
@@ -285,14 +289,58 @@ class login_bll
 	}
 
 
-	function get_count_trys_BLL($args){
+	function get_count_trys_BLL($args)
+	{
 		$this->dao->update_trys($this->db, $args);
 		return 'done';
 	}
 
-	function get_trys_BLL($args){
+	function get_trys_BLL($args)
+	{
 		$trys = $this->dao->get_trys($this->db, $args);
-		
+
 		return $trys;
+	}
+
+	function get_reset_trys_BLL($args)
+	{
+		$this->dao->reset_trys($this->db, $args);
+
+		return 'done';
+	}
+
+	function get_send_sms_identity_BLL($args)
+	{
+		$code = rand(0, 9999);
+		error_log("789568925724803957243590734580972348059734890573489057349058");
+
+
+		$code = str_pad($code, 4, '0', STR_PAD_LEFT);
+
+		error_log($code);
+		$insert = $this->dao->save_otp($this->db, $args[0], $code, $args[1]);
+		$obj = [
+			'phone' => $args[0],
+			'code' =>  $code
+		];
+
+		// $res = json_decode(OTP::send_sms($obj), true);
+		return $code;
+	}
+
+
+	function get_verify_code_identity_BLL($args)
+	{
+		error_log("Entra en verify_code_identity_BLL              /*/*/*/*/** */ / / * /* /* /* / */ */ ");
+		$check = $this->dao->get_OTP($this->db, $args[0], $args[1]);
+
+		if (!empty($check) and isset($check) and $check[0]['code_OTP'] == $args[2]) {
+			
+			return 'done';
+		} else {
+			
+			return 'fail';
+		}
+	
 	}
 }

@@ -76,4 +76,16 @@
             return $this -> bll -> get_trys_BLL($args);
         }
 
+        public function get_reset_trys($args) {
+            return $this -> bll -> get_reset_trys_BLL($args);
+        }
+
+        public function get_send_sms_identity($args) {
+            return $this -> bll -> get_send_sms_identity_BLL($args);
+        }
+
+        public function get_verify_code_identity($args) {
+            return $this -> bll -> get_verify_code_identity_BLL($args);
+        }
+
     }

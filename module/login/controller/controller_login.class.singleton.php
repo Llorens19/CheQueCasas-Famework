@@ -92,4 +92,17 @@ class controller_login
     function get_trys(){
         echo json_encode(common::load_model('login_model', 'get_trys', $_POST['username']));
     }
+
+    function reset_trys(){
+        echo json_encode(common::load_model('login_model', 'get_reset_trys', $_POST['username']));
+    }
+
+    function send_sms_identity() {
+        echo json_encode(common::load_model('login_model', 'get_send_sms_identity', [$_POST['phone'], $_POST['username']]));
+    }   
+
+    function verify_code_identity() {
+        echo json_encode(common::load_model('login_model', 'get_verify_code_identity', [$_POST['phone'], $_POST['username'], $_POST['code']]));
+    } 
+
 }

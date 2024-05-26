@@ -15,12 +15,14 @@ async function login() {
             op: 'login'
         };
 
+        localStorage.setItem('username', username);
+
         ajaxPromise('POST', 'JSON', friendlyURL('?module=login'), { op: 'get_trys', username: username })
             .then(function (data) {
-                console.log(data[0].login_trys);
 
                 let user_trys = data[0].login_trys;
-                console.log(user_trys);
+                let phone = data[0].tlf;
+                localStorage.setItem('phone', phone);
                 if (user_trys < 3) {
 
                     ajaxPromise('POST', 'JSON', friendlyURL('?module=login'), data_imput)
@@ -64,9 +66,9 @@ async function login() {
                 else {
 
                     $(".close_login_button").click();
-
-
-
+                    $("#load_moda_verify_identity").modal("show");
+                    send_sms_identity(phone, username);
+                    compare_idenity(username);
                 }
 
             })
@@ -77,6 +79,22 @@ async function login() {
 
     }
 }
+
+function send_sms_identity(phone, username) {
+    console.log("send_sms");
+
+    ajaxPromise('POST', 'JSON', friendlyURL('?module=login'), { phone: phone, username: username, op: 'send_sms_identity' })
+        .then(function (data) {
+            console.log(data);
+            console.log("Código enviado", data);
+        }).catch(function () {
+            console.error("Error al guardar el teléfono");
+        });
+}
+
+
+
+
 
 function validate_login() {
     let error = false;
@@ -389,8 +407,6 @@ function validate_new_password() {
         }
     }
 
-
-
     if (error == true) {
         return 0;
     }
@@ -398,11 +414,109 @@ function validate_new_password() {
 
 
 
+function load_moda_verify_identity() {
+
+    var modal = $("<div></div>").attr("class", "modal fade").attr("id", "load_moda_verify_identity").attr("tabindex", "-1")
+    .attr("aria-labelledby", "load_moda_verify_identityLabel").attr("aria-hidden", "true").appendTo(".login_bar").html(`
+                    <div class="modal-dialog modal-dialog-centered modal-sm">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="load_moda_verify_identityLabel">Verifica tu Teléfono</h5>
+                                <button type="button" class="close close_verify_phone_identity" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body modal_phone_body">
+                            <form id="phone_code_identity_form">
+                                
+                            <div class="form-outline mb-4">
+                                <label class="form-label" for="phone_code_identity">Código Recibido</label>
+                                <input type="email" id="phone_code_identity" class="form-control phone_code"/>
+                                <span id="error_phone_code_identity" class="error"></span>
+
+                            </div>
+
+                            <button type="button" class="btn btn-primary col-md-4 offset-lg-4 compare_sms_identity">Comprobar</button>
+                        </form>
+                            </div>
+                        </div>
+                    </div>`);
+
+// Vincula el evento de cierre al botón de cierre
+modal.find('.close_verify_phone_identity').on('click', function() {
+    $('#load_moda_verify_identity').modal('hide');
+});
+
+
+}
+
+function compare_idenity(username) {
+    $(".compare_sms_identity").on("click", function () {
+
+        let phone = localStorage.getItem('phone');
+        let code = $("#phone_code_identity").val();
+
+        ajaxPromise('POST', 'JSON', friendlyURL('?module=login'), { phone: phone, username: username, code: code, op: 'verify_code_identity' })
+            .then(function (data) {
+
+                console.log(data);
+
+                if (data == "done") {
+                    console.log("Código correcto");
+                    $('.close_verify_phone_identity').click();
+
+                    new Noty({
+                        text: 'Verificado.',
+                        type: 'success',
+                        layout: 'topRight',
+                        timeout: 3000
+                    }).show();
+
+                    reset_trys();
+
+                    $("#loginModal").modal("show");
+
+
+
+                } else {
+
+                    document.getElementById('error_phone_code_identity').innerHTML = "Código incorrecto";
+                    new Noty({
+                        text: 'El pin no es correcto o ha caducado.',
+                        type: 'error',
+                        layout: 'topRight',
+                        timeout: 3000
+                    }).show();
+
+                }
+
+
+            }).catch(function () {
+                console.error("Error al verificar identidad");
+            });
+    });
+}
+
+function reset_trys() {
+    
+    let username = localStorage.getItem('username');
+
+    ajaxPromise('POST', 'JSON', friendlyURL('?module=login'), { username: username, op: 'reset_trys' })
+        .then(function (data) {
+            console.log(data);
+        })
+        .catch(function (textStatus) {
+            console.error('Error al resetear los intentos');
+        });
+}
+
+
 $(document).ready(function () {
     console.log("ready");
     setTimeout(function () {
         click_login();
         load_content();
+        load_moda_verify_identity();
     }, 500);
 
 });

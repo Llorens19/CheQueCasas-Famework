@@ -81,4 +81,19 @@
         <uri>get_trys</uri> 
     </function>
 
+    <function>
+        <name>reset_trys</name>
+        <uri>reset_trys</uri>
+    </function>
+
+    <function>
+        <name>send_sms_identity</name>
+        <uri>send_sms_identity</uri>
+    </function>
+
+    <function>
+        <name>verify_code_identity</name>
+        <uri>verify_code_identity</uri>
+    </function>
+
 </functions>

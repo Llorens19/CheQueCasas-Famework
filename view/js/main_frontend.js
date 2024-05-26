@@ -160,7 +160,7 @@ function load_menu() {
                                 <form id="phone_code_form">
                                     
                                         <div class="form-outline mb-4">
-                                            <label class="form-label" for="phone_code">Número de Teléfono</label>
+                                            <label class="form-label" for="phone_code">Código Recibido</label>
                                             <input type="email" id="phone_code" class="form-control phone_code"/>
                                             <span id="error_phone_code" class="error"></span>
 
@@ -170,7 +170,7 @@ function load_menu() {
                                     </form>`);
 
 
-                                let code = send_sms(phone);
+                                send_sms(phone);
                                 compare();
 
 
@@ -186,13 +186,10 @@ function load_menu() {
                 function send_sms(phone) {
                     console.log("send_sms");
 
-                    //let phone = $(".phone_code").val();
-
                     ajaxPromise('POST', 'JSON', friendlyURL('?module=login'), { phone: phone, op: 'send_sms' })
                         .then(function (data) {
                             console.log(data);
                             console.log("Código enviado", data);
-                            return data;
                         }).catch(function () {
                             console.error("Error al guardar el teléfono");
                         });
@@ -212,7 +209,6 @@ function load_menu() {
                                 if (data == "done") {
                                     console.log("Código correcto");
                                     $('.close_verify_phone').click();
-                                    // active_2fa();
                                     new Noty({
                                         text: 'Verificación 2fa activada.',
                                         type: 'success',
@@ -239,20 +235,6 @@ function load_menu() {
                             });
                     });
                 }
-
-
-                // function active_2fa(){
-
-                //     ajaxPromise('POST', 'JSON', friendlyURL('?module=login'), { op: 'active_2fa' })
-                //         .then(function (data) {
-                //             console.log(data);
-                //             console.log("Código enviado", data);
-                //             return data;
-                //         }).catch(function () {
-                //             console.error("Error al guardar el teléfono");
-                //         });
-
-                // }
 
 
 
