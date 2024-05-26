@@ -191,4 +191,39 @@ class login_dao
 		$stmt = $db->ejecutar($sql);
 		return "ok";
 	}
+
+	public function select_user_google($db, $username, $email){
+
+		$sql = "SELECT * FROM user_google WHERE username = '$username' OR email = '$email'";
+
+		$stmt = $db->ejecutar($sql);
+		return $db->listar($stmt);
+	}
+
+	function insert_user_google($db, $id, $username, $email, $avatar)
+	{
+		$sql ="INSERT INTO user_google (id_user, username, email, type_user, avatar, active)     
+		VALUES ('$id', '$username', '$email', 'client', '$avatar', 1)";
+
+	return $stmt = $db->ejecutar($sql);
+
+	}
+
+	public function select_user_github($db, $username, $email){
+
+		$sql = "SELECT * FROM user_github WHERE username = '$username' OR email = '$email'";
+
+		$stmt = $db->ejecutar($sql);
+		return $db->listar($stmt);
+	}
+
+	function insert_user_github($db, $id, $username, $email, $avatar)
+	{
+		$sql ="INSERT INTO user_github (id_user, username, email, type_user, avatar, active)     
+		VALUES ('$id', '$username', '$email', 'client', '$avatar', 1)";
+
+	return $stmt = $db->ejecutar($sql);
+
+	}
+
 }

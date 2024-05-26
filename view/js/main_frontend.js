@@ -50,11 +50,14 @@ function friendlyURL(url) {
 
 
 function load_menu() {
-    const token = localStorage.getItem('access_token');
+    let type_user = localStorage.getItem('type_user');
+    let token = localStorage.getItem('access_token');
+
     console.log(token);
     if (token) {
-        console.log("dentro");
-        ajaxPromise('POST', 'JSON', friendlyURL('?module=login'), { 'token': token, op: 'data_user' })
+        
+
+        ajaxPromise('POST', 'JSON', friendlyURL('?module=login'), { 'token': token, type_user: type_user, op: 'data_user'})
             .then(function (data) {
                 console.log(data[0]);
 
@@ -397,7 +400,7 @@ function load_login_modal() {
                                     <i class="fab fa-facebook-f"></i>
                                 </button>
 
-                                <button type="button" class="btn btn-link btn-floating mx-1">
+                                <button type="button" class="btn btn-link btn-floating mx-1 google_button">
                                     <i class="fab fa-google"></i>
                                 </button>
 
@@ -405,7 +408,7 @@ function load_login_modal() {
                                     <i class="fab fa-twitter"></i>
                                 </button>
 
-                                <button type="button" class="btn btn-link btn-floating mx-1">
+                                <button type="button" class="btn btn-link btn-floating mx-1 google_button">
                                     <i class="fab fa-github"></i>
                                 </button>
                             </div>
@@ -454,11 +457,11 @@ function load_login_modal() {
                         <form id="register__form" method="post">
                             <!-- <div class="text-center mb-3">
                                 <p>Sign up with:</p>
-                                <button type="button" class="btn btn-link btn-floating mx-1">
+                                <button type="button" class="btn btn-link btn-floating mx-1 ">
                                     <i class="fab fa-facebook-f"></i>
                                 </button>
 
-                                <button type="button" class="btn btn-link btn-floating mx-1">
+                                <button type="button" class="btn btn-link btn-floating mx-1 google_button">
                                     <i class="fab fa-google"></i>
                                 </button>
 
@@ -466,7 +469,7 @@ function load_login_modal() {
                                     <i class="fab fa-twitter"></i>
                                 </button>
 
-                                <button type="button" class="btn btn-link btn-floating mx-1">
+                                <button type="button" class="btn btn-link btn-floating mx-1 github_button">
                                     <i class="fab fa-github"></i>
                                 </button>
                             </div>

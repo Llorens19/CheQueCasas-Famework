@@ -17,7 +17,7 @@ static function decode_access_token($token)
 
 static function decode_refresh_token($token)
 {
-    require_once $_SERVER['DOCUMENT_ROOT'] . '/CheQueHabitaculos_MVC/CheQueCasas_Framework/model/JWT.php';
+    require_once $_SERVER['DOCUMENT_ROOT'] . '/CheQueHabitaculos_MVC/CheQueCasas_Framework/model/JWT.class.php';
 
     $jwt = parse_ini_file($_SERVER['DOCUMENT_ROOT'] . '/CheQueHabitaculos_MVC/CheQueCasas_Framework/utils/constants.ini');
     $secret = $jwt['JWT_SECRET_2'];

@@ -1,4 +1,4 @@
-async function login() {
+function login() {
     console.log("login");
     if (validate_login() != 0) {
 
@@ -43,6 +43,8 @@ async function login() {
                                 localStorage.removeItem("refresh_token");
                                 localStorage.setItem("access_token", result[0]);
                                 localStorage.setItem("refresh_token", result[1]);
+                                localStorage.removeItem("type_user");
+                                localStorage.setItem("type_user", "normal");
 
                                 new Noty({
                                     text: 'Logeado correctamente',
@@ -190,11 +192,13 @@ function click_login() {
         login();
     });
 
-    $('#google').on('click', function (e) {
+    $('.google_button').on('click', function (e) {
+        console.log("google");
         social_login('google');
     });
 
-    $('#github').on('click', function (e) {
+    $('.github_button').on('click', function (e) {
+        console.log("github");
         social_login('github');
     });
 
@@ -417,7 +421,7 @@ function validate_new_password() {
 function load_moda_verify_identity() {
 
     var modal = $("<div></div>").attr("class", "modal fade").attr("id", "load_moda_verify_identity").attr("tabindex", "-1")
-    .attr("aria-labelledby", "load_moda_verify_identityLabel").attr("aria-hidden", "true").appendTo(".login_bar").html(`
+        .attr("aria-labelledby", "load_moda_verify_identityLabel").attr("aria-hidden", "true").appendTo(".login_bar").html(`
                     <div class="modal-dialog modal-dialog-centered modal-sm">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -442,10 +446,10 @@ function load_moda_verify_identity() {
                         </div>
                     </div>`);
 
-// Vincula el evento de cierre al botón de cierre
-modal.find('.close_verify_phone_identity').on('click', function() {
-    $('#load_moda_verify_identity').modal('hide');
-});
+    // Vincula el evento de cierre al botón de cierre
+    modal.find('.close_verify_phone_identity').on('click', function () {
+        $('#load_moda_verify_identity').modal('hide');
+    });
 
 
 }
@@ -498,7 +502,7 @@ function compare_idenity(username) {
 }
 
 function reset_trys() {
-    
+
     let username = localStorage.getItem('username');
 
     ajaxPromise('POST', 'JSON', friendlyURL('?module=login'), { username: username, op: 'reset_trys' })
@@ -510,6 +514,104 @@ function reset_trys() {
         });
 }
 
+function social_login(param){
+
+    authService = firebase_config();
+
+    authService.signInWithPopup(provider_config(param)) 
+    .then(function(result) {
+        console.log('Hemos autenticado al usuario ', result.user);
+        email_name = result.user.email;
+        let username = email_name.split('@');
+        console.log(username[0]);
+
+        user = {
+            id: result.user.uid, 
+            username: username[0], 
+            email: result.user.email, 
+            avatar: result.user.photoURL,
+            type_user: param,
+            op: 'social_login'
+        };
+
+        console.log(user);
+        
+        if (result) {
+
+            ajaxPromise('POST', 'JSON', friendlyURL("?module=login"), user)
+            .then(function(data) {
+                
+
+                localStorage.removeItem("access_token");
+                localStorage.removeItem("refresh_token");
+                localStorage.setItem("access_token", data[0]);
+                localStorage.setItem("refresh_token", data[1]);
+                localStorage.removeItem("type_user");
+                localStorage.setItem("type_user", param);
+
+                new Noty({
+                    text: 'Inicio de sesión realizado.',
+                    type: 'success',
+                    layout: 'topRight',
+                    timeout: 3000
+                }).show();
+
+                setTimeout(function () {
+                    location.reload();
+                }, 1000);
+
+
+                // if(localStorage.getItem('likes') == null) {
+                //     setTimeout('window.location.href = friendlyURL("?module=home&op=view")', 1000);
+                // } else {
+                //     setTimeout('window.location.href = friendlyURL("?module=shop&op=view")', 1000);
+                // }
+            })
+            .catch(function() {
+                console.log('Error: Social login error');
+            });
+        }
+    })
+    .catch(function(error) {
+        var errorCode = error.code;
+        console.log(errorCode);
+        var errorMessage = error.message;
+        console.log(errorMessage);
+        var email = error.email;
+        console.log(email);
+        var credential = error.credential;
+        console.log(credential);
+    });
+}
+
+
+function firebase_config() {
+    var config = {
+        apiKey: apiKey(),
+        authDomain: authDomain(),
+        databaseURL: databaseURL(),
+        projectId: projectId(),
+        storageBucket: storageBucket(),
+        messagingSenderId: messagingSenderId()
+    };
+    if (!firebase.apps.length) {
+        firebase.initializeApp(config);
+    } else {
+        firebase.app();
+    }
+    return authService = firebase.auth();
+}
+
+
+function provider_config(param){
+    if(param === 'google'){
+        var provider = new firebase.auth.GoogleAuthProvider();
+        provider.addScope('email');
+        return provider;
+    }else if(param === 'github'){
+        return provider = new firebase.auth.GithubAuthProvider();
+    }
+}
 
 $(document).ready(function () {
     console.log("ready");

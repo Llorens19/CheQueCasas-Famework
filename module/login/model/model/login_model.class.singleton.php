@@ -88,4 +88,8 @@
             return $this -> bll -> get_verify_code_identity_BLL($args);
         }
 
+        public function get_social_login($args) {
+            return $this -> bll -> get_social_login_BLL($args);
+        }
+
     }

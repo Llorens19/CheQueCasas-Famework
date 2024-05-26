@@ -17,7 +17,6 @@ class controller_login
 
     function register()
     {
-       
         echo json_encode(common::load_model('login_model', 'get_register', [
             [$_POST['email']],
             [$_POST['username']],
@@ -41,7 +40,7 @@ class controller_login
 
     function data_user()
     {
-    echo json_encode(common::load_model('login_model', 'get_data_user', $_POST['token']));
+    echo json_encode(common::load_model('login_model', 'get_data_user', [$_POST['token'], $_POST['type_user']]));
     }
 
     function actividad()
@@ -103,6 +102,10 @@ class controller_login
 
     function verify_code_identity() {
         echo json_encode(common::load_model('login_model', 'get_verify_code_identity', [$_POST['phone'], $_POST['username'], $_POST['code']]));
+    } 
+
+    function social_login() {
+        echo json_encode(common::load_model('login_model', 'get_social_login', [$_POST['id'], $_POST['username'], $_POST['email'], $_POST['avatar'], $_POST['type_user']]));
     } 
 
 }

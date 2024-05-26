@@ -2,3 +2,4 @@
 *.ini
 utils/composer.lock
 utils/vendor
+utils/constants.js

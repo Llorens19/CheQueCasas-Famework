@@ -43,7 +43,7 @@ function control_activity() {
                 }
             });
     } else {
-        console.log("No hay usario logeado");
+        //console.log("No hay usario logeado");
     }
 }
 
@@ -62,7 +62,6 @@ function control_activity() {
 function refresh_cookie() {
     ajaxPromise('POST', 'JSON', friendlyURL('?module=login'), {op: 'refresh_cookie'})
         .then(function (response) {
-            console.log("Refresh cookie correctly");
         });
 }
 
@@ -73,7 +72,7 @@ function logout_auto() {
             localStorage.removeItem('refresh_token');
             window.location.href = friendlyURL("?module=home");
         }).catch(function () {
-            console.log('Something has occured');
+            console.error('Something has occured');
         });
 
     setTimeout(function () {

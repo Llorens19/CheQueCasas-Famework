@@ -118,9 +118,6 @@ class login_bll
 					$tokens[1] = middleware::create_refresh_token($rdo[0]["username"]);
 					$_SESSION['username'] = $rdo[0]['username']; //Guardamos el usario 
 					$_SESSION['tiempo'] = time(); //Guardamos el tiempo que se logea
-					error_log("///////////////////////////////////////");
-					error_log("Tiempo: " . $_SESSION['tiempo']);
-					error_log("Username: " . $_SESSION['username']);
 					session_regenerate_id(); //Regeneramos la sesión
 					return $tokens;
 				} else if (password_verify($args[1][0], $rdo[0]['password']) && $rdo[0]['active'] == 0) {
@@ -148,10 +145,17 @@ class login_bll
 	public function get_data_user_BLL($args)
 	{
 
-		$json = middleware::decode_access_token($args);
-
-		$rdo = $this->dao->select_data_user($this->db, $json['username']);
-		return $rdo;
+		$json = middleware::decode_access_token($args[0]);
+		if ($args[1] == "normal") {
+			$rdo = $this->dao->select_data_user($this->db, $json['username']);
+			return $rdo;
+		} else if ($args[1] == "google") {
+			$rdo = $this->dao->select_user_google($this->db, $json['username'], "");
+			return $rdo;
+		} else if ($args[1] == "github") {
+			$rdo = $this->dao->select_user_github($this->db, $json['username'], "");
+			return $rdo;
+		}
 	}
 	public function get_actividad_BLL($args)
 	{
@@ -335,12 +339,90 @@ class login_bll
 		$check = $this->dao->get_OTP($this->db, $args[0], $args[1]);
 
 		if (!empty($check) and isset($check) and $check[0]['code_OTP'] == $args[2]) {
-			
+
 			return 'done';
 		} else {
-			
+
 			return 'fail';
 		}
-	
+	}
+
+	function get_social_login_BLL($args)
+	{
+
+		// try {
+		// 	$rdo = $this->dao->select_user_login($this->db, $args[0][0]);
+		// 	if ($rdo == "error_user") {
+		// 		return "error_user";
+		// 	} else {
+		// 		if (password_verify($args[1][0], $rdo[0]['password']) && $rdo[0]['active'] == 1) { //Si la contraseña es correcta creamos el token
+
+		// 			$tokens = [];
+		// 			$tokens[0] = middleware::create_access_token($rdo[0]["username"]);
+		// 			$tokens[1] = middleware::create_refresh_token($rdo[0]["username"]);
+		// 			$_SESSION['username'] = $rdo[0]['username']; //Guardamos el usario 
+		// 			$_SESSION['tiempo'] = time(); //Guardamos el tiempo que se logea
+		// 			session_regenerate_id(); //Regeneramos la sesión
+		// 			return $tokens;
+		// 		} else if (password_verify($args[1][0], $rdo[0]['password']) && $rdo[0]['active'] == 0) {
+
+		// 			return "error_active";
+		// 		} else {
+		// 			return "error_passwd";
+		// 		}
+		// 	}
+		// } catch (Exception $e) {
+		// 	return "error";
+		// }
+
+
+
+
+
+
+
+error_log("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT");
+error_log("Entra en get_social_login_BLL");
+
+
+
+
+		if ($args[4] == "google" and isset($args[4]) and !empty($args[4])) {
+			if (!empty($this->dao->select_user_google($this->db, $args[1], $args[2]))) {
+				$user = $this->dao->select_user_google($this->db, $args[1], $args[2]);
+
+				$tokens = [];
+				$tokens[0] = middleware::create_access_token($user[0]['username']);
+				$tokens[1] = middleware::create_refresh_token($user[0]["username"]);
+				return $tokens;
+			} else {
+				$this->dao->insert_user_google($this->db, $args[0], $args[1], $args[2], $args[3]);
+				$user = $this->dao->select_user_google($this->db, $args[1], $args[2]);
+
+				$tokens = [];
+				$tokens[0] = middleware::create_access_token($user[0]['username']);
+				$tokens[1] = middleware::create_refresh_token($user[0]["username"]);
+				return $tokens;
+			}
+		} elseif ($args[4] == "github" and isset($args[4]) and !empty($args[4])) {
+			if (!empty($this->dao->select_user_github($this->db, $args[1], $args[2]))) {
+				$user = $this->dao->select_user_github($this->db, $args[1], $args[2]);
+
+				$tokens = [];
+				$tokens[0] = middleware::create_access_token($user[0]['username']);
+				$tokens[1] = middleware::create_refresh_token($user[0]["username"]);
+				return $tokens;
+			} else {
+				$this->dao->insert_user_github($this->db, $args[0], $args[1], $args[2], $args[3]);
+				$user = $this->dao->select_user_github($this->db, $args[1], $args[2]);
+
+				$tokens = [];
+				$tokens[0] = middleware::create_access_token($user[0]['username']);
+				$tokens[1] = middleware::create_refresh_token($user[0]["username"]);
+				return $tokens;
+			}
+		} else {
+			return "error";
+		}
 	}
 }
