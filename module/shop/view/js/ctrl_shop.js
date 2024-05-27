@@ -1069,6 +1069,33 @@ function click_like_building() {
 }
 
 
+function click_cart_building() {
+
+    $(document).on("click", ".button_cart_building_active", function (event) {
+        event.stopPropagation();
+        let id = $(this).attr("id");
+        console.log(id);
+
+        ajaxPromise("POST", "JSON", friendlyURL('?module=shop'), { "id_building": id, op: 'action_cart' })
+
+            .then(function (data) {
+
+                console.table(data);
+
+                
+            })
+            .catch(function (error) {
+                console.error("Maloooooooooo");
+
+            });
+
+    });
+}
+
+
+
+
+
 async function find_likes_user() {
 
     await ajaxPromise("POST", "JSON", friendlyURL('?module=shop'), { op: "likes_user" })
@@ -1248,6 +1275,7 @@ $(document).ready(() => {
     delete_button();
     clicks();
     click_like_building();
+    click_cart_building();
     //map_search_buttons();
     $('.footer').attr('class', 'footer col-lg-7');
 

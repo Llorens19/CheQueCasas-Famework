@@ -37,6 +37,7 @@ class controller_login
         // echo json_encode(common::load_model('login_model', 'get_logout', [$_SESSION['username'], $_SESSION['tiempo']]));
         $_SESSION['username'] = null;
         $_SESSION['tiempo'] = null;
+        $_SESSION['type_user'] = null;
         echo json_encode("Done");
     }
 
@@ -109,5 +110,7 @@ class controller_login
     function social_login() {
         echo json_encode(common::load_model('login_model', 'get_social_login', [$_POST['id'], $_POST['username'], $_POST['email'], $_POST['avatar'], $_POST['type_user']]));
     } 
+
+    
 
 }

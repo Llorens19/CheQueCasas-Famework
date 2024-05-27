@@ -53,5 +53,9 @@
             return $this -> bll -> get_action_like_BLL($args);
         }
 
+        public function get_action_cart($args) {
+            return $this -> bll -> get_action_cart_BLL($args);
+        }
+
 
     }

@@ -118,6 +118,7 @@ class login_bll
 					$tokens[1] = middleware::create_refresh_token($rdo[0]["username"]);
 					$_SESSION['username'] = $rdo[0]['username']; //Guardamos el usario 
 					$_SESSION['tiempo'] = time(); //Guardamos el tiempo que se logea
+					$_SESSION['type_user'] = "normal";
 					session_regenerate_id(); //Regeneramos la sesión
 					return $tokens;
 				} else if (password_verify($args[1][0], $rdo[0]['password']) && $rdo[0]['active'] == 0) {
@@ -391,6 +392,9 @@ error_log("Entra en get_social_login_BLL");
 			if (!empty($this->dao->select_user_google($this->db, $args[1], $args[2]))) {
 				$user = $this->dao->select_user_google($this->db, $args[1], $args[2]);
 
+				$_SESSION['username'] = $user[0]['username']; 
+				$_SESSION['tiempo'] = time();
+				$_SESSION['type_user'] = "google";
 				$tokens = [];
 				$tokens[0] = middleware::create_access_token($user[0]['username']);
 				$tokens[1] = middleware::create_refresh_token($user[0]["username"]);
@@ -398,6 +402,10 @@ error_log("Entra en get_social_login_BLL");
 			} else {
 				$this->dao->insert_user_google($this->db, $args[0], $args[1], $args[2], $args[3]);
 				$user = $this->dao->select_user_google($this->db, $args[1], $args[2]);
+
+				$_SESSION['username'] = $user[0]['username'];
+				$_SESSION['tiempo'] = time();
+				$_SESSION['type_user'] = "google";
 
 				$tokens = [];
 				$tokens[0] = middleware::create_access_token($user[0]['username']);
@@ -408,6 +416,10 @@ error_log("Entra en get_social_login_BLL");
 			if (!empty($this->dao->select_user_github($this->db, $args[1], $args[2]))) {
 				$user = $this->dao->select_user_github($this->db, $args[1], $args[2]);
 
+				$_SESSION['username'] = $user[0]['username'];
+				$_SESSION['tiempo'] = time();
+				$_SESSION['type_user'] = "github";
+
 				$tokens = [];
 				$tokens[0] = middleware::create_access_token($user[0]['username']);
 				$tokens[1] = middleware::create_refresh_token($user[0]["username"]);
@@ -416,6 +428,10 @@ error_log("Entra en get_social_login_BLL");
 				$this->dao->insert_user_github($this->db, $args[0], $args[1], $args[2], $args[3]);
 				$user = $this->dao->select_user_github($this->db, $args[1], $args[2]);
 
+				$_SESSION['username'] = $user[0]['username'];
+				$_SESSION['tiempo'] = time();
+				$_SESSION['type_user'] = "github";
+				
 				$tokens = [];
 				$tokens[0] = middleware::create_access_token($user[0]['username']);
 				$tokens[1] = middleware::create_refresh_token($user[0]["username"]);

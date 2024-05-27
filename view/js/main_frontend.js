@@ -249,11 +249,14 @@ function load_menu() {
                         `<button class="btn btn-primary" data-bs-toggle="modal" onclick="window.location.href=friendlyURL('?module=cart')">Carrito</button>`);
 
                 $(".button_like_building").removeAttr("data-bs-toggle");
-
                 $(".button_like_building").removeAttr("data-bs-target");
                 $(".button_like_building").removeAttr("onclick");
-
                 $(".button_like_building").addClass("button_like_building_active");
+
+                $(".button_cart_building").removeAttr("data-bs-toggle");
+                $(".button_cart_building").removeAttr("data-bs-target");
+                $(".button_cart_building").removeAttr("onclick");
+                $(".button_cart_building").addClass("button_cart_building_active");
 
 
                 if (data[0].type_user == "admin") {

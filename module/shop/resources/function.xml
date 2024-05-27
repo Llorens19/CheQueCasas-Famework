@@ -49,6 +49,11 @@
         <uri>action_like</uri>
     </function>
 
+    <function>
+        <name>action_cart</name>
+        <uri>action_cart</uri>
+    </function>
+
 
 
 </functions>

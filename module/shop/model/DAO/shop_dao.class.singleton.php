@@ -403,4 +403,114 @@ class shop_dao
 		$stmt = $db->ejecutar($sql);
 		return $db->listar($stmt);
 	}
+
+
+	public static function select_user_product_normal($db, $username, $id_building)
+	{
+		$sql = "SELECT *
+		FROM user u, cart c, product p
+		WHERE u.id_user = c.id_user 
+		and u.username = '$username' 
+		and p.id_building = '$id_building' 
+		and p.id_product = c.id_product";
+
+		$stmt = $db->ejecutar($sql);
+		return $db->listar($stmt);
+	}
+
+	public static function select_user_product_google($db, $username, $id_building)
+	{
+		$sql = "SELECT *
+		FROM user_google u, cart c, product p
+		WHERE u.id_user = c.id_user 
+		and u.username = '$username' 
+		and p.id_building = '$id_building' 
+		and p.id_product = c.id_product";
+
+		$stmt = $db->ejecutar($sql);
+		return $db->listar($stmt);
+	}
+
+	public static function select_user_product_github($db, $username, $id_building)
+	{
+		$sql = "SELECT *
+		FROM user_github u, cart c, product p
+		WHERE u.id_user = c.id_user 
+		and u.username = '$username' 
+		and p.id_building = '$id_building' 
+		and p.id_product = c.id_product";
+
+		$stmt = $db->ejecutar($sql);
+		return $db->listar($stmt);
+	}
+
+	public static function insert_line_cart_normal($db, $username, $id_building)
+	{
+		$sql = "INSERT INTO cart (id_user, id_product, total_quantity, price_line) 
+		VALUES (
+			(SELECT id_user 
+			FROM user 
+			WHERE username = '$username'), 
+			
+			(SELECT id_product 
+			FROM product 
+			WHERE id_building = '$id_building'),
+
+			1,
+
+			(SELECT price_product
+			FROM product
+			WHERE id_building = '$id_building')
+			)";
+
+		$stmt = $db->ejecutar($sql);
+		return "ok";
+	}
+
+	public static function insert_line_cart_google($db, $username, $id_building)
+	{
+		$sql = "INSERT INTO cart (id_user, id_product, total_quantity, price_line) 
+		VALUES (
+			(SELECT id_user 
+			FROM user_google 
+			WHERE username = '$username'), 
+			
+			(SELECT id_product 
+			FROM product 
+			WHERE id_building = '$id_building'),
+
+			1,
+
+			(SELECT price_product
+			FROM product
+			WHERE id_building = '$id_building')
+			)";
+
+		$stmt = $db->ejecutar($sql);
+		return "ok";
+	}
+
+	public static function insert_line_cart_github($db, $username, $id_building)
+	{
+		$sql = "INSERT INTO cart (id_user, id_product, total_quantity, price_line) 
+		VALUES (
+			(SELECT id_user 
+			FROM user_github 
+			WHERE username = '$username'), 
+			
+			(SELECT id_product 
+			FROM product 
+			WHERE id_building = '$id_building'),
+
+			1,
+
+			(SELECT price_product
+			FROM product
+			WHERE id_building = '$id_building')
+			)";
+
+		$stmt = $db->ejecutar($sql);
+		return "ok";
+	}
+
 }

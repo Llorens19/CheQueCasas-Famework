@@ -52,4 +52,8 @@
             echo json_encode(common::load_model('shop_model', 'get_action_like', [$_SESSION['username'], $_POST['id_building']]));
         }
 
+        function action_cart() {
+            echo json_encode(common::load_model('shop_model', 'get_action_cart', [$_SESSION['username'], $_POST['id_building'], $_SESSION['type_user']]));
+        }
+
     }
