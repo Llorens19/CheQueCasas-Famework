@@ -2506,3 +2506,22 @@ body {
     border-bottom: none;
 }
 
+/* cart */
+
+/* mapa */
+.cart_pay {
+    padding-top: 0px;
+    padding-left: 2%;
+}
+
+.cart_pay .cart_pay_container {
+    justify-content: center; 
+    width: 100%;
+    height: 100%;
+
+    border-radius: 5px;
+    overflow: hidden;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    
+}
+

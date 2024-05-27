@@ -307,6 +307,12 @@ function loadDetails(id_building) {
                     "<button type='button' id= " + data[0].id_building + " class='btn btn-link button_like_building' onclick='event.stopPropagation();' data-bs-toggle='modal' data-bs-target='#loginModal'>" +
                     "<img src='view/img/shop/img_card/sin_megusta.png' class='img_like_building img_" + data[0].id_building + "' id= img_" + data[0].id_building + " style='height: 50px;' alt='Me gusta'></button>" +
                     "</div>" +
+                    
+
+                    "<div class='col-md-2' cart_building>" +
+                    "<button type='button' id= " + data[0].id_building + " class='btn btn-link button_cart_building' onclick='event.stopPropagation();' data-bs-toggle='modal' data-bs-target='#loginModal'>" +
+                    "<img src='view/img/shop/img_card/cart.png' class='img_like_building img_" + data[0].id_building + "' id= img_" + data[0].id_building + " style='height: 50px;' alt='Me gusta'></button>" +
+                    "</div>" +
 
 
                     "</div>" +
@@ -981,6 +987,11 @@ function print_buildings(url, sData) {
 
                                 "<div class='col-md-2' like_building>" +
                                 "<button type='button' id= " + data[0][row].id_building + " class='btn btn-link button_like_building' onclick='event.stopPropagation();' data-bs-toggle='modal' data-bs-target='#loginModal'><img src='view/img/shop/img_card/sin_megusta.png' class='img_like_building img_" + data[0][row].id_building + "' id= img_" + data[0][row].id_building + " style='height: 50px;' alt='Me gusta'></button>" +
+                                "</div>" +
+
+                                "<div class='col-md-2' cart_building>" +
+                                "<button type='button' id= " + data[0][row].id_building + " class='btn btn-link button_cart_building' onclick='event.stopPropagation();' data-bs-toggle='modal' data-bs-target='#loginModal'>" +
+                                "<img src='view/img/shop/img_card/cart.png'  style='height: 50px;' alt='Carrito'></button>" +
                                 "</div>" +
 
                                 "</div>" +

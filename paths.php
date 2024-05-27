@@ -75,3 +75,12 @@ define('BLL_MAPS', SITE_ROOT . 'module/maps/model/BLL/');
 define('MODEL_MAPS', SITE_ROOT . 'module/maps/model/model/');
 define('JS_VIEW_MAPS', SITE_PATH . 'module/maps/view/js/');
 define('VIEW_PATH_MAPS', SITE_ROOT . 'module/maps/view/');
+
+
+//MODEL_CART
+define('UTILS_CART', SITE_ROOT . 'module/cart/utils/');
+define('DAO_CART', SITE_ROOT . 'module/cart/model/DAO/');
+define('BLL_CART', SITE_ROOT . 'module/cart/model/BLL/');
+define('MODEL_CART', SITE_ROOT . 'module/cart/model/model/');
+define('JS_VIEW_CART', SITE_PATH . 'module/cart/view/js/');
+define('VIEW_PATH_CART', SITE_ROOT . 'module/cart/view/');

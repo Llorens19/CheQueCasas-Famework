@@ -63,6 +63,7 @@ function load_menu() {
                 
                 $(".login_bar").empty();
 
+                
 
                 $("<div></div>").attr("class", "ms-2 loged_button round_button").attr("data-toggle", "modal")
                     .attr("data-target", "#userModal").appendTo(".login_bar").html(`<img src="` + data[0].avatar + `">`);
@@ -244,6 +245,9 @@ function load_menu() {
                 $("<div></div>").attr("class", "ms-2 loged_button").appendTo(".login_bar").html(
                     `<button class="btn btn-primary logout" >Cerrar Sesión</button>`);
 
+                $("<div></div>").attr("class", "ms-2 cart_button").appendTo(".login_bar").html(
+                        `<button class="btn btn-primary" data-bs-toggle="modal" onclick="window.location.href=friendlyURL('?module=cart')">Carrito</button>`);
+
                 $(".button_like_building").removeAttr("data-bs-toggle");
 
                 $(".button_like_building").removeAttr("data-bs-target");
@@ -261,12 +265,6 @@ function load_menu() {
 
                     $(".delete_building").remove();
 
-                    // $("<div></div>").attr("class", "col-md-2 chat").appendTo(".buttons_card_shop")
-                    // .html( "<button type='button' class='btn btn-link'><img src='view/img/shop/img_card/chat.png' style='height: 50px;' alt='Me gusta'></button>");
-
-
-                    // $("<div></div>").attr("class", "col-md-2 like_building").appendTo(".buttons_card_shop")
-                    // .html( "<button type='button' class='btn btn-link'><img src='view/img/shop/img_card/sin_megusta.png' style='height: 50px;' alt='Me gusta'></button>");
 
 
                     $("<div></div>").attr("class", "col-md-2 delete_building").appendTo(".buttons_card_shop")
