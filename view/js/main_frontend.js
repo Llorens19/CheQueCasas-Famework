@@ -60,7 +60,7 @@ function load_menu() {
         ajaxPromise('POST', 'JSON', friendlyURL('?module=login'), { 'token': token, type_user: type_user, op: 'data_user'})
             .then(function (data) {
                 console.log(data[0]);
-
+                
                 $(".login_bar").empty();
 
 
@@ -253,6 +253,7 @@ function load_menu() {
 
 
                 if (data[0].type_user == "admin") {
+                    //find_likes_user();
                     console.log("Admin loged");
 
                     $("<div></div>").attr("class", "ms-2 admin_options").appendTo(".login_bar").html(
@@ -277,6 +278,7 @@ function load_menu() {
 
 
                 } else {
+                    //find_likes_user();
                     console.log("Client loged");
                     $('.opc_CRUD').show();
                     $('.opc_exceptions').show();
@@ -327,8 +329,13 @@ function click_logout() {
 function logout() {
     ajaxPromise('POST', 'JSON', 'index.php?module=login&op=logout')
         .then(function (data) {
+            console.log ('logout');
             localStorage.removeItem('access_token');
             localStorage.removeItem('refresh_token');
+            localStorage.removeItem('type_user');
+            localStorage.removeItem('phone');
+            localStorage.removeItem('id_likes_user');
+            localStorage.removeItem('username');
             window.location.href = "index.php?module=home&op=view";
         }).catch(function () {
             console.log('Something has occured');
@@ -408,7 +415,7 @@ function load_login_modal() {
                                     <i class="fab fa-twitter"></i>
                                 </button>
 
-                                <button type="button" class="btn btn-link btn-floating mx-1 google_button">
+                                <button type="button" class="btn btn-link btn-floating mx-1 github_button">
                                     <i class="fab fa-github"></i>
                                 </button>
                             </div>

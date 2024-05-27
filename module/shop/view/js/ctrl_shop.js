@@ -1230,13 +1230,13 @@ function print_scroll(url, sData) {
 
 
 
+
 $(document).ready(() => {
     //count_click_details();
     printFilters();
     delete_button();
     clicks();
     click_like_building();
-    find_likes_user();
     //map_search_buttons();
     $('.footer').attr('class', 'footer col-lg-7');
 

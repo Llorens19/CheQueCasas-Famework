@@ -1,10 +1,6 @@
 function login() {
     console.log("login");
     if (validate_login() != 0) {
-
-
-
-
         username = document.getElementById('login_username').value;
         password = document.getElementById('login_password').value;
 
