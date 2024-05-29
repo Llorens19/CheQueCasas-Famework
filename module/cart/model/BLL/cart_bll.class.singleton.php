@@ -17,12 +17,9 @@
 		}
 
 
+		public function get_loadCart_BLL($args) {
 
-		
-
-		public function get_type_BLL() {
-			return $this -> dao -> select_type($this -> db);
+			$res = $this->dao->get_cart_user($this->db, $args[0], $args[1]);
+			return $res;
 		}
-
-	
 	}

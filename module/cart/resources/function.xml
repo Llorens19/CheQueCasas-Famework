@@ -6,4 +6,9 @@
         <uri>view</uri>
     </function>
 
+    <function>
+        <name>loadCart</name>
+        <uri>loadCart</uri>
+    </function>
+
 </functions>

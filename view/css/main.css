@@ -2525,3 +2525,12 @@ body {
     
 }
 
+.rounded {
+    border-radius: 5px;
+    overflow: hidden;
+    border: 1.5px solid rgba(0, 0, 0, 0.125);
+    background-color: #f0f0f0; /* Cambia este valor al color que prefieras */
+    padding: 10px; /* Añade un poco de padding para ver mejor el efecto */
+    margin-bottom: 10px; /* Añade un poco de margen para separar los elementos */
+}
+

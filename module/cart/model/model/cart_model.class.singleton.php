@@ -15,10 +15,9 @@
             return self::$_instance;
         }
 
-        public function get_carrusel_type() {
-            return $this -> bll -> get_type_BLL();
+
+        public function get_loadCart($args) {
+            return $this -> bll -> get_loadCart_BLL($args);
         }
-
-
 
     }

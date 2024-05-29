@@ -18,8 +18,8 @@
             common::load_view('top_page_cart.html', VIEW_PATH_CART . 'cart.html');
         }
 
-        function carrusel_type() {
-            echo json_encode(common::load_model('cart_model', 'get_carrusel_type'));
+        function loadCart() {
+            echo json_encode(common::load_model('cart_model', 'get_loadCart', [$_SESSION['username'], $_SESSION['type_user']]));
         }
         
     }
