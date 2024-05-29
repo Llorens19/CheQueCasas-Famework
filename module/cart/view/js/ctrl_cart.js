@@ -26,7 +26,7 @@ function loadCart() {
             <div class="d-flex align-items-center col-lg-6">
                 <div class="d-flex align-items-center col-lg-4">
                     <button class="btn btn-secondary btn-sm decrement" id="`+ data[row].id_line + `" = >-</button>
-                    <input type="number" class="form-control form-control-sm mx-2 text-center input_card_`+ data[row].id_line + `" value="1" min="1" max= "` + data[row].stock + `" style="width: 60px;">
+                    <input type="number" class="form-control form-control-sm mx-2 text-center input_card_`+ data[row].id_line + `" value="`+ data[row].total_quantity +`" min="1" max= "` + data[row].stock + `" style="width: 60px;">
                     <button class="btn btn-secondary btn-sm increment" id="`+ data[row].id_line + `">+</button>
                 </div> 
                 <div class="d-flex align-items-center col-lg-4">
@@ -45,7 +45,7 @@ function loadCart() {
 
             }
             butons_cart();
-
+            total_money();
 
         })
         .catch(function () {
@@ -68,6 +68,7 @@ function increment() {
             ajaxPromise('POST', 'JSON', friendlyURL('?module=cart'), { op: 'increment', id_line: id })
                 .then(function (data) {
                     console.log(data);
+                    total_money()
                 })
                 .catch(function () {
                     console.error('error');
@@ -88,6 +89,7 @@ function decrement() {
             input.val(value);
             ajaxPromise('POST', 'JSON', friendlyURL('?module=cart'), { op: 'decrement', id_line: id })
                 .then(function (data) {
+                    total_money();
                 })
                 .catch(function () {
                     console.error('error');
@@ -107,6 +109,7 @@ function deleteLine() {
                 // $(".list_cart").empty();
                 // loadCart();
                 $("#line_"+id).remove();
+                total_money();
             })
             .catch(function () {
                 console.error('error');
@@ -130,6 +133,7 @@ function selected_line () {
         ajaxPromise('POST', 'JSON', friendlyURL('?module=cart'), { op: 'selected_line', id_line: id, state: state_bd})
             .then(function (data) {
                 console.log(data);
+                total_money();
             })
             .catch(function () {
                 console.error('error');
@@ -143,17 +147,16 @@ function total_money(){
 
     ajaxPromise("POST", "JSON", friendlyURL("?module=cart"), { op: "total_money" })
     .then(function (data) {
-        console.log(data);
-        $(".total_money").html(Total = data.total_money + "€");
-
+        console.log(data[0].total);
+        if (data[0].total == null) {
+            $(".total_money").html("Total: 0.00 €");
+        }else{
+        $(".total_money").html("Total:  " +data[0].total + "€");
+        }
     })
     .catch(function () {
         console.error("error");
     });
-
-
-
-
 }
 
 

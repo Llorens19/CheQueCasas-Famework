@@ -35,4 +35,8 @@
             return $this -> bll -> get_decrement_BLL($args);
         }
 
+        public function get_total_money($args) {
+            return $this -> bll -> get_total_money_BLL($args);
+        }
+
     }

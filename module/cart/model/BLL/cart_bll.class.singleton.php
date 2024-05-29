@@ -42,4 +42,9 @@
 			$this->dao->decrement($this->db, $args);
 			return "done";
 		}
+
+		public function get_total_money_BLL($args) {
+			$res = $this->dao->total_money($this->db, $args[0], $args[1]);
+			return $res;
+		}
 	}

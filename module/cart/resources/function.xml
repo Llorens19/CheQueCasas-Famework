@@ -31,4 +31,9 @@
         <uri>decrement</uri>
     </function>
 
+    <function>
+        <name>total_money</name>
+        <uri>total_money</uri>
+    </function>
+
 </functions>

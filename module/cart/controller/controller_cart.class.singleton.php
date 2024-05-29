@@ -37,5 +37,8 @@
         function decrement () {
             echo json_encode(common::load_model('cart_model', 'get_decrement', $_POST['id_line']));
         }
+        function total_money() {
+            echo json_encode(common::load_model('cart_model', 'get_total_money', [$_SESSION['username'], $_SESSION['type_user']]));
+        }   
         
     }
