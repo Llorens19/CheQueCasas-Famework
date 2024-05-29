@@ -27,5 +27,12 @@
         public function get_selected_line($args) {
             return $this -> bll -> get_selected_line_BLL($args);
         }
+        public function get_increment($args) {
+            return $this -> bll -> get_increment_BLL($args);
+        }
+
+        public function get_decrement($args) {
+            return $this -> bll -> get_decrement_BLL($args);
+        }
 
     }

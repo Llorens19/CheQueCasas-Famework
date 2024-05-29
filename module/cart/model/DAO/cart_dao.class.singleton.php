@@ -53,6 +53,18 @@ class cart_dao
 		return $db->ejecutar($sql);
 	}
 
+	public function increment($db, $id_line)
+	{
+		$sql = "UPDATE cart SET total_quantity = total_quantity + 1 WHERE id_line = '$id_line'";
+		return $db->ejecutar($sql);
+	}
+	
+	public function decrement($db, $id_line)
+	{
+		$sql = "UPDATE cart SET total_quantity = total_quantity - 1 WHERE id_line = '$id_line'";
+		return $db->ejecutar($sql);
+	}
+
 	
 
 	

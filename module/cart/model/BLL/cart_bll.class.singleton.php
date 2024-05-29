@@ -32,4 +32,14 @@
 			$this->dao->selected_line_cart($this->db, $args[0], $args[1]);
 			return "done";
 		}
+
+		public function get_increment_BLL($args) {
+			$this->dao->increment($this->db, $args);
+			return "done";
+		}
+
+		public function get_decrement_BLL($args) {
+			$this->dao->decrement($this->db, $args);
+			return "done";
+		}
 	}

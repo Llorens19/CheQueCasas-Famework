@@ -29,5 +29,13 @@
         function selected_line() {
             echo json_encode(common::load_model('cart_model', 'get_selected_line', [$_POST['id_line'], $_POST['state']]));
         }
+
+        function increment () {
+            echo json_encode(common::load_model('cart_model', 'get_increment', $_POST['id_line']));
+        }
+
+        function decrement () {
+            echo json_encode(common::load_model('cart_model', 'get_decrement', $_POST['id_line']));
+        }
         
     }

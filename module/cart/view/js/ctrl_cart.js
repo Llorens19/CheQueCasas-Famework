@@ -65,6 +65,13 @@ function increment() {
         let max = parseInt(input.attr('max'));
         if (value <= max) {
             input.val(value);
+            ajaxPromise('POST', 'JSON', friendlyURL('?module=cart'), { op: 'increment', id_line: id })
+                .then(function (data) {
+                    console.log(data);
+                })
+                .catch(function () {
+                    console.error('error');
+                });
         }
     });
 
@@ -79,6 +86,12 @@ function decrement() {
         let min = parseInt(input.attr('min'));
         if (value >= min) {
             input.val(value);
+            ajaxPromise('POST', 'JSON', friendlyURL('?module=cart'), { op: 'decrement', id_line: id })
+                .then(function (data) {
+                })
+                .catch(function () {
+                    console.error('error');
+                });
         }
     });
 }
@@ -124,6 +137,23 @@ function selected_line () {
 
     });
     
+}
+
+function total_money(){
+
+    ajaxPromise("POST", "JSON", friendlyURL("?module=cart"), { op: "total_money" })
+    .then(function (data) {
+        console.log(data);
+        $(".total_money").html(Total = data.total_money + "€");
+
+    })
+    .catch(function () {
+        console.error("error");
+    });
+
+
+
+
 }
 
 

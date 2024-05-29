@@ -21,4 +21,14 @@
         <uri>selected_line</uri>
     </function>
 
+    <function>
+        <name>increment</name>
+        <uri>increment</uri>
+    </function>
+
+    <function>
+        <name>decrement</name>
+        <uri>decrement</uri>
+    </function>
+
 </functions>
