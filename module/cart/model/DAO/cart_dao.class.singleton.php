@@ -143,4 +143,27 @@ class cart_dao
 		return $db->listar($stmt);
 	
 	}
+
+
+	function save_lines($db, $id, $username, $type_user)
+	{
+		error_log("id"  . $id);
+		error_log("username"  . $username);
+		error_log("type_user"  . $type_user);
+
+		if ($type_user == 'normal' and isset($type_user)) {
+			error_log("normal");
+			$sql = "SELECT transfer_to_order('$id', (SELECT id_user FROM user WHERE username = '$username')) AS message";
+			error_log($sql);
+		} else if ($type_user == 'google' and isset($type_user)) {
+			$sql = "SELECT transfer_to_order('$id', (SELECT id_user FROM user_google WHERE username = '$username')) AS message";
+		} else if ($type_user == 'github' and isset($type_user)) {
+			$sql = "SELECT transfer_to_order('$id', (SELECT id_user FROM user_github WHERE username = '$username')) AS message";
+		}
+
+		$stmt = $db->ejecutar($sql);
+		return $db->listar($stmt);
+
+		
+	}
 }

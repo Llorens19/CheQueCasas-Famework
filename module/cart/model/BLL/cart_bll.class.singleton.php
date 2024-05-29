@@ -49,8 +49,22 @@
 		}
 
 		public function get_buy_BLL($args) {
-			error_log("buyyyyyyyyyyyyyyyyyyasdasdsa");
+			
 			$res = $this->dao->buy($this->db, $args[0], $args[1], $args[2], $args[3], $args[4], $args[5], $args[6]);
-			return $res;
+
+			
+
+			$id = $res[0]['message'];
+			if(isset($id)){
+
+				$res2 = $this->dao->save_lines($this->db, $id, $args[0], $args[6]);
+
+				error_log($id);
+			return $res2;
+
+			}else{
+				return 'fail';
+			}
+			
 		}
 	}
