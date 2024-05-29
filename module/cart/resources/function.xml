@@ -11,4 +11,9 @@
         <uri>loadCart</uri>
     </function>
 
+    <function>
+        <name>delete_line_cart</name>
+        <uri>delete_line_cart</uri>
+    </function>
+
 </functions>

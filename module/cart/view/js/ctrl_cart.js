@@ -7,7 +7,7 @@ function loadCart() {
 
                 console.log(data[row].id_line);
 
-                $("<li></li>").attr('class', 'list-group-item d-flex justify-content-between align-items-center item_cart rounded col-lg-12').attr('id', data[row].id_line)
+                $("<li></li>").attr('class', 'list-group-item d-flex justify-content-between align-items-center item_cart rounded col-lg-12').attr('id', "line_"+data[row].id_line)
                     .appendTo('.list_cart')
                     .html(`
             <div class="form-check d-flex align-items-center col-lg-3">
@@ -40,8 +40,7 @@ function loadCart() {
         `);
 
             }
-            increment();
-            decrement();
+            butons_cart();
 
 
         })
@@ -54,10 +53,8 @@ function loadCart() {
 
 
 function increment() {
-    console.log('increment');
     $(".increment").click(function () {
-        console.log('click');
-        console.log($(this).attr('id'));
+      
         let id = $(this).attr('id');
         let input = $(".input_card_" + id);
         let value = parseInt(input.val()) + 1;
@@ -71,8 +68,7 @@ function increment() {
 }
 function decrement() {
     $(".decrement").click(function () {
-        console.log('click');
-        console.log($(this).attr('id'));
+
         let id = $(this).attr('id');
         let input = $(".input_card_" + id);
         let value = parseInt(input.val()) - 1;
@@ -81,6 +77,31 @@ function decrement() {
             input.val(value);
         }
     });
+}
+
+function deleteLine() {
+    $(".delete_line_cart").click(function () {
+        console.log('delete');
+        let id = $(this).attr('id');
+        console.log(id);
+        ajaxPromise('POST', 'JSON', friendlyURL('?modul=cart'), { op: 'delete_line_cart', id_line: id })
+            .then(function (data) {
+                console.log(data);
+                // $(".list_cart").empty();
+                // loadCart();
+                $("#line_"+id).remove();
+            })
+            .catch(function () {
+                console.error('error');
+            });
+    });
+    
+}
+
+function butons_cart() {
+    deleteLine();
+    increment();
+    decrement();
 }
 
 

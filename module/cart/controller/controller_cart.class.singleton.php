@@ -21,5 +21,9 @@
         function loadCart() {
             echo json_encode(common::load_model('cart_model', 'get_loadCart', [$_SESSION['username'], $_SESSION['type_user']]));
         }
+
+        function delete_line_cart() {
+            echo json_encode(common::load_model('cart_model', 'get_delete_line_cart', $_POST['id_line']));
+        }
         
     }

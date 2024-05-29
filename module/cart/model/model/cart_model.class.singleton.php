@@ -20,4 +20,8 @@
             return $this -> bll -> get_loadCart_BLL($args);
         }
 
+        public function get_delete_line_cart($args) {
+            return $this -> bll -> get_delete_line_cart_BLL($args);
+        }
+
     }

@@ -35,11 +35,15 @@ class cart_dao
 			$sql = "SELECT * FROM cart c, product p WHERE c.id_user = (SELECT id_user FROM user_github WHERE username = '$username') and p.id_product = c.id_product";
 		}
 
-		error_log("QWEQWEQWEQWEQWEQWEWQEQWEQWEQWEQWEWQE");
-		error_log($sql);
-
 		$stmt = $db->ejecutar($sql);
 		return $db->listar($stmt);
+	}
+
+	public function delete_line_cart($db, $id_line)
+	{
+		$sql = "DELETE FROM cart WHERE id_line = '$id_line'";
+		$stmt = $db->ejecutar($sql);
+		return $stmt;
 	}
 
 	
