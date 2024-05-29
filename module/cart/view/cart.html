@@ -55,8 +55,8 @@
             </div>
         </div>
 
-        <div class="offset-lg-7 col-lg-5 position-fixed cart_pay" style="margin-top: 10.5vh; height: 80vh;">
-           <div class = "cart_pay_container">
+        <div class="offset-lg-7 col-lg-5 position-fixed cart_pay" style="margin-top: 15.5vh; height: 80vh;">
+            <div >
 
 
 
@@ -66,94 +66,70 @@
                     <div class="card-body" style="overflow-y: auto;">
                         
 
-                      
-                        <!-- <form>
+                        <form>
                             <div class="row">
-                                <div class="col-md-6 mb-3">
+                                <div class="col-md-4 mb-3">
                                     <label for="firstName">Nombre</label>
                                     <input type="text" class="form-control" id="firstName" placeholder="" required>
+                                    <span id="firstName_error" class="error"></span>
                                 </div>
-                                <div class="col-md-6 mb-3">
+                                <div class="col-md-8 mb-3">
                                     <label for="lastName">Apellido</label>
                                     <input type="text" class="form-control" id="lastName" placeholder="" required>
+                                    <span id="lastName_error" class="error"></span>
                                 </div>
                             </div>
 
                             <div class="mb-3">
                                 <label for="email">Email</label>
-                                <input type="email" class="form-control" id="email" placeholder="you@example.com" required>
+                                <input type="email" class="form-control" id="email" placeholder="tu@email.com" required>
                             </div>
 
                             <div class="mb-3">
                                 <label for="address">Dirección</label>
-                                <input type="text" class="form-control" id="address" placeholder="1234 Main St" required>
+                                <input type="text" class="form-control" id="address" placeholder="dirección" required>
+                                <span id="address_error" class="error"></span>
                             </div>
 
                             <div class="mb-3">
                                 <label for="address2">Dirección 2 <span class="text-muted">(Opcional)</span></label>
-                                <input type="text" class="form-control" id="address2" placeholder="Apartment or suite">
+                                <input type="text" class="form-control" id="address2" placeholder="dirección 2">
+                                <span id="address2_error" class="error"></span>
                             </div>
 
                             <div class="row">
-                                <div class="col-md-5 mb-3">
-                                    <label for="country">País</label>
-                                    <select class="custom-select d-block w-100" id="country" required>
-                                        <option value="">Elige...</option>
-                                        <option>Estados Unidos</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <label for="state">Estado</label>
-                                    <select class="custom-select d-block w-100" id="state" required>
-                                        <option value="">Elige...</option>
-                                        <option>California</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-3 mb-3">
-                                    <label for="zip">Código Postal</label>
-                                    <input type="text" class="form-control" id="zip" placeholder="" required>
-                                </div>
                             </div>
                             <hr class="mb-4">
                             <h4 class="mb-3">Pago</h4>
                             <div class="d-block my-3">
-                                <div class="custom-control custom-radio">
-                                    <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked required>
-                                    <label class="custom-control-label" for="credit">Tarjeta de Crédito</label>
-                                </div>
-                                <div class="custom-control custom-radio">
-                                    <input id="debit" name="paymentMethod" type="radio" class="custom-control-input" required>
-                                    <label class="custom-control-label" for="debit">Tarjeta de Débito</label>
-                                </div>
-                                <div class="custom-control custom-radio">
-                                    <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" required>
-                                    <label class="custom-control-label" for="paypal">PayPal</label>
-                                </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-6 mb-3">
-                                    <label for="cc-name">Nombre en la tarjeta</label>
-                                    <input type="text" class="form-control" id="cc-name" placeholder="" required>
-                                    <small class="text-muted">Nombre completo como se muestra en la tarjeta</small>
+                                    <label for="nameCard">Nombre en la tarjeta</label>
+                                    <input type="text" class="form-control" id="nameCard" placeholder="" required>
+                                    <span id="nameCard_error" class="error"></span>
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label for="cc-number">Número de la tarjeta</label>
-                                    <input type="text" class="form-control" id="cc-number" placeholder="" required>
+                                    <label for="creditCard">Número de la tarjeta</label>
+                                    <input type="text" class="form-control" id="creditCard" placeholder="" required>
+                                    <span id="creditCard_error" class="error"></span>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-3 mb-3">
-                                    <label for="cc-expiration">Expiración</label>
-                                    <input type="text" class="form-control" id="cc-expiration" placeholder="" required>
+                                    <label for="expiration">Expiración</label>
+                                    <input type="text" class="form-control" id="expiration" placeholder="" required>
+                                    <span id="expiration_error" class="error"></span>
                                 </div>
                                 <div class="col-md-3 mb-3">
-                                    <label for="cc-cvv">CVV</label>
-                                    <input type="text" class="form-control" id="cc-cvv" placeholder="" required>
+                                    <label for="cvv">CVV</label>
+                                    <input type="text" class="form-control" id="cvv" placeholder="" required>
+                                    <span id="cvv_error" class="error"></span>
                                 </div>
                             </div>
                             <hr class="mb-4">
                             <button class="btn btn-primary btn-lg btn-block" type="submit">Realizar Pago</button>
-                        </form> -->
+                        </form>
 
 
 
