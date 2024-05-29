@@ -24,4 +24,8 @@
             return $this -> bll -> get_delete_line_cart_BLL($args);
         }
 
+        public function get_selected_line($args) {
+            return $this -> bll -> get_selected_line_BLL($args);
+        }
+
     }

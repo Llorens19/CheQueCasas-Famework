@@ -46,6 +46,13 @@ class cart_dao
 		return $stmt;
 	}
 
+	public function selected_line_cart($db, $id_line, $state)
+	{
+	$sql = "UPDATE cart SET selected = '$state' WHERE id_line = '$id_line'";
+	error_log($sql);
+		return $db->ejecutar($sql);
+	}
+
 	
 
 	

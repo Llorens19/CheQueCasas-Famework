@@ -24,7 +24,12 @@
 		}
 
 		public function get_delete_line_cart_BLL($args) {
-			$res = $this->dao->delete_line_cart($this->db, $args[0]);
+			$res = $this->dao->delete_line_cart($this->db, $args);
 			return $res;
+		}
+
+		public function get_selected_line_BLL($args) {
+			$this->dao->selected_line_cart($this->db, $args[0], $args[1]);
+			return "done";
 		}
 	}

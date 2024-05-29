@@ -1,6 +1,6 @@
 function loadCart() {
 
-    ajaxPromise('POST', 'JSON', friendlyURL('?modul=cart'), { op: 'loadCart' })
+    ajaxPromise('POST', 'JSON', friendlyURL('?module=cart'), { op: 'loadCart' })
         .then(function (data) {
 
             for (row in data) {
@@ -11,7 +11,7 @@ function loadCart() {
                     .appendTo('.list_cart')
                     .html(`
             <div class="form-check d-flex align-items-center col-lg-3">
-                <input class="form-check-input" type="checkbox" id="checkbox1">
+                <input class="form-check-input selected_line selected_line_`+data[row].id_line+`" type="checkbox" id="`+data[row].id_line+`">
                 <label class="form-check-label mx-2" for="checkbox1">
                     <img src="`+ absoluteURL('view/img/shop/test/' + data[row].image_url) + `" alt="Producto 1" style="width: 150px; height: 100px;">
                     
@@ -38,6 +38,10 @@ function loadCart() {
                 </div>
                 
         `);
+
+                if (data[row].selected == 1) {
+                    $(".selected_line_"+data[row].id_line).prop('checked', true);
+                }
 
             }
             butons_cart();
@@ -84,7 +88,7 @@ function deleteLine() {
         console.log('delete');
         let id = $(this).attr('id');
         console.log(id);
-        ajaxPromise('POST', 'JSON', friendlyURL('?modul=cart'), { op: 'delete_line_cart', id_line: id })
+        ajaxPromise('POST', 'JSON', friendlyURL('?module=cart'), { op: 'delete_line_cart', id_line: id })
             .then(function (data) {
                 console.log(data);
                 // $(".list_cart").empty();
@@ -98,10 +102,36 @@ function deleteLine() {
     
 }
 
+function selected_line () {
+    $(".selected_line").click(function () {
+        console.log('selected');
+        let id = $(this).attr('id');
+        console.log(id);
+
+
+        let state = $(this).prop('checked');
+        let state_bd = state ? 1 : 0;
+        console.log(state_bd);
+
+
+        ajaxPromise('POST', 'JSON', friendlyURL('?module=cart'), { op: 'selected_line', id_line: id, state: state_bd})
+            .then(function (data) {
+                console.log(data);
+            })
+            .catch(function () {
+                console.error('error');
+            });
+
+    });
+    
+}
+
+
 function butons_cart() {
     deleteLine();
     increment();
     decrement();
+    selected_line();
 }
 
 

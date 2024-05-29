@@ -25,5 +25,9 @@
         function delete_line_cart() {
             echo json_encode(common::load_model('cart_model', 'get_delete_line_cart', $_POST['id_line']));
         }
+
+        function selected_line() {
+            echo json_encode(common::load_model('cart_model', 'get_selected_line', [$_POST['id_line'], $_POST['state']]));
+        }
         
     }

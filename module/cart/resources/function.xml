@@ -16,4 +16,9 @@
         <uri>delete_line_cart</uri>
     </function>
 
+    <function>
+        <name>selected_line</name>
+        <uri>selected_line</uri>
+    </function>
+
 </functions>
