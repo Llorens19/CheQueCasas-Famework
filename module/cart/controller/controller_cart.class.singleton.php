@@ -40,5 +40,10 @@
         function total_money() {
             echo json_encode(common::load_model('cart_model', 'get_total_money', [$_SESSION['username'], $_SESSION['type_user']]));
         }   
+
+        function buy() {
+            error_log("buyyyyyyyyyyyyyyyyyy");
+            echo json_encode(common::load_model('cart_model', 'get_buy', [$_SESSION["username"], $_POST["name"], $_POST["surname"], $_POST['email'], $_POST['adress'], $_POST["adress2"], $_SESSION['type_user']]));
+        }
         
     }

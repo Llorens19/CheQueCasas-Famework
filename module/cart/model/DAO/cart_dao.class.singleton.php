@@ -86,4 +86,61 @@ class cart_dao
 		$stmt = $db->ejecutar($sql);
 		return $db->listar($stmt);
 	}
+
+	public function buy($db, $username, $name, $surname, $email, $adress, $adress2, $type_user)
+	{
+
+
+		if ($type_user == 'normal' and isset($type_user)) {
+
+			
+		$sql = "SELECT insert_user_order_by_username(
+			'$username', 
+			'$name', 
+			'$surname', 
+			'$email', 
+			'$adress', 
+			'$adress2',
+			NOW(), 
+			(SELECT SUM(p.price_product * c.total_quantity) as total FROM cart c, product p WHERE c.id_user = (SELECT id_user FROM user  WHERE username = '$username') and p.id_product = c.id_product and c.selected = '1')
+		) AS message;";
+		
+		
+		
+		
+		
+		} else if ($type_user == 'google' and isset($type_user)) {
+			
+			
+		$sql = "SELECT insert_user_order_by_username_google(
+			'$username', 
+			'$name', 
+			'$surname', 
+			'$email', 
+			'$adress', 
+			'$adress2',
+			NOW(), 
+			(SELECT SUM(p.price_product * c.total_quantity) as total FROM cart c, product p WHERE c.id_user = (SELECT id_user FROM user_google  WHERE username = '$username') and p.id_product = c.id_product and c.selected = '1')
+		) AS message;";
+		
+		} else if ($type_user == 'github' and isset($type_user)) {
+
+			
+		$sql = "SELECT insert_user_order_by_username_github(
+			'$username', 
+			'$name', 
+			'$surname', 
+			'$email', 
+			'$adress', 
+			'$adress2',
+			NOW(), 
+			(SELECT SUM(p.price_product * c.total_quantity) as total FROM cart c, product p WHERE c.id_user = (SELECT id_user FROM user_github  WHERE username = '$username') and p.id_product = c.id_product and c.selected = '1')
+		) AS message;";
+		
+		}
+
+		$stmt = $db->ejecutar($sql);
+		return $db->listar($stmt);
+	
+	}
 }

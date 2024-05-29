@@ -47,4 +47,10 @@
 			$res = $this->dao->total_money($this->db, $args[0], $args[1]);
 			return $res;
 		}
+
+		public function get_buy_BLL($args) {
+			error_log("buyyyyyyyyyyyyyyyyyyasdasdsa");
+			$res = $this->dao->buy($this->db, $args[0], $args[1], $args[2], $args[3], $args[4], $args[5], $args[6]);
+			return $res;
+		}
 	}

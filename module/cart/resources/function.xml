@@ -36,4 +36,9 @@
         <uri>total_money</uri>
     </function>
 
+    <function>
+        <name>buy</name>
+        <uri>buy</uri>
+    </function>
+
 </functions>

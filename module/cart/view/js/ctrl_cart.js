@@ -160,6 +160,7 @@ function total_money() {
 }
 
 function validate_buy_data() {
+    console.log("validaaaaaaaaaa");
     let name_ex = /^[a-zA-Z\s]{3,30}$/;
     let surnames_ex = /^[a-zA-Z\s]{3,30}$/;
     let direction_ex = /^[a-zA-Z0-9\s]{3,30}$/;
@@ -244,59 +245,87 @@ function validate_buy_data() {
         } else {
             document.getElementById('nameCard_error').innerHTML = "";
         }
-
-
-
-        if (credit_card.length === 0) {
-            document.getElementById('creditCard_error').innerHTML = "El campo tarjeta de credito es obligatorio";
-            let error = true;
-
-        } else {
-            if (!credit_card_ex.test(credit_card)) {
-                document.getElementById('creditCard_error').innerHTML = "La tarjeta de credito no es valida";
-                error = true;
-            } else {
-                document.getElementById('creditCard_error').innerHTML = "";
-            }
-        }
-
-        if (expiration_date.length === 0) {
-            document.getElementById('expiration_error').innerHTML = "El campo fecha de caducidad es obligatorio";
-            let error = true;
-
-        } else {
-            if (!expiration_date_ex.test(expiration_date)) {
-                document.getElementById('expiration_error').innerHTML = "La fecha de caducidad no es valida";
-                error = true;
-            } else {
-                document.getElementById('expiration_error').innerHTML = "";
-            }
-        }
-
-        if (cvv.length === 0) {
-            document.getElementById('cvv_error').innerHTML = "El campo cvv es obligatorio";
-            let error = true;
-        } else {
-            if (!cvv_ex.test(cvv)) {
-                document.getElementById('cvv_error').innerHTML = "El cvv no es valido";
-                error = true;
-            } else {
-                document.getElementById('cvv_error').innerHTML = "";
-            }
-        }
-
-        if (error) {
-            return false;
-        }
-
     }
 
 
+    if (credit_card.length === 0) {
+        document.getElementById('creditCard_error').innerHTML = "El campo tarjeta de credito es obligatorio";
+        let error = true;
 
+    } else {
+        if (!credit_card_ex.test(credit_card)) {
+            document.getElementById('creditCard_error').innerHTML = "La tarjeta de credito no es valida";
+            error = true;
+        } else {
+            document.getElementById('creditCard_error').innerHTML = "";
+        }
+    }
 
+    if (expiration_date.length === 0) {
+        document.getElementById('expiration_error').innerHTML = "El campo fecha de caducidad es obligatorio";
+        let error = true;
 
+    } else {
+        if (!expiration_date_ex.test(expiration_date)) {
+            document.getElementById('expiration_error').innerHTML = "La fecha de caducidad no es valida";
+            error = true;
+        } else {
+            document.getElementById('expiration_error').innerHTML = "";
+        }
+    }
 
+    if (cvv.length === 0) {
+        document.getElementById('cvv_error').innerHTML = "El campo cvv es obligatorio";
+        let error = true;
+    } else {
+        if (!cvv_ex.test(cvv)) {
+            document.getElementById('cvv_error').innerHTML = "El cvv no es valido";
+            error = true;
+        } else {
+            document.getElementById('cvv_error').innerHTML = "";
+        }
+    }
+
+    if (error) {
+        return false;
+    } else {
+        return true;
+    }
 }
+
+
+function buy() {
+    $(".buy_button").click(function () {
+
+        data = {
+            name: document.getElementById('firstName').value,
+            surname: document.getElementById('lastName').value,
+            email: document.getElementById('email').value,
+            adress: document.getElementById('address').value,
+            adress2: document.getElementById('address2').value,
+            //name_card: document.getElementById('nameCard').value,
+            //credit_card: document.getElementById('creditCard').value,
+            //expiration_date: document.getElementById('expiration').value,
+            //cvv: document.getElementById('cvv').value,
+            op: 'buy'
+        };
+
+        check = validate_buy_data();
+        console.log(check);
+        if (check) {
+            console.log('buy');
+            ajaxPromise('POST', 'JSON', friendlyURL('?module=cart'), data)
+                .then(function (data) {
+                    
+                    console.log(data);
+                })
+                .catch(function () {
+                    console.error('error');
+                });
+        }
+    });
+}
+
 
 
 function butons_cart() {
@@ -304,6 +333,7 @@ function butons_cart() {
     increment();
     decrement();
     selected_line();
+    buy();
 }
 
 

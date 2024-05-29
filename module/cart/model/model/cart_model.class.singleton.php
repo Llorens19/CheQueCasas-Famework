@@ -39,4 +39,8 @@
             return $this -> bll -> get_total_money_BLL($args);
         }
 
+        public function get_buy($args) {
+            return $this -> bll -> get_buy_BLL($args);
+        }
+
     }
