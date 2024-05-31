@@ -1,9 +1,19 @@
 <!-- ======= Hero Section ======= -->
 <section  class=" shop_header d-flex position-fixed" style="z-index: 2;">
     <div class="col-lg-10 mx-auto ">
-        <div class="d-flex justify-content-between my-2 mx-2 cart_options ">
+        <div class="d-flex justify-content-between my-2 mx-2 cart_options filters shop_filters">
+          
+            <button class="btn btn-primary btn-block user_bills" type="button" id="cart_button">Mis Facturas</button>
 
-         
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#invoiceModal">
+            Ver Facturas
+        </button>
+   
+
+    
+
+
+            
         </div>
     </div>
 </section>
@@ -147,8 +157,63 @@
 
     </section>
 
-    <section class="details-shop">
+    <section >
+
+        <div class="modal fade" id="invoiceModal" tabindex="-1" aria-labelledby="invoiceModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="invoiceModalLabel">Facturas de Juan Pérez</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table ">
+                            <thead>
+                                <tr>
+                                    <th class="col text-center">ID</th>
+                                    <th class="col text-center">Fecha</th>
+                                    <th class="col text-center">Monto</th>
+                                    <th class="col text-center">Estado</th>
+                                    <th class="col text-center">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody class = "bill_table_content">
+                                <tr>
+                                    <td class="col text-center">1</td>
+                                    <td class="col text-center">2023-01-15</td>
+                                    <td class="col text-center">$500.00</td>
+                                    <td class="col text-center">Pagada</td>
+                                    <td class="col text-center"><button class="btn btn-primary">Ver Factura</button></td>
+                                </tr>
+                               
+                                <tr>
+                                    <td class="col text-center">3</td>
+                                    <td class="col text-center">2023-03-10</td>
+                                    <td class="col text-center">$450.00</td>
+                                    <td class="col text-center">Pagada</td>
+                                    <td class="col text-center"><button class="btn btn-primary">Ver Factura</button></td>
+                                </tr>
+
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    
 
 
     </section>
+
+
+
+
+
 </main>

@@ -43,4 +43,8 @@
             return $this -> bll -> get_buy_BLL($args);
         }
 
+        public function get_load_facturas($args) {
+            return $this -> bll -> get_load_facturas_BLL($args);
+        }
+
     }

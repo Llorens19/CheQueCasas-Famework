@@ -42,8 +42,11 @@
         }   
 
         function buy() {
-            error_log("buyyyyyyyyyyyyyyyyyy");
             echo json_encode(common::load_model('cart_model', 'get_buy', [$_SESSION["username"], $_POST["name"], $_POST["surname"], $_POST['email'], $_POST['adress'], $_POST["adress2"], $_SESSION['type_user']]));
+        }
+
+        function load_facturas() {
+            echo json_encode(common::load_model('cart_model', 'get_load_facturas', [$_SESSION["username"], $_SESSION['type_user']]));
         }
         
     }

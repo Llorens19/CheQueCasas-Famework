@@ -316,7 +316,7 @@ function buy() {
             console.log('buy');
             ajaxPromise('POST', 'JSON', friendlyURL('?module=cart'), data)
                 .then(function (data) {
-                    
+
                     console.log(data);
                 })
                 .catch(function () {
@@ -327,8 +327,28 @@ function buy() {
 }
 
 
+function load_facturas() {
+
+    ajaxPromise("POST", "JSON", friendlyURL("?module=cart"), { op: "load_facturas" })
+        .then(function (data) {
+            console.log(data);
+
+
+
+
+
+        })
+        .catch(function () {
+            console.error('error');
+        });
+}
+
+
+
 
 function butons_cart() {
+
+    load_facturas();
     deleteLine();
     increment();
     decrement();

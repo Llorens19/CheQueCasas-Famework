@@ -47,7 +47,7 @@ class cart_dao
 	public function selected_line_cart($db, $id_line, $state)
 	{
 		$sql = "UPDATE cart SET selected = '$state' WHERE id_line = '$id_line'";
-		error_log($sql);
+
 		return $db->ejecutar($sql);
 	}
 
@@ -76,8 +76,7 @@ class cart_dao
 
 			$sql = "SELECT SUM(p.price_product * c.total_quantity) as total FROM cart c, product p WHERE c.id_user = (SELECT id_user FROM user_github  WHERE username = '$username') and p.id_product = c.id_product and c.selected = '1'";
 		}
-		error_log($sql);
-
+	
 
 		$stmt = $db->ejecutar($sql);
 		return $db->listar($stmt);
@@ -135,14 +134,12 @@ class cart_dao
 
 	function save_lines($db, $id, $username, $type_user)
 	{
-		error_log("id"  . $id);
-		error_log("username"  . $username);
-		error_log("type_user"  . $type_user);
+
 
 		if ($type_user == 'normal' and isset($type_user)) {
-			error_log("normal");
+			
 			$sql = "SELECT transfer_to_order('$id', (SELECT id_user FROM user WHERE username = '$username')) AS message";
-			error_log($sql);
+			
 		} else if ($type_user == 'google' and isset($type_user)) {
 			$sql = "SELECT transfer_to_order('$id', (SELECT id_user FROM user_google WHERE username = '$username')) AS message";
 		} else if ($type_user == 'github' and isset($type_user)) {
@@ -159,7 +156,7 @@ class cart_dao
 		if ($type_user == 'normal' and isset($type_user)) {
 			$sql = "UPDATE product p SET p.stock = p.stock - (SELECT c.total_quantity FROM cart c WHERE c.id_product = p.id_product AND c.selected = '1' AND c.id_user = (SELECT id_user FROM user WHERE username = '$username')) WHERE p.id_product = (SELECT c.id_product FROM cart c WHERE c.id_product = p.id_product AND c.selected = '1' AND c.id_user = (SELECT id_user FROM user WHERE username = '$username'));";
 		
-			error_log($sql);
+			
 		} else if ($type_user == 'google' and isset($type_user)) {
 
 			$sql = "UPDATE product p SET p.stock = p.stock - (SELECT c.total_quantity FROM cart c WHERE c.id_product = p.id_product AND c.selected = '1' AND c.id_user = (SELECT id_user FROM user_google WHERE username = '$username'));";
@@ -179,7 +176,7 @@ class cart_dao
 		if ($type_user == 'normal' and isset($type_user)) {
 
 			$sql = "DELETE FROM cart WHERE id_user = (SELECT id_user FROM user WHERE username = '$username') and selected = '1'";
-			error_log($sql);
+			
 		} else if ($type_user == 'google' and isset($type_user)) {
 
 			$sql = "DELETE FROM cart WHERE id_user = (SELECT id_user FROM user_google WHERE username = '$username') and selected = '1'";
@@ -196,7 +193,7 @@ class cart_dao
 	function select_order($db, $id)
 	{
 		$sql = "SELECT * FROM `order` o, product p WHERE id_order = '$id' and o.id_product = p.id_product";
-		error_log($sql);
+		
 		$stmt = $db->ejecutar($sql);
 		return $db->listar($stmt);
 	}
@@ -204,7 +201,7 @@ class cart_dao
 	function select_user_order($db, $id)
 	{
 		$sql = "SELECT * FROM user_order WHERE id_order = '$id'";
-		error_log($sql);
+	
 		$stmt = $db->ejecutar($sql);
 		return $db->listar($stmt);
 	}
@@ -213,5 +210,25 @@ class cart_dao
 	{
 		$sql = "UPDATE user_order SET url_pdf = '$url' WHERE id_order = '$id'";
 		return $db->ejecutar($sql);
+	}
+
+
+	function factura_user($db, $username, $type_user){
+
+		if($type_user == 'normal' and isset($type_user)){
+			$sql = "SELECT * FROM user_order WHERE id_user = (SELECT id_user FROM user WHERE username = '$username')";
+
+		}else if($type_user == 'google' and isset($type_user)){
+
+			$sql = "SELECT * FROM user_order WHERE id_user = (SELECT id_user FROM user_google WHERE username = '$username')";
+
+		}else if($type_user == 'github' and isset($type_user)){
+
+			$sql = "SELECT * FROM user_order WHERE id_user = (SELECT id_user FROM user_github WHERE username = '$username')";
+		}
+		error_log($sql);
+		$stmt = $db->ejecutar($sql);
+		return $db->listar($stmt);
+
 	}
 }
