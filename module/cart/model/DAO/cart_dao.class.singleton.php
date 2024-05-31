@@ -69,20 +69,16 @@ class cart_dao
 		if ($type_user == 'normal' and isset($type_user)) {
 
 			$sql = "SELECT SUM(p.price_product * c.total_quantity) as total FROM cart c, product p WHERE c.id_user = (SELECT id_user FROM user  WHERE username = '$username') and p.id_product = c.id_product and c.selected = '1'";
-			
 		} else if ($type_user == 'google' and isset($type_user)) {
-			
+
 			$sql = "SELECT SUM(p.price_product * c.total_quantity) as total FROM cart c, product p WHERE c.id_user = (SELECT id_user FROM user_google  WHERE username = '$username') and p.id_product = c.id_product and c.selected = '1'";
-		
-		
 		} else if ($type_user == 'github' and isset($type_user)) {
 
 			$sql = "SELECT SUM(p.price_product * c.total_quantity) as total FROM cart c, product p WHERE c.id_user = (SELECT id_user FROM user_github  WHERE username = '$username') and p.id_product = c.id_product and c.selected = '1'";
-		
 		}
 		error_log($sql);
 
-	
+
 		$stmt = $db->ejecutar($sql);
 		return $db->listar($stmt);
 	}
@@ -93,8 +89,8 @@ class cart_dao
 
 		if ($type_user == 'normal' and isset($type_user)) {
 
-			
-		$sql = "SELECT insert_user_order_by_username(
+
+			$sql = "SELECT insert_user_order_by_username(
 			'$username', 
 			'$name', 
 			'$surname', 
@@ -104,15 +100,10 @@ class cart_dao
 			NOW(), 
 			(SELECT SUM(p.price_product * c.total_quantity) as total FROM cart c, product p WHERE c.id_user = (SELECT id_user FROM user  WHERE username = '$username') and p.id_product = c.id_product and c.selected = '1')
 		) AS message;";
-		
-		
-		
-		
-		
 		} else if ($type_user == 'google' and isset($type_user)) {
-			
-			
-		$sql = "SELECT insert_user_order_by_username_google(
+
+
+			$sql = "SELECT insert_user_order_by_username_google(
 			'$username', 
 			'$name', 
 			'$surname', 
@@ -122,11 +113,10 @@ class cart_dao
 			NOW(), 
 			(SELECT SUM(p.price_product * c.total_quantity) as total FROM cart c, product p WHERE c.id_user = (SELECT id_user FROM user_google  WHERE username = '$username') and p.id_product = c.id_product and c.selected = '1')
 		) AS message;";
-		
 		} else if ($type_user == 'github' and isset($type_user)) {
 
-			
-		$sql = "SELECT insert_user_order_by_username_github(
+
+			$sql = "SELECT insert_user_order_by_username_github(
 			'$username', 
 			'$name', 
 			'$surname', 
@@ -136,12 +126,10 @@ class cart_dao
 			NOW(), 
 			(SELECT SUM(p.price_product * c.total_quantity) as total FROM cart c, product p WHERE c.id_user = (SELECT id_user FROM user_github  WHERE username = '$username') and p.id_product = c.id_product and c.selected = '1')
 		) AS message;";
-		
 		}
 
 		$stmt = $db->ejecutar($sql);
 		return $db->listar($stmt);
-	
 	}
 
 
@@ -163,7 +151,45 @@ class cart_dao
 
 		$stmt = $db->ejecutar($sql);
 		return $db->listar($stmt);
+	}
 
+	function update_stock($db, $username, $type_user)
+	{
+
+		if ($type_user == 'normal' and isset($type_user)) {
+			$sql = "UPDATE product p SET p.stock = p.stock - (SELECT c.total_quantity FROM cart c WHERE c.id_product = p.id_product AND c.selected = '1' AND c.id_user = (SELECT id_user FROM user WHERE username = '$username')) WHERE p.id_product = (SELECT c.id_product FROM cart c WHERE c.id_product = p.id_product AND c.selected = '1' AND c.id_user = (SELECT id_user FROM user WHERE username = '$username'));";
 		
+			error_log($sql);
+		} else if ($type_user == 'google' and isset($type_user)) {
+
+			$sql = "UPDATE product p SET p.stock = p.stock - (SELECT c.total_quantity FROM cart c WHERE c.id_product = p.id_product AND c.selected = '1' AND c.id_user = (SELECT id_user FROM user_google WHERE username = '$username'));";
+		
+		} else if ($type_user == 'github' and isset($type_user)) {
+
+			$sql = "UPDATE product p SET p.stock = p.stock - (SELECT c.total_quantity FROM cart c WHERE c.id_product = p.id_product AND c.selected = '1' AND c.id_user = (SELECT id_user FROM user_github WHERE username = '$username'));";
+		
+		}
+
+
+		return $db->ejecutar($sql);
+	}
+
+	function delete_cart($db, $username, $type_user)
+	{
+		if ($type_user == 'normal' and isset($type_user)) {
+
+			$sql = "DELETE FROM cart WHERE id_user = (SELECT id_user FROM user WHERE username = '$username') and selected = '1'";
+			error_log($sql);
+		} else if ($type_user == 'google' and isset($type_user)) {
+
+			$sql = "DELETE FROM cart WHERE id_user = (SELECT id_user FROM user_google WHERE username = '$username') and selected = '1'";
+
+		} else if ($type_user == 'github' and isset($type_user)) {
+
+			$sql = "DELETE FROM cart WHERE id_user = (SELECT id_user FROM user_github WHERE username = '$username')and selected = '1'";
+
+		}
+
+		return $db->ejecutar($sql);
 	}
 }

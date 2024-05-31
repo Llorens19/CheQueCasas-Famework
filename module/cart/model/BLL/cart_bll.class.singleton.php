@@ -58,6 +58,9 @@
 			if(isset($id)){
 
 				$res2 = $this->dao->save_lines($this->db, $id, $args[0], $args[6]);
+				
+				$this->dao->update_stock($this->db, $args[0], $args[6]);
+				$this->dao->delete_cart($this->db, $args[0], $args[6]);
 
 				error_log($id);
 			return $res2;
