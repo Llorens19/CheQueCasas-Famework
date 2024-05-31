@@ -60,10 +60,20 @@
 				$res2 = $this->dao->save_lines($this->db, $id, $args[0], $args[6]);
 				
 				$this->dao->update_stock($this->db, $args[0], $args[6]);
-				$this->dao->delete_cart($this->db, $args[0], $args[6]);
+				
+				$order = $this->dao->select_order($this->db, $id);
+				$user_order = $this->dao->select_user_order($this->db, $id);
+				
+				PDF::create_Bill($order, $user_order, $id);
 
 				error_log($id);
-			return $res2;
+				$this->dao->delete_cart($this->db, $args[0], $args[6]);
+				
+				$url_pdf = 'pdf/factura' . $id . '.pdf';
+
+				$this->dao->save_pdf_url($this->db, $id, $url_pdf);
+
+			return $order;
 
 			}else{
 				return 'fail';

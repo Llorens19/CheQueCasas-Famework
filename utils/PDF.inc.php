@@ -1,36 +1,47 @@
 <?php
-require 'vendor/autoload.php';
+require __DIR__ . '/vendor/autoload.php';
+
 use Dompdf\Dompdf;
 
-class DompdfFactory
+class PDF
 {
     public static function create()
     {
         return new Dompdf();
     }
 
-    public static function createDompdf($order,$user_order, $id_order)
+    public static function create_Bill($order, $user_order, $id_order)
     {
-        $id =$user_order[0]['id_order'];
+        $save_path = SITE_ROOT . 'pdf/';
+        $html = self::html_creator($order, $user_order);
 
-        $html = html_creator($order, $user_order);
 
         $dompdf = new Dompdf();
         $dompdf->loadHtml($html);
-        $dompdf->setPaper('A4', 'landscape');
+        $dompdf->setPaper('A4', 'portrait');  
         $dompdf->render();
-        $dompdf->stream('factura' . $id . '.pdf', ['Attachment' => 0]);
+        
+        $output = $dompdf->output();
+        $file_path = $save_path . 'factura' . $id_order . '.pdf';
+        file_put_contents($file_path, $output);
+
+
+
+
     }
-}
 
+    public static function html_creator($order, $user_order)
+    {
+        $user_order_data = $user_order[0];
+        $order_data = $order;
+        
+        // error_log(print_r($user_order_data, true));
+        // error_log(print_r($order, true));
+        // error_log($user_order_data['name_buyer'] . ' ' . $user_order_data['surname_buyer']);
 
-function html_creator($order, $user_order)
-{
-    $order_data = $user_order[0];
-
-    ob_start(); 
-    ?>
-    <!DOCTYPE html>
+        ob_start();
+?>
+        <!DOCTYPE html>
     <html lang="es">
     <head>
         <meta charset="UTF-8">
@@ -76,23 +87,23 @@ function html_creator($order, $user_order)
             <table width="100%">
                 <tr>
                     <th>ID Pedido</th>
-                    <td><?php echo htmlspecialchars($order_data['id_order']); ?></td>
+                    <td><?php echo htmlspecialchars($user_order_data['id_order']); ?></td>
                 </tr>
                 <tr>
                     <th>Cliente</th>
-                    <td><?php echo htmlspecialchars($order_data['name_buyer'] . ' ' . $order_data['surname_buyer']); ?></td>
+                    <td><?php echo htmlspecialchars($user_order_data['name_buyer'] . ' ' . $user_order_data['surname_buyer']); ?></td>
                 </tr>
                 <tr>
                     <th>Email</th>
-                    <td><?php echo htmlspecialchars($order_data['email_buyer']); ?></td>
+                    <td><?php echo htmlspecialchars($user_order_data['email_buyer']); ?></td>
                 </tr>
                 <tr>
                     <th>Dirección</th>
-                    <td><?php echo htmlspecialchars($order_data['address_buyer'] . ', ' . $order_data['address2_buyer']); ?></td>
+                    <td><?php echo htmlspecialchars($user_order_data['address_buyer'] . ', ' . $user_order_data['address2_buyer']); ?></td>
                 </tr>
                 <tr>
                     <th>Fecha del Pedido</th>
-                    <td><?php echo htmlspecialchars($order_data['date_order']); ?></td>
+                    <td><?php echo htmlspecialchars($user_order_data['date_order']); ?></td>
                 </tr>
             </table>
         </div>
@@ -108,7 +119,7 @@ function html_creator($order, $user_order)
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($order as $item): ?>
+                    <?php foreach ($order_data as $item): ?>
                     <tr>
                         <td><?php echo htmlspecialchars($item['n_product']); ?></td>
                         <td><?php echo htmlspecialchars($item['d_product']); ?></td>
@@ -121,14 +132,15 @@ function html_creator($order, $user_order)
             </table>
         </div>
         <div class="total">
-            <p>Total: $<?php echo htmlspecialchars($order_data['total_price']); ?></p>
+            <p>Total:<?php echo htmlspecialchars($user_order_data['total_price']); ?> €</p>
         </div>
         <div class="footer">
             <p>Gracias por su compra</p>
         </div>
     </body>
     </html>
-    <?php
-    return ob_get_clean();
-}
 
+<?php
+        return ob_get_clean();
+    }
+}

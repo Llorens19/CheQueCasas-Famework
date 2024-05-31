@@ -192,4 +192,26 @@ class cart_dao
 
 		return $db->ejecutar($sql);
 	}
+
+	function select_order($db, $id)
+	{
+		$sql = "SELECT * FROM `order` o, product p WHERE id_order = '$id' and o.id_product = p.id_product";
+		error_log($sql);
+		$stmt = $db->ejecutar($sql);
+		return $db->listar($stmt);
+	}
+
+	function select_user_order($db, $id)
+	{
+		$sql = "SELECT * FROM user_order WHERE id_order = '$id'";
+		error_log($sql);
+		$stmt = $db->ejecutar($sql);
+		return $db->listar($stmt);
+	}
+
+	function save_pdf_url($db, $id, $url)
+	{
+		$sql = "UPDATE user_order SET url_pdf = '$url' WHERE id_order = '$id'";
+		return $db->ejecutar($sql);
+	}
 }
