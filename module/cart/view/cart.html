@@ -163,39 +163,23 @@
             <div class="modal-dialog modal-lg modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="invoiceModalLabel">Facturas de Juan Pérez</h5>
+                        <h5 class="modal-title" id="invoiceModalLabel">Facturas</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body">
-                        <table class="table ">
+                    <div class="modal-body" style="max-height: 400px; overflow-y: auto;">
+                        <table class="table">
                             <thead>
                                 <tr>
                                     <th class="col text-center">ID</th>
                                     <th class="col text-center">Fecha</th>
-                                    <th class="col text-center">Monto</th>
-                                    <th class="col text-center">Estado</th>
-                                    <th class="col text-center">Acciones</th>
+                                    <th class="col text-center">Nombre</th>
+                                    <th class="col text-center">Total</th>
+                                    <th class="col text-center">Ver</th>
                                 </tr>
                             </thead>
-                            <tbody class = "bill_table_content">
-                                <tr>
-                                    <td class="col text-center">1</td>
-                                    <td class="col text-center">2023-01-15</td>
-                                    <td class="col text-center">$500.00</td>
-                                    <td class="col text-center">Pagada</td>
-                                    <td class="col text-center"><button class="btn btn-primary">Ver Factura</button></td>
-                                </tr>
-                               
-                                <tr>
-                                    <td class="col text-center">3</td>
-                                    <td class="col text-center">2023-03-10</td>
-                                    <td class="col text-center">$450.00</td>
-                                    <td class="col text-center">Pagada</td>
-                                    <td class="col text-center"><button class="btn btn-primary">Ver Factura</button></td>
-                                </tr>
-
+                            <tbody class="bill_table_content">
                                 
                             </tbody>
                         </table>
@@ -206,8 +190,27 @@
                 </div>
             </div>
         </div>
+
         
-    
+        <div class="modal fade" id="pdfModal" tabindex="-1" role="dialog" aria-labelledby="pdfModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="pdfModalLabel">Factura</h5>
+                        <button type="button" class="close close_pdf" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="pdf-viewer"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <a id="download-link" href="#" class="btn btn-primary" download>Descargar PDF</a>
+                        <button type="button" class="btn btn-secondary close_pdf" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
     </section>

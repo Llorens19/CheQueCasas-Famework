@@ -82,17 +82,12 @@
 		}
 
 		public function get_load_facturas_BLL($args){
-
 			$facturas = $this->dao->factura_user($this->db, $args[0], $args[1]);
 			
 			if (empty($facturas)){
-
 				return "error";
-
 			}else{
 				return $facturas;
 			}
-
 		}
-
 	}

@@ -44,7 +44,7 @@ function loadCart() {
                 }
 
             }
-            butons_cart();
+            buttons_cart();
             total_money();
 
         })
@@ -333,20 +333,90 @@ function load_facturas() {
         .then(function (data) {
             console.log(data);
 
+            for (row in data) {
 
-
-
-
+                $("<tr></tr>").attr('class', 'row_factura')
+                    .appendTo('.bill_table_content')
+                    .html(`
+                    <td class="col text-center">`+ data[row].id_order + `</td>
+                    <td class="col text-center">`+ data[row].date_order + `</td>
+                    <td class="col text-center">`+ data[row].name_buyer + ` ` + data[row].surname_buyer + `</td>
+                    <td class="col text-center">`+ data[row].total_price + `</td>
+                    <td class="col text-center"><button class="btn btn-primary load_factura" id = "`+ data[row].id_order + `">Ver Factura</button></td>
+                    `);
+            }
+            load_factura();
         })
         .catch(function () {
             console.error('error');
         });
 }
 
+function load_factura() {
+    $(".load_factura").click(function () {
+
+        console.log('load factura');
+        let id = $(this).attr('id');
+        const url = absoluteURL('pdf/factura' + id + '.pdf');
+        console.log(url);
+
+        // Configurar la URL del worker de PDF.js
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.9.359/pdf.worker.min.js';
+
+        const loadingTask = pdfjsLib.getDocument(url);
+        loadingTask.promise.then(pdf => {
+            const viewer = document.getElementById('pdf-viewer');
+            if (!viewer) {
+                console.error('No se encontró el elemento #pdf-viewer en el DOM.');
+                return;
+            }
+
+            viewer.innerHTML = '';
+            const numPages = pdf.numPages;
+
+            for (let pageNum = 1; pageNum <= numPages; pageNum++) {
+                pdf.getPage(pageNum).then(page => {
+                    const scale = 1.5;
+                    const viewport = page.getViewport({ scale: scale });
+
+                    const canvas = document.createElement('canvas');
+                    const context = canvas.getContext('2d');
+                    canvas.height = viewport.height;
+                    canvas.width = viewport.width;
+
+                    viewer.appendChild(canvas);
+
+                    const renderContext = {
+                        canvasContext: context,
+                        viewport: viewport
+                    };
+                    page.render(renderContext);
+                });
+            }
+        }).catch(err => {
+            console.error('Error al cargar el PDF:', err);
+        });
+
+        const downloadLink = document.getElementById('download-link');
+        downloadLink.href = url;
+
+        $('#pdfModal').modal('show');
+    });
+
+}
+
+
+function button_close_pdf() {
+    $(".close_pdf").click(function () {
+    $('#pdfModal').modal('hide');
+    });
+}
 
 
 
-function butons_cart() {
+
+
+function buttons_cart() {
 
     load_facturas();
     deleteLine();
@@ -357,9 +427,12 @@ function butons_cart() {
 }
 
 
+
+
 $(document).ready(() => {
     console.log('cart ready');
     loadCart();
+    button_close_pdf();
 
     $('.footer').attr('class', 'footer col-lg-7');
 });

@@ -2534,3 +2534,14 @@ body {
     margin-bottom: 10px; /* Añade un poco de margen para separar los elementos */
 }
 
+#pdf-viewer {
+    width: 100%;
+    height: 600px;
+    overflow: auto;
+}
+canvas {
+    display: block;
+    margin: 10px auto;
+    max-width: 100%;
+    height: auto;
+}
