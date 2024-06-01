@@ -342,10 +342,14 @@ function load_facturas() {
                     <td class="col text-center">`+ data[row].date_order + `</td>
                     <td class="col text-center">`+ data[row].name_buyer + ` ` + data[row].surname_buyer + `</td>
                     <td class="col text-center">`+ data[row].total_price + `</td>
-                    <td class="col text-center"><button class="btn btn-primary load_factura" id = "`+ data[row].id_order + `">Ver Factura</button></td>
+                    <td class="col text-center">
+                    <button class="btn btn-primary load_factura" id = "`+ data[row].id_order + `">Ver Factura</button>
+                    <button class="btn btn-primary load_qr" id = "`+ data[row].id_order + `">Ver QR</button>
+                    </td>
                     `);
             }
             load_factura();
+            load_qr();
         })
         .catch(function () {
             console.error('error');
@@ -406,6 +410,35 @@ function load_factura() {
 }
 
 
+function load_qr() {
+    
+    $(".load_qr").click(function () {
+        console.log('load qr');
+        let id = $(this).attr('id');
+        const url = absoluteURL('QR/QR' + id + '.png');
+
+        $('.qr_img').empty();
+
+        $("<img></img>").attr('src', url).attr('class', 'qr_code').css("max-width", "100%").appendTo('.qr_img');
+        
+
+        $('#imageModal').modal('show');
+
+       
+    });
+}
+
+
+
+
+function button_close_qr() {
+    $(".close_qr").click(function () {
+    $('#imageModal').modal('hide');
+    });
+}
+
+
+
 function button_close_pdf() {
     $(".close_pdf").click(function () {
     $('#pdfModal').modal('hide');
@@ -432,7 +465,9 @@ function buttons_cart() {
 $(document).ready(() => {
     console.log('cart ready');
     loadCart();
+    
     button_close_pdf();
+    button_close_qr();
 
     $('.footer').attr('class', 'footer col-lg-7');
 });

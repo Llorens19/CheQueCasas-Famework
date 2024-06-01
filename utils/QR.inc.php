@@ -14,7 +14,9 @@ class QR
 
     public static function QR_bill($html, $id_order)
     {
-        $qr_url = SITE_ROOT . "QR/QR" . $id_order . ".png";
+        $qr_url_relative = "QR/QR" . $id_order . ".png";
+        $qr_url = SITE_ROOT . $qr_url_relative;
+        
         error_log($qr_url);
         error_log($html);
         
@@ -28,13 +30,13 @@ class QR
             ->writer(new PngWriter())
             ->data($data_Url)
             ->encoding(new Encoding('UTF-8'))
-            ->size(1000)
-            ->margin(0.1)
+            ->size(2000)
+            ->margin(20) 
             ->build();
         
         $result->saveToFile($qr_url);
 
-        return $qr_url;
+        return $qr_url_relative;
 
     } catch (Exception $e) {
         error_log("Error generating QR code: " . $e->getMessage());
