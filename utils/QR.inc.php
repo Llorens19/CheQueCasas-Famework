@@ -21,15 +21,15 @@ class QR
         $base64Content = base64_encode($html);
         error_log($base64Content);
         
-        $data_Url = SITE_ROOT .'data:text/html;base64,' . $base64Content;
+        $data_Url = 'data:text/html;base64,' . $base64Content;
         error_log($data_Url);
         try {
         $result = Builder::create()
             ->writer(new PngWriter())
             ->data($data_Url)
             ->encoding(new Encoding('UTF-8'))
-            ->size(300)
-            ->margin(10)
+            ->size(1000)
+            ->margin(0.1)
             ->build();
         
         $result->saveToFile($qr_url);
