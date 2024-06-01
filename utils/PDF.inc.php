@@ -25,9 +25,8 @@ class PDF
         $file_path = $save_path . 'factura' . $id_order . '.pdf';
         file_put_contents($file_path, $output);
 
-
-
-
+      
+        return $html;
     }
 
     public static function html_creator($order, $user_order)

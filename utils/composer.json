@@ -5,7 +5,8 @@
     "require": {
         "resend/resend-php": "^0.6.0",
         "twilio/sdk": "^8.0",
-        "dompdf/dompdf": "^3.0"
+        "dompdf/dompdf": "^3.0",
+        "endroid/qr-code": "^5.0"
     },
     "license": "MIT",
     "minimum-stability": "stable"

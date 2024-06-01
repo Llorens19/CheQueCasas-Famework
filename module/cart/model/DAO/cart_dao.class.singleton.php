@@ -231,4 +231,15 @@ class cart_dao
 		return $db->listar($stmt);
 
 	}
+
+
+	public static function save_qr($db, $id, $url)
+    {
+        $sql = "UPDATE user_order SET url_qr = '$url' WHERE id_order = '$id'";
+
+		error_log($sql);
+
+        return $db->ejecutar($sql);
+    }
+
 }

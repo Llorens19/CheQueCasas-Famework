@@ -64,7 +64,13 @@
 				$order = $this->dao->select_order($this->db, $id);
 				$user_order = $this->dao->select_user_order($this->db, $id);
 				
-				PDF::create_Bill($order, $user_order, $id);
+				$html = PDF::create_Bill($order, $user_order, $id);
+
+				error_log($html);
+				$url_qr =QR::QR_bill($html, $id);
+				error_log($url_qr);
+
+				$this->dao->save_qr($this->db, $id, $url_qr);
 
 				error_log($id);
 				$this->dao->delete_cart($this->db, $args[0], $args[6]);
