@@ -63,7 +63,7 @@ class shop_dao
 	public static function select_buildings($db, $filters, $total_prod, $items_page)
 	{
 
-		$sql = "SELECT * FROM building inner join city on building.id_city = city.id_city";
+		$sql = "SELECT * FROM building inner join city on building.id_city = city.id_city inner join product on building.id_building = product.id_building ";
 
 		foreach ($filters as $column) {
 			if ($column[0] === "price" || $column[0] === "order" || $column[0] === "in_poligon"  || $column[0] === "city") {
@@ -72,7 +72,7 @@ class shop_dao
 			$sql .= ", $column[0]";
 		}
 
-		$sql .= " WHERE building.id_building = building.id_building";
+		$sql .= " WHERE building.id_building = building.id_building and product.stock > 0 ";
 
 
 		foreach ($filters as $column) {
@@ -166,7 +166,7 @@ class shop_dao
 
 		$sql = "SELECT *
         FROM building
-        WHERE id_building NOT IN (SELECT id_building FROM building inner join city on building.id_city = city.id_city ";
+        WHERE id_building NOT IN (SELECT id_building FROM building inner join city on building.id_city = city.id_city inner join product on building.id_building = product.id_building  ";
 
 		foreach ($filters as $column) {
 			if ($column[0] === "price" || $column[0] === "order" || $column[0] === "in_poligon"  || $column[0] === "city") {
@@ -175,7 +175,7 @@ class shop_dao
 			$sql .= ", $column[0]";
 		}
 
-		$sql .= " WHERE building.id_building = building.id_building";
+		$sql .= " WHERE building.id_building = building.id_building and product.stock > 0 ";
 
 
 		foreach ($filters as $column) {
@@ -305,7 +305,7 @@ class shop_dao
 
 	public static function total_prod($db, $filters)
 	{
-		$sql = "SELECT COUNT(*) as total FROM building inner join city on building.id_city = city.id_city";
+		$sql = "SELECT COUNT(*) as total FROM building inner join city on building.id_city = city.id_city inner join product on building.id_building = product.id_building ";
 
 		foreach ($filters as $column) {
 			if ($column[0] === "price" || $column[0] === "order" || $column[0] === "in_poligon"  || $column[0] === "city") {
@@ -314,7 +314,7 @@ class shop_dao
 			$sql .= ", $column[0]";
 		}
 
-		$sql .= " WHERE building.id_building = building.id_building";
+		$sql .= " WHERE building.id_building = building.id_building and product.stock > 0 ";
 
 
 		foreach ($filters as $column) {

@@ -100,7 +100,6 @@ function load_menu() {
                                             <p class="card-text"><strong>Apellidos:</strong> `+ data[0].surname + `</p>
                                             <p class="card-text"><strong>Email:</strong> `+ data[0].email + `</p>
                                             <p class="card-text"><strong>Teléfono:</strong> `+ data[0].tlf + `</p>
-                                            <button type="button" class="btn btn-primary col-md-6 my-2"  data-dismiss="modal" data-toggle="modal" data-target="#Bills" >Mis facturas</button>
                                             <button type="button" class="btn btn-primary col-md-12"  data-dismiss="modal" data-toggle="modal" data-target="#phoneVerificationModal" >Activar 2fa</button>
                                             
                                             

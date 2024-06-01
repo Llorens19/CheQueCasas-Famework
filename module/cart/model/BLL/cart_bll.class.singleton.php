@@ -66,20 +66,20 @@
 				
 				$html = PDF::create_Bill($order, $user_order, $id);
 
-				error_log($html);
+				
 				$url_qr =QR::QR_bill($html, $id);
-				error_log($url_qr);
+				
 
 				$this->dao->save_qr($this->db, $id, $url_qr);
 
-				error_log($id);
+				
 				$this->dao->delete_cart($this->db, $args[0], $args[6]);
 				
 				$url_pdf = 'pdf/factura' . $id . '.pdf';
 
 				$this->dao->save_pdf_url($this->db, $id, $url_pdf);
 
-			return $order;
+			return "done";
 
 			}else{
 				return 'fail';
@@ -95,5 +95,13 @@
 			}else{
 				return $facturas;
 			}
+		}
+
+		public function get_check_stock_BLL($args){
+			$this->dao->update_cart_quantity($this->db, $args[0], $args[1]);
+
+			$this->dao->delete_cart_lines_stock($this->db, $args[0], $args[1]);
+
+			return "done";
 		}
 	}

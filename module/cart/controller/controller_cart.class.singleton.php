@@ -48,5 +48,10 @@
         function load_facturas() {
             echo json_encode(common::load_model('cart_model', 'get_load_facturas', [$_SESSION["username"], $_SESSION['type_user']]));
         }
-        
+
+        function check_stock() {
+            echo json_encode(common::load_model('cart_model', 'get_check_stock', [$_SESSION["username"], $_SESSION['type_user']]));
+        }
+
+
     }

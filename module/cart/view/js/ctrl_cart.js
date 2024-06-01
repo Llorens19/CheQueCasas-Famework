@@ -180,7 +180,7 @@ function validate_buy_data() {
     let error = false;
 
     if (name.length === 0) {
-        document.getElementById('firstName_error').innerHTML = "El campo nombre es obligatorio";
+        document.getElementById('firstName_error').innerHTML = "El campo es obligatorio";
         let error = true;
     } else {
 
@@ -193,7 +193,7 @@ function validate_buy_data() {
     }
 
     if (surnames.length === 0) {
-        document.getElementById('lastName_error').innerHTML = "El campo apellidos es obligatorio";
+        document.getElementById('lastName_error').innerHTML = "El campo es obligatorio";
         let error = true;
 
     } else {
@@ -207,7 +207,7 @@ function validate_buy_data() {
     }
 
     if (direction.length === 0) {
-        document.getElementById('address_error').innerHTML = "El campo direccion es obligatorio";
+        document.getElementById('address_error').innerHTML = "El campo es obligatorio";
         let error = true;
 
     } else {
@@ -234,7 +234,7 @@ function validate_buy_data() {
     }
 
     if (name_card.length === 0) {
-        document.getElementById('nameCard_error').innerHTML = "El campo nombre de la tarjeta es obligatorio";
+        document.getElementById('nameCard_error').innerHTML = "El campo es obligatorio";
         let error = true;
 
     } else {
@@ -249,7 +249,7 @@ function validate_buy_data() {
 
 
     if (credit_card.length === 0) {
-        document.getElementById('creditCard_error').innerHTML = "El campo tarjeta de credito es obligatorio";
+        document.getElementById('creditCard_error').innerHTML = "El campo es obligatorio";
         let error = true;
 
     } else {
@@ -262,7 +262,7 @@ function validate_buy_data() {
     }
 
     if (expiration_date.length === 0) {
-        document.getElementById('expiration_error').innerHTML = "El campo fecha de caducidad es obligatorio";
+        document.getElementById('expiration_error').innerHTML = "El campo es obligatorio";
         let error = true;
 
     } else {
@@ -275,7 +275,7 @@ function validate_buy_data() {
     }
 
     if (cvv.length === 0) {
-        document.getElementById('cvv_error').innerHTML = "El campo cvv es obligatorio";
+        document.getElementById('cvv_error').innerHTML = "El campo es obligatorio";
         let error = true;
     } else {
         if (!cvv_ex.test(cvv)) {
@@ -423,9 +423,19 @@ function load_qr() {
         
 
         $('#imageModal').modal('show');
-
-       
     });
+}
+
+
+function check_stock() {
+    ajaxPromise("POST", "JSON", friendlyURL("?module=cart"), { op: "check_stock" })
+        .then(function (data) {
+            console.log("wuligrjsdjhaiñhbunjj");
+            
+        })
+        .catch(function () {
+            console.error("error");
+        });
 }
 
 
@@ -464,8 +474,8 @@ function buttons_cart() {
 
 $(document).ready(() => {
     console.log('cart ready');
+    check_stock();
     loadCart();
-    
     button_close_pdf();
     button_close_qr();
 

@@ -47,4 +47,8 @@
             return $this -> bll -> get_load_facturas_BLL($args);
         }
 
+        public function get_check_stock($args) {
+            return $this -> bll -> get_check_stock_BLL($args);
+        }
+
     }

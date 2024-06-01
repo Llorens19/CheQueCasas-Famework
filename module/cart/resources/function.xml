@@ -46,4 +46,9 @@
         <uri>load_facturas</uri>
     </function>
 
+    <function>
+        <name>check_stock</name>
+        <uri>check_stock</uri>
+    </function>
+
 </functions>

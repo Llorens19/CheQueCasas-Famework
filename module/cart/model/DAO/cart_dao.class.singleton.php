@@ -159,11 +159,11 @@ class cart_dao
 			
 		} else if ($type_user == 'google' and isset($type_user)) {
 
-			$sql = "UPDATE product p SET p.stock = p.stock - (SELECT c.total_quantity FROM cart c WHERE c.id_product = p.id_product AND c.selected = '1' AND c.id_user = (SELECT id_user FROM user_google WHERE username = '$username'));";
+			$sql = "UPDATE product p SET p.stock = p.stock - (SELECT c.total_quantity FROM cart c WHERE c.id_product = p.id_product AND c.selected = '1' AND c.id_user = (SELECT id_user FROM user WHERE username = '$username')) WHERE p.id_product = (SELECT c.id_product FROM cart c WHERE c.id_product = p.id_product AND c.selected = '1' AND c.id_user = (SELECT id_user FROM user_google WHERE username = '$username'));";
 		
 		} else if ($type_user == 'github' and isset($type_user)) {
 
-			$sql = "UPDATE product p SET p.stock = p.stock - (SELECT c.total_quantity FROM cart c WHERE c.id_product = p.id_product AND c.selected = '1' AND c.id_user = (SELECT id_user FROM user_github WHERE username = '$username'));";
+			$sql = "UPDATE product p SET p.stock = p.stock - (SELECT c.total_quantity FROM cart c WHERE c.id_product = p.id_product AND c.selected = '1' AND c.id_user = (SELECT id_user FROM user WHERE username = '$username')) WHERE p.id_product = (SELECT c.id_product FROM cart c WHERE c.id_product = p.id_product AND c.selected = '1' AND c.id_user = (SELECT id_user FROM user_github WHERE username = '$username'));";
 		
 		}
 
@@ -226,7 +226,7 @@ class cart_dao
 
 			$sql = "SELECT * FROM user_order WHERE id_user = (SELECT id_user FROM user_github WHERE username = '$username')";
 		}
-		error_log($sql);
+		
 		$stmt = $db->ejecutar($sql);
 		return $db->listar($stmt);
 
@@ -237,9 +237,52 @@ class cart_dao
     {
         $sql = "UPDATE user_order SET url_qr = '$url' WHERE id_order = '$id'";
 
-		error_log($sql);
+		
 
         return $db->ejecutar($sql);
     }
+
+	public function update_cart_quantity($db, $username, $type_user){
+
+		if($type_user == 'normal' and isset($type_user)){
+
+			$sql = "UPDATE cart c INNER JOIN product p ON c.id_product = p.id_product SET c.total_quantity = p.stock WHERE c.total_quantity > p.stock AND p.stock > 0 AND c.id_user = (SELECT id_user FROM user WHERE username = '$username');";
+		
+		}else if($type_user == 'google' and isset($type_user)){
+		
+			$sql = "UPDATE cart c INNER JOIN product p ON c.id_product = p.id_product SET c.total_quantity = p.stock WHERE c.total_quantity > p.stock AND p.stock > 0 AND c.id_user = (SELECT id_user FROM user_google WHERE username = '$username');";
+		
+		}else if($type_user == 'github' and isset($type_user)){
+		
+			$sql = "UPDATE cart c INNER JOIN product p ON c.id_product = p.id_product SET c.total_quantity = p.stock WHERE c.total_quantity > p.stock AND p.stock > 0 AND c.id_user = (SELECT id_user FROM user_github WHERE username = '$username');";
+		
+		}
+
+		error_log($sql);
+
+		return $db->ejecutar($sql);
+
+	}
+
+	public function delete_cart_lines_stock($db, $username, $type_user)
+	{
+		if($type_user == 'normal' and isset($type_user)){
+
+			$sql = "DELETE c FROM cart c INNER JOIN product p ON c.id_product = p.id_product WHERE p.stock = 0 AND c.id_user = (SELECT id_user FROM user WHERE username = '$username');";
+	}
+	else if($type_user == 'google' and isset($type_user)){
+
+		$sql = "DELETE c FROM cart c INNER JOIN product p ON c.id_product = p.id_product WHERE p.stock = 0 AND c.id_user = (SELECT id_user FROM user_google WHERE username = '$username');";
+	}
+	else if($type_user == 'github' and isset($type_user)){
+
+		$sql = "DELETE c FROM cart c INNER JOIN product p ON c.id_product = p.id_product WHERE p.stock = 0 AND c.id_user = (SELECT id_user FROM user_github WHERE username = '$username');";
+	}
+	error_log($sql);
+	
+	return $db->ejecutar($sql);
+	}
+
+
 
 }
