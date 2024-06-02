@@ -82,8 +82,8 @@ function logout_auto() {
 }
 
 $(document).ready(function () {
-    setInterval(function () { control_activity() }, 60000); //10min= 600000
+    setInterval(function () { control_activity() }, 6000); //10min= 
     protecturl();
     
-    setInterval(function () { refresh_cookie() }, 60000);
+    setInterval(function () { refresh_cookie() }, 6000);
 });

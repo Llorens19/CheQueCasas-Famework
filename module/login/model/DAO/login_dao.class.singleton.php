@@ -17,7 +17,7 @@ class login_dao
 	public function select_verify_email($db, $token_email)
 	{
 
-		$sql = "SELECT token_email FROM user WHERE token_email = '$token_email'";
+		$sql = "SELECT email FROM user WHERE token_email = '$token_email'";
 
 		$stmt = $db->ejecutar($sql);
 		return $db->listar($stmt);

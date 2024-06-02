@@ -26,8 +26,8 @@
             return $this -> bll -> get_login_BLL($args);
         }
 
-        public function get_logout($args) {
-            return $this -> bll -> get_logout_BLL($args);
+        public function get_logout() {
+            return $this -> bll -> get_logout_BLL();
         }
 
         public function get_data_user($args) {

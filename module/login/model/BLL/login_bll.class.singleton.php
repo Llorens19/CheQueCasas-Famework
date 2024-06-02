@@ -133,12 +133,12 @@ class login_bll
 		}
 	}
 
-	public function get_logout_BLL($args)
+	public function get_logout_BLL()
 	{
-
-		// unset($args[0]);
-		// unset($args[1]);
-		// session_destroy();
+		error_log("llega");
+		$_SESSION['username'] = null;
+        $_SESSION['tiempo'] = null;
+        $_SESSION['type_user'] = null;
 
 		return 'Done';
 	}
@@ -208,7 +208,9 @@ class login_bll
 	public function get_recover_email_BBL($args)
 	{
 		$user = $this->dao->select_recover_password($this->db, $args);
-		$token_email = common::generate_Token_secure(20);
+		//$token_email = common::generate_Token_secure(20);
+
+		$token_email = middleware::create_recover_token($args);
 
 		if (!empty($user)) {
 			$this->dao->update_recover_password($this->db, $args, $token_email);
@@ -235,10 +237,23 @@ class login_bll
 
 	public function get_verify_token_BLL($args)
 	{
-		if ($this->dao->select_verify_email($this->db, $args)) {
+		$email = $this->dao->select_verify_email($this->db, $args);
+		$token_dec = middleware::decode_recover_token($args);
+		error_log($token_dec['exp']);
+		error_log($token_dec['exp'] > time());
+		error_log($token_dec['email']);
+		error_log($email[0]['email']);
+		error_log($token_dec['email'] == $email[0]['email']);
+
+		if (isset($email) and !empty($email and $token_dec['exp'] > time() and $token_dec['email'] == $email[0]['email'])) {
+
+			$this->dao->update_verify_email($this->db, $args);
+
 			return 'verify';
+		
+		} else {
+			return 'fail';
 		}
-		return 'fail';
 	}
 
 	public function get_new_password_BLL($args)
@@ -262,8 +277,6 @@ class login_bll
 	{
 
 		$code = rand(0, 9999);
-		error_log("789568925724803957243590734580972348059734890573489057349058");
-
 
 		$code = str_pad($code, 4, '0', STR_PAD_LEFT);
 
@@ -317,7 +330,6 @@ class login_bll
 	function get_send_sms_identity_BLL($args)
 	{
 		$code = rand(0, 9999);
-		error_log("789568925724803957243590734580972348059734890573489057349058");
 
 
 		$code = str_pad($code, 4, '0', STR_PAD_LEFT);
@@ -336,7 +348,6 @@ class login_bll
 
 	function get_verify_code_identity_BLL($args)
 	{
-		error_log("Entra en verify_code_identity_BLL              /*/*/*/*/** */ / / * /* /* /* / */ */ ");
 		$check = $this->dao->get_OTP($this->db, $args[0], $args[1]);
 
 		if (!empty($check) and isset($check) and $check[0]['code_OTP'] == $args[2]) {
@@ -375,15 +386,6 @@ class login_bll
 		// } catch (Exception $e) {
 		// 	return "error";
 		// }
-
-
-
-
-
-
-
-error_log("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT");
-error_log("Entra en get_social_login_BLL");
 
 
 

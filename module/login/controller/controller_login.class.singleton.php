@@ -34,11 +34,8 @@ class controller_login
 
     function logout()
     {
-        // echo json_encode(common::load_model('login_model', 'get_logout', [$_SESSION['username'], $_SESSION['tiempo']]));
-        $_SESSION['username'] = null;
-        $_SESSION['tiempo'] = null;
-        $_SESSION['type_user'] = null;
-        echo json_encode("Done");
+        echo json_encode(common::load_model('login_model', 'get_logout'));
+        
     }
 
     function data_user()
