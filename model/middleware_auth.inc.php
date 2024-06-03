@@ -34,7 +34,7 @@ static function create_access_token($username)
     $jwt = parse_ini_file($_SERVER['DOCUMENT_ROOT'] . '/CheQueHabitaculos_MVC/CheQueCasas_Framework/utils/constants.ini');
     $header = $jwt['JWT_HEADER'];
     $secret = $jwt['JWT_SECRET'];
-    $payload = '{"iat":"' . time() . '","exp":"' . time() + (60) . '","username":"' . $username . '"}';
+    $payload = '{"iat":"' . time() . '","exp":"' . time() + (6000) . '","username":"' . $username . '"}';
 
     $JWT = new JWT;
     $token = $JWT->encode($header, $payload, $secret);
@@ -47,7 +47,7 @@ static function create_refresh_token($username)
     $jwt = parse_ini_file($_SERVER['DOCUMENT_ROOT'] . '/CheQueHabitaculos_MVC/CheQueCasas_Framework/utils/constants.ini');
     $header = $jwt['JWT_HEADER'];
     $secret = $jwt['JWT_SECRET_2'];
-    $payload = '{"iat":"' . time() . '","exp":"' . time() + (120) . '","username":"' . $username . '"}';
+    $payload = '{"iat":"' . time() . '","exp":"' . time() + (12000) . '","username":"' . $username . '"}';
 
     $JWT = new JWT;
     $token = $JWT->encode($header, $payload, $secret);

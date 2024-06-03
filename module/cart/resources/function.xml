@@ -51,4 +51,14 @@
         <uri>check_stock</uri>
     </function>
 
+    <function>
+        <name>products</name>
+        <uri>products</uri>
+    </function>
+
+    <function>
+        <name>add_product</name>
+        <uri>add_product</uri>
+    </function>
+
 </functions>

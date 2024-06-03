@@ -5,15 +5,13 @@ function loadCart() {
 
             for (row in data) {
 
-                console.log(data[row].id_line);
-
                 $("<li></li>").attr('class', 'list-group-item d-flex justify-content-between align-items-center item_cart rounded col-lg-12').attr('id', "line_" + data[row].id_line)
                     .appendTo('.list_cart')
                     .html(`
             <div class="form-check d-flex align-items-center col-lg-3">
                 <input class="form-check-input selected_line selected_line_`+ data[row].id_line + `" type="checkbox" id="` + data[row].id_line + `">
                 <label class="form-check-label mx-2" for="checkbox1">
-                    <img src="`+ absoluteURL('view/img/shop/test/' + data[row].image_url) + `" alt="Producto 1" style="width: 150px; height: 100px;">
+                    <img src="`+ absoluteURL('view/img/cart/' + data[row].image_url) + `" alt="Producto 1" style="width: 150px; height: 100px;">
                     
                 </label>
             </div>
@@ -470,6 +468,56 @@ function buttons_cart() {
 }
 
 
+function carrousel_products() {
+    ajaxPromise('POST', 'JSON', friendlyURL('?module=cart'), {op: "products" })
+        .then(function (data) {
+            console.log(data);
+
+
+            for (row in data) {
+                $('<swiper-slide></swiper-slide>').attr('class', "element_product").attr('id', data[row].id_product).appendTo(".carrousel_products")
+                    .html(`
+                    <div class="container mt-5">
+                        <div class="custom-card">
+                            <div class="custom-card-item" >
+                                <img src="` + absoluteURL('view/img/cart/' + data[row].image_url) + `" class="card-img-top" style="width: 100%; height: 170px;">
+                                <div class  = "col-md-12 row" >
+                                    <h5 class="card-title col-md-12 mt-1">` + data[row].price_product + ` €</h5>
+                                    <h6 class="col-md-12 mt-1 text-muted"><em>` + data[row].n_product + `</em></h6>
+                                    <p class="col-md-12 mt-1">` + data[row].d_product + `</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    `);
+            }
+            click_product() ;
+        })
+        .catch(function () {
+            console.error("Error en carrousel products");
+            //window.location.href = "index.php?module=ctrl_exceptions&op=503&type=503&lugar=Carrusel_Brands HOME";
+        }
+        );
+}
+
+function click_product() {
+    $(".element_product").click(function () {
+        let id = $(this).attr('id');
+        console.log(id);
+        ajaxPromise('POST', 'JSON', friendlyURL('?module=cart'), { op: 'add_product', id_product: id })
+            .then(function (data) {
+                console.log(data);
+                $(".list_cart").empty();
+                loadCart();
+            })
+            .catch(function () {
+                console.error('error');
+            });
+    });
+}
+
+
+
 
 
 $(document).ready(() => {
@@ -478,6 +526,7 @@ $(document).ready(() => {
     loadCart();
     button_close_pdf();
     button_close_qr();
+    carrousel_products();
 
     $('.footer').attr('class', 'footer col-lg-7');
 });

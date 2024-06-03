@@ -51,4 +51,13 @@
             return $this -> bll -> get_check_stock_BLL($args);
         }
 
+        public function get_products() {
+            error_log("products2");
+            return $this -> bll -> get_products_BLL();
+        }
+
+        public function get_add_product($args) {
+            return $this -> bll -> get_add_product_BLL($args);
+        }
+
     }

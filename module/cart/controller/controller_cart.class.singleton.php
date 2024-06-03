@@ -53,5 +53,13 @@
             echo json_encode(common::load_model('cart_model', 'get_check_stock', [$_SESSION["username"], $_SESSION['type_user']]));
         }
 
+        function products() {
+            error_log("products");
+            echo json_encode(common::load_model('cart_model', 'get_products'));
+        }
 
+        function add_product() {
+            error_log("add_product");
+            echo json_encode(common::load_model('cart_model', 'get_add_product',  [$_SESSION['username'], $_POST['id_product'], $_SESSION['type_user']]));
+        }
     }

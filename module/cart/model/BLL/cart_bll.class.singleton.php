@@ -104,4 +104,61 @@
 
 			return "done";
 		}
+
+		public function get_products_BLL(){
+			error_log("products3");
+			$res = $this->dao->select_products($this->db);
+
+			if (empty($res)){
+				
+				return "error";
+			
+			}else{
+				
+				return $res;
+			
+			}
+		}
+
+		public function get_add_product_BLL($args) {
+	
+			if($args[2] == 'normal' and isset($args[2])) {
+	
+				if (empty($this->dao->select_user_product_normal($this->db, $args[0], $args[1]))) {
+	
+				$this->dao->insert_line_cart_normal($this->db, $args[0], $args[1]);
+			}
+			return 'add';
+		}
+	
+	
+			if($args[2] == 'google'and isset($args[2])) {
+				if (empty($this->dao->select_user_product_google($this->db, $args[0], $args[1]))) {
+	
+				$this->dao->insert_line_cart_google($this->db, $args[0], $args[1]);
+				
+			}
+			return 'add';
+		}
+	
+	
+			
+			if($args[2] == 'github'and isset($args[2])) {
+				
+				if (empty($this->dao->select_user_product_github($this->db, $args[0], $args[1]))) {
+	
+					$this->dao->insert_line_cart_github($this->db, $args[0], $args[1]);
+	
+					
+				}
+				return 'add';
+			}
+		}
+	
+
+
+
+
+
+
 	}

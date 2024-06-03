@@ -38,4 +38,6 @@
             echo json_encode(common::load_model('home_model', 'get_lasts_views', $_POST["lasts_views"]));
         }
 
+      
+
     }
