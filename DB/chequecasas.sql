@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 01-06-2024 a las 16:07:40
+-- Tiempo de generación: 02-06-2024 a las 14:09:49
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -146,6 +146,66 @@ CREATE DEFINER=`root`@`localhost` FUNCTION `like_user_function` (`user` VARCHAR(
 
         SELECT u.id_user INTO id
         FROM user u  
+        WHERE u.username = user;
+
+        INSERT INTO likes (id_user, id_building, ref_cat, username, `date`) 
+        VALUES (id, id_build, ref_cat, user, NOW());
+        SET accion = "add";
+    ELSE
+        DELETE FROM likes WHERE user like username and id_building like id_build;
+        SET accion = "remove";
+    END IF; 
+    
+    RETURN accion;
+END$$
+
+CREATE DEFINER=`root`@`localhost` FUNCTION `like_user_github_function` (`user` VARCHAR(255), `id_build` INT) RETURNS VARCHAR(255) CHARSET utf8mb4 COLLATE utf8mb4_general_ci  BEGIN 
+    DECLARE existe INT;
+    DECLARE ref_cat VARCHAR(255);
+    DECLARE id INT;
+    DECLARE accion VARCHAR(255);
+
+    SELECT COUNT(*) INTO existe
+    FROM likes l
+    WHERE user like l.username and l.id_building like id_build;
+
+    IF existe = 0 THEN
+        SELECT b.ref_cat INTO ref_cat
+        FROM building b  
+        WHERE b.id_building = id_build;
+
+        SELECT u.id_user INTO id
+        FROM user_github u  
+        WHERE u.username = user;
+
+        INSERT INTO likes (id_user, id_building, ref_cat, username, `date`) 
+        VALUES (id, id_build, ref_cat, user, NOW());
+        SET accion = "add";
+    ELSE
+        DELETE FROM likes WHERE user like username and id_building like id_build;
+        SET accion = "remove";
+    END IF; 
+    
+    RETURN accion;
+END$$
+
+CREATE DEFINER=`root`@`localhost` FUNCTION `like_user_google_function` (`user` VARCHAR(255), `id_build` INT) RETURNS VARCHAR(255) CHARSET utf8mb4 COLLATE utf8mb4_general_ci  BEGIN 
+    DECLARE existe INT;
+    DECLARE ref_cat VARCHAR(255);
+    DECLARE id INT;
+    DECLARE accion VARCHAR(255);
+
+    SELECT COUNT(*) INTO existe
+    FROM likes l
+    WHERE user like l.username and l.id_building like id_build;
+
+    IF existe = 0 THEN
+        SELECT b.ref_cat INTO ref_cat
+        FROM building b  
+        WHERE b.id_building = id_build;
+
+        SELECT u.id_user INTO id
+        FROM user_google u  
         WHERE u.username = user;
 
         INSERT INTO likes (id_user, id_building, ref_cat, username, `date`) 
@@ -331,8 +391,6 @@ CREATE TABLE `cart` (
 
 INSERT INTO `cart` (`id_line`, `id_user`, `id_product`, `total_quantity`, `price_line`, `selected`) VALUES
 (8, 'SGfG3gKhGVSIbQyy2rVSfSXbUhS2', 128, 1, 500001.00, 0),
-(32, '17BKmFLAmcMBUofjMLCG7QQWbEI3', 141, 1, 720000.00, 0),
-(33, '17BKmFLAmcMBUofjMLCG7QQWbEI3', 155, 1, 1250000.00, 0),
 (40, 'SGfG3gKhGVSIbQyy2rVSfSXbUhS2', 129, 1, 750000.00, 1),
 (41, 'SGfG3gKhGVSIbQyy2rVSfSXbUhS2', 130, 1, 1000000.00, 0),
 (42, 'SGfG3gKhGVSIbQyy2rVSfSXbUhS2', 131, 1, 600000.00, 1),
@@ -964,24 +1022,18 @@ INSERT INTO `image` (`id_image`, `id_building`, `url_image`) VALUES
 CREATE TABLE `likes` (
   `id_like` int(11) NOT NULL,
   `id_building` int(11) DEFAULT NULL,
-  `id_user` int(11) DEFAULT NULL,
   `ref_cat` varchar(255) DEFAULT NULL,
-  `username` varchar(255) DEFAULT NULL,
-  `date` datetime DEFAULT NULL
+  `date` datetime DEFAULT NULL,
+  `id_user` varchar(255) DEFAULT NULL,
+  `username` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `likes`
 --
 
-INSERT INTO `likes` (`id_like`, `id_building`, `id_user`, `ref_cat`, `username`, `date`) VALUES
-(1260, 5, 53, 'REFDEF', 'Llorens21', '2024-05-27 16:40:48'),
-(1264, 8, 53, 'REFMNO', 'Llorens21', '2024-05-27 16:42:42'),
-(1265, 2, 53, 'REF456', 'Llorens21', '2024-05-27 16:42:52'),
-(1268, 3, 53, 'REF789', 'Llorens21', '2024-05-27 18:58:33'),
-(1291, 4, 53, 'REFABC', 'Llorens21', '2024-06-01 15:41:24'),
-(1292, 9, 53, 'REFPQR', 'Llorens21', '2024-06-01 15:41:26'),
-(1293, 1, 53, 'REF123', 'Llorens21', '2024-06-01 15:42:11');
+INSERT INTO `likes` (`id_like`, `id_building`, `ref_cat`, `date`, `id_user`, `username`) VALUES
+(1321, 5, 'REFDEF', '2024-06-02 14:07:55', '53', 'Llorens21');
 
 -- --------------------------------------------------------
 
@@ -1028,6 +1080,8 @@ INSERT INTO `order` (`id_order`, `id_user`, `id_product`, `id_line`, `total_quan
 ('100', '53', 131, 107, 1, 600000.00),
 ('101', '53', 128, 108, 1, 500001.00),
 ('101', '53', 132, 109, 1, 800000.00),
+('102', '17BKmFLAmcMBUofjMLCG7QQWbEI3', 131, 112, 10, 600000.00),
+('103', '17BKmFLAmcMBUofjMLCG7QQWbEI3', 128, 114, 1, 500001.00),
 ('25', '53', 132, 28, 1, 800000.00),
 ('25', '53', 134, 29, 1, 900000.00),
 ('25', '53', 166, 37, 1, 1250000.00),
@@ -1193,7 +1247,7 @@ INSERT INTO `product` (`id_product`, `price_product`, `stock`, `n_product`, `id_
 (129, 750000.00, 1, 'REF456', 2, 'Inmueble', '[www.fotocasa.es][50683].jpg'),
 (130, 1000000.00, 1, 'REF789', 3, 'Inmueble', '[www.fotocasa.es][662]2809647.jpg'),
 (131, 600000.00, 1, 'REFABC', 4, 'Inmueble', '444738940.jpg'),
-(132, 800000.00, 0, 'REFDEF', 5, 'Inmueble', '[www.fotocasa.es][33544].jpg'),
+(132, 800000.00, 1, 'REFDEF', 5, 'Inmueble', '[www.fotocasa.es][33544].jpg'),
 (133, 1200000.00, 1, 'REFGHI', 6, 'Inmueble', 'b0e1215d-32e8-4fe3-8d7c-ea4e115fd6e2.jpeg'),
 (134, 900000.00, 1, 'REFJKL', 7, 'Inmueble', '[www.fotocasa.es][8161].jpg'),
 (135, 1100000.00, 1, 'REFMNO', 8, 'Inmueble', '8bd61680-9429-4cc1-a151-d73c2b6b8cdd.jpeg'),
@@ -1258,9 +1312,7 @@ INSERT INTO `product` (`id_product`, `price_product`, `stock`, `n_product`, `id_
 (194, 1030000.00, 1, 'REF167168169', 185, 'Inmueble', '[www.fotocasa.es][28905].jpg'),
 (195, 1270000.00, 1, 'REF170171172', 186, 'Inmueble', '[www.fotocasa.es][47]647017250.jpg'),
 (196, 910000.00, 1, 'REF173174175', 187, 'Inmueble', '[www.fotocasa.es][21248].jpg'),
-(197, 1040000.00, 1, 'REF176177178', 188, 'Inmueble', '15b43bab-9a9f-4baa-aa84-025d28f12fa8.jpeg'),
-(198, 0.00, 1, '', NULL, NULL, NULL),
-(199, 0.00, 1, '', NULL, NULL, NULL);
+(197, 1040000.00, 1, 'REF176177178', 188, 'Inmueble', '15b43bab-9a9f-4baa-aa84-025d28f12fa8.jpeg');
 
 -- --------------------------------------------------------
 
@@ -1316,7 +1368,7 @@ CREATE TABLE `user` (
 INSERT INTO `user` (`id_user`, `name`, `surname`, `tlf`, `username`, `password`, `email`, `type_user`, `avatar`, `active`, `token_email`, `code_OTP`, `2fa_active`, `expire_OTP`, `login_trys`) VALUES
 (51, 'Diego', 'Soriano', '658311725', 'Llorens18', '$2y$12$d.MI4onIxsmdXPiu4T.rcuiheppGHHyLY43oKniVTg2sBTFkTgchG', 'diegollorenssoriano2001@gmail.com', 'client', 'https://i.pravatar.cc/500?u=dad77be30c8d0fc60d337434639f61f2', 0, 'd1e56f4a86245f25ad52', '7892', 0, '2001-01-19 00:00:00', 0),
 (52, 'Diego', 'Soriano', '658311725', 'Llorens19', '$2y$12$.NuvXxjumKZQOrCdOs.4NuDR.rseFCS7KkM2fd1Z65xCju.gDZKiW', 'llorenssorianodiego@gmail.com', 'client', 'https://i.pravatar.cc/500?u=af7709d1d6cb834f44dd8d05688c3e7b', 0, 'c193255957a0dcce45d5', '7892', 0, '2001-01-19 00:00:00', 0),
-(53, 'Diego', 'Soriano', '658311725', 'Llorens21', '$2y$12$T3nti2a53/HyIpQpFjw8n../oZG5vYE0jrifwMCrfzw0wkpThVcpi', 'dllorens21@gmail.com', 'client', 'https://i.pravatar.cc/500?u=b684c9f159a1bdb8c2ffd7e69ee70faf', 1, '', '0422', 1, '2024-05-29 19:46:03', 0);
+(53, 'Diego', 'Soriano', '658311725', 'Llorens21', '$2y$12$22E7VrlIalA2UZ6FE4jurOxr4m1SJsMla1OnpXKUmIIh19Y.bZ4bq', 'dllorens21@gmail.com', 'client', 'https://i.pravatar.cc/500?u=b684c9f159a1bdb8c2ffd7e69ee70faf', 1, '', '0422', 1, '2024-05-29 19:46:03', 2);
 
 -- --------------------------------------------------------
 
@@ -1488,7 +1540,9 @@ INSERT INTO `user_order` (`id_order`, `id_user`, `name_buyer`, `surname_buyer`, 
 (98, 53, 'Diego', 'Llorens Soriano', 'diegollorenssoriano2001@gmail.com', '23423423', '324', '2024-06-01 13:05:11', 1250001.00, 'pdf/factura98.pdf', 'QR/QR98.png'),
 (99, 17, 'Diego', 'Llorens Soriano', 'diegollorenssoriano2001@gmail.com', 'ghjghjghj', '', '2024-06-01 15:09:08', 5000010.00, 'pdf/factura99.pdf', 'QR/QR99.png'),
 (100, 53, 'Diego', 'Llorens Soriano', 'diegollorenssoriano2001@gmail.com', 'dfsdsdfsdf', '', '2024-06-01 15:28:13', 600000.00, 'pdf/factura100.pdf', 'QR/QR100.png'),
-(101, 53, 'Diego', 'Llorens Soriano', 'diegollorenssoriano2001@gmail.com', 'erwqeqwe', '', '2024-06-01 15:33:02', 1300001.00, 'pdf/factura101.pdf', 'QR/QR101.png');
+(101, 53, 'Diego', 'Llorens Soriano', 'diegollorenssoriano2001@gmail.com', 'erwqeqwe', '', '2024-06-01 15:33:02', 1300001.00, 'pdf/factura101.pdf', 'QR/QR101.png'),
+(102, 17, 'Diego', 'Llorens Soriano', 'diegollorenssoriano2001@gmail.com', 'ewqeqwewqe', '', '2024-06-01 17:01:28', 6000000.00, 'pdf/factura102.pdf', 'QR/QR102.png'),
+(103, 17, 'Diego', 'Llorens Soriano', 'diegollorenssoriano2001@gmail.com', 'dfewwqewqew', '', '2024-06-01 17:20:42', 500001.00, 'pdf/factura103.pdf', 'QR/QR103.png');
 
 --
 -- Índices para tablas volcadas
@@ -1556,8 +1610,6 @@ ALTER TABLE `image`
 ALTER TABLE `likes`
   ADD PRIMARY KEY (`id_like`),
   ADD KEY `id_building` (`id_building`),
-  ADD KEY `id_user` (`id_user`),
-  ADD KEY `username` (`username`),
   ADD KEY `ref_cat` (`ref_cat`);
 
 --
@@ -1626,7 +1678,7 @@ ALTER TABLE `building`
 -- AUTO_INCREMENT de la tabla `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `id_line` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=110;
+  MODIFY `id_line` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=115;
 
 --
 -- AUTO_INCREMENT de la tabla `category`
@@ -1656,7 +1708,7 @@ ALTER TABLE `image`
 -- AUTO_INCREMENT de la tabla `likes`
 --
 ALTER TABLE `likes`
-  MODIFY `id_like` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1294;
+  MODIFY `id_like` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1323;
 
 --
 -- AUTO_INCREMENT de la tabla `operations`
@@ -1686,7 +1738,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT de la tabla `user_order`
 --
 ALTER TABLE `user_order`
-  MODIFY `id_order` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=102;
+  MODIFY `id_order` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=104;
 
 --
 -- Restricciones para tablas volcadas
@@ -1725,8 +1777,6 @@ ALTER TABLE `image`
 --
 ALTER TABLE `likes`
   ADD CONSTRAINT `likes_ibfk_1` FOREIGN KEY (`id_building`) REFERENCES `building` (`id_building`),
-  ADD CONSTRAINT `likes_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`),
-  ADD CONSTRAINT `likes_ibfk_3` FOREIGN KEY (`username`) REFERENCES `user` (`username`),
   ADD CONSTRAINT `likes_ibfk_4` FOREIGN KEY (`ref_cat`) REFERENCES `building` (`ref_cat`);
 
 --

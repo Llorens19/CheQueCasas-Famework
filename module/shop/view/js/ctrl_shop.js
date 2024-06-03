@@ -1111,8 +1111,6 @@ async function find_likes_user() {
 
             console.log(id_building_like_user);
 
-
-
             //localStorage.setItem('all_likes_table', JSON.stringify(data));
 
             console.table(data);

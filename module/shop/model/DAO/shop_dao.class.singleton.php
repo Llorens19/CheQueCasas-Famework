@@ -294,9 +294,21 @@ class shop_dao
 	}
 
 
-	public static function action_like($db, $username, $id_building)
+	public static function action_like($db, $username, $id_building, $type_user)
 	{
-		$sql = "SELECT like_user_function('$username',  $id_building) AS message;";
+		error_log("action_like: " . $username . " " . $id_building . " " . $type_user);
+		
+		if($type_user == 'normal') {
+			$sql = "SELECT like_user_function('$username',  $id_building) AS message;";
+		} else if($type_user == 'google') {
+
+			$sql = "SELECT like_user_google_function('$username',  $id_building) AS message;";
+		} else if($type_user == 'github') {
+
+			$sql = "SELECT like_user_github_function('$username',  $id_building) AS message;";
+		}
+
+		error_log($sql);
 
 		$stmt = $db->ejecutar($sql);
 		return $db->listar($stmt);

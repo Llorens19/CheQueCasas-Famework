@@ -140,7 +140,7 @@
 
 		public function get_likes_user_BLL($args) {
 			try {
-				$rdo = $this -> dao -> likes_user($this -> db, $args);
+				$rdo = $this -> dao -> likes_user($this -> db, $args[0]);
 			} catch (Exception $e) {
 				return "error";
 			}
@@ -165,7 +165,7 @@
 	public function get_action_like_BLL($args) {
 
 		try {
-            $rdo = $this -> dao -> action_like($this -> db, $args[0], $args[1]);
+            $rdo = $this -> dao -> action_like($this -> db, $args[0], $args[1], $args[2]);
         } catch (Exception $e) {
             return "error";
         }

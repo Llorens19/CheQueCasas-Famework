@@ -42,14 +42,14 @@
             echo json_encode(common::load_model('shop_model', 'get_total_prod', $_POST['filters']));
         }
         function likes_user() {
-            echo json_encode(common::load_model('shop_model', 'get_likes_user', $_SESSION['username']));
+            echo json_encode(common::load_model('shop_model', 'get_likes_user', [$_SESSION['username'], $_SESSION['type_user']]));
         }
         function table_likes() {
             echo json_encode(common::load_model('shop_model', 'get_table_likes'));
         }
 
         function action_like() {
-            echo json_encode(common::load_model('shop_model', 'get_action_like', [$_SESSION['username'], $_POST['id_building']]));
+            echo json_encode(common::load_model('shop_model', 'get_action_like', [$_SESSION['username'], $_POST['id_building'], $_SESSION['type_user']]));
         }
 
         function action_cart() {
