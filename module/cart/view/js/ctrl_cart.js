@@ -316,6 +316,7 @@ function buy() {
                 .then(function (data) {
 
                     console.log(data);
+                    
                 })
                 .catch(function () {
                     console.error('error');

@@ -55,210 +55,19 @@ function load_menu() {
 
     console.log(token);
     if (token) {
-        
 
-        ajaxPromise('POST', 'JSON', friendlyURL('?module=login'), { 'token': token, type_user: type_user, op: 'data_user'})
+
+        ajaxPromise('POST', 'JSON', friendlyURL('?module=login'), { 'token': token, type_user: type_user, op: 'data_user' })
             .then(function (data) {
                 console.log(data[0]);
-                
+
                 $(".login_bar").empty();
 
-                
-
-                $("<div></div>").attr("class", "ms-2 loged_button round_button").attr("data-toggle", "modal")
-                    .attr("data-target", "#userModal").appendTo(".login_bar").html(`<img src="` + data[0].avatar + `">`);
-
-                $("<div></div>").attr("class", "modal fade").attr("id", "userModal")
-                    .attr("tabindex", "-1")
-                    .attr("aria-labelledby", "userMuserModalLabelodal")
-                    .attr("aria-hidden", "true")
-                    .appendTo(".login_bar").html(`
-
-
-                    <div class="modal-dialog modal-dialog-centered ">
-                        <div class="modal-content modal-dialog-centered modal-dialog-scrollable">
-
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="userModalLabel">Datos de usuario</h5>
-                            </div>
-    
-                            <div class="modal-body col-md-12">
-                                <div class="text-center">
-                                    <div class="user-photo round_img">
-                                        <img src="`+ data[0].avatar + `">
-                                    </div>
-                                    <div>
-                                        <p class="user-id">User ID: <span id="userId">`+ data[0].id_user + `</span></p>
-                                    </div>
-                                </div>
-    
-                                <div class="my-3 mx-3">
-                                    <div class="card">
-                                        <div class="card-body">
-                                        <p class="card-text"><strong>Username:</strong> `+ data[0].username + `</p>
-                                            <p class="card-text"><strong>Nombre:</strong> `+ data[0].name + `</p>
-                                            <p class="card-text"><strong>Apellidos:</strong> `+ data[0].surname + `</p>
-                                            <p class="card-text"><strong>Email:</strong> `+ data[0].email + `</p>
-                                            <p class="card-text"><strong>Teléfono:</strong> `+ data[0].tlf + `</p>
-                                            <button type="button" class="btn btn-primary col-md-12"  data-dismiss="modal" data-toggle="modal" data-target="#phoneVerificationModal" >Activar 2fa</button>
-                                            
-                                            
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="d-flex">
-                                    <button type="button" class="btn btn-secondary offset-md-10 col-md-2" data-dismiss="modal">Close</button>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>`);
-
-
-                $("<div></div>").attr("class", "modal fade").attr("id", "phoneVerificationModal").attr("tabindex", "-1")
-                    .attr("aria-labelledby", "phoneVerificationModalLabel").attr("aria-hidden", "true").appendTo(".login_bar").html(`
-                        <div class="modal-dialog modal-dialog-centered modal-sm">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="phoneVerificationModalLabel">Verifica tu Teléfono</h5>
-                                    <button type="button" class="close close_verify_phone" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body modal_phone_body">
-                                    <form id="phoneVerificationForm">
-                                    
-                                        <div class="form-outline mb-4">
-                                            <label class="form-label" for="phone_number">Número de Teléfono</label>
-                                            <input type="email" id="phone_number" class="form-control phone_number" value = "`+ data[0].tlf + `" />
-                                            <span id="error_phone_number" class="error"></span>
-
-                                        </div>
-
-                                        <button type="button" class="btn btn-primary col-md-4 offset-lg-4 save_phone">Siguiente</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>`);
-
-
-
-                $(".save_phone").on("click", function () {
-
-                    let phone_regex = /^[9|6|7][0-9]{8}$/;
-                    let phone = $(".phone_number").val();
-
-                    localStorage.setItem('phone', phone);
-
-                    if (phone_regex.test(phone)) {
-
-                        ajaxPromise('POST', 'JSON', friendlyURL('?module=login'), { phone: phone, username: data[0].username, op: 'save_phone' })
-                            .then(function (data) {
-                                document.getElementById('error_phone_number').innerHTML = "";
-                                console.log(data);
-
-
-
-
-                                $(".modal_phone_body").empty().html(`
-
-                                <form id="phone_code_form">
-                                    
-                                        <div class="form-outline mb-4">
-                                            <label class="form-label" for="phone_code">Código Recibido</label>
-                                            <input type="email" id="phone_code" class="form-control phone_code"/>
-                                            <span id="error_phone_code" class="error"></span>
-
-                                        </div>
-
-                                        <button type="button" class="btn btn-primary col-md-4 offset-lg-4 send_sms">Comprobar</button>
-                                    </form>`);
-
-
-                                send_sms(phone);
-                                compare();
-
-
-                            }).catch(function () {
-                                console.log("Error al guardar el teléfono");
-                            });
-                    } else {
-                        document.getElementById('error_phone_number').innerHTML = "Introduce un teléfono válido";
-                    }
-                });
-
-
-                function send_sms(phone) {
-                    console.log("send_sms");
-
-                    ajaxPromise('POST', 'JSON', friendlyURL('?module=login'), { phone: phone, op: 'send_sms' })
-                        .then(function (data) {
-                            console.log(data);
-                            console.log("Código enviado", data);
-                        }).catch(function () {
-                            console.error("Error al guardar el teléfono");
-                        });
-                }
-
-                function compare() {
-                    $(".send_sms").on("click", function () {
-
-                        let phone = localStorage.getItem('phone');
-                        let code = $(".phone_code").val();
-
-                        ajaxPromise('POST', 'JSON', friendlyURL('?module=login'), { phone: phone, code: code, op: 'verify_OTP' })
-                            .then(function (data) {
-                                console.log(data);
-                                console.log("Código enviado", data);
-
-                                if (data == "done") {
-                                    console.log("Código correcto");
-                                    $('.close_verify_phone').click();
-                                    new Noty({
-                                        text: 'Verificación 2fa activada.',
-                                        type: 'success',
-                                        layout: 'topRight',
-                                        timeout: 3000
-                                    }).show();
-
-
-                                } else {
-
-                                    document.getElementById('error_phone_code').innerHTML = "Código incorrecto";
-                                    new Noty({
-                                        text: 'El pin no es correcto o ha caducado.',
-                                        type: 'error',
-                                        layout: 'topRight',
-                                        timeout: 3000
-                                    }).show();
-
-                                }
-
-
-                            }).catch(function () {
-                                console.error("Error al guardar el teléfono");
-                            });
-                    });
-                }
-
-
-
-                $("<div></div>").attr("class", "ms-2 loged_button").appendTo(".login_bar").html(
-                    `<button class="btn btn-primary logout" >Cerrar Sesión</button>`);
-
-                $("<div></div>").attr("class", "ms-2 cart_button").appendTo(".login_bar").html(
-                        `<button class="btn btn-primary" data-bs-toggle="modal" onclick="window.location.href=friendlyURL('?module=cart')">Carrito</button>`);
-
-                $(".button_like_building").removeAttr("data-bs-toggle");
-                $(".button_like_building").removeAttr("data-bs-target");
-                $(".button_like_building").removeAttr("onclick");
-                $(".button_like_building").addClass("button_like_building_active");
-
-                $(".button_cart_building").removeAttr("data-bs-toggle");
-                $(".button_cart_building").removeAttr("data-bs-target");
-                $(".button_cart_building").removeAttr("onclick");
-                $(".button_cart_building").addClass("button_cart_building_active");
+                load_profile(data);
+                change_photo();
+                load_modal_phone_verification(data);
+                button_save_phone(data);
+                load_menu_content();
 
 
                 if (data[0].type_user == "admin") {
@@ -274,11 +83,6 @@ function load_menu() {
 
                     $("<div></div>").attr("class", "col-md-2 delete_building").appendTo(".buttons_card_shop")
                         .html("<button type='button' class='btn btn-link'><img src='view/img/shop/img_card/borrar.png' style='height: 50px;' alt='Me gusta'></button>");
-
-
-
-
-
 
                 } else {
                     //find_likes_user();
@@ -332,7 +136,7 @@ function click_logout() {
 function logout() {
     ajaxPromise('POST', 'JSON', 'index.php?module=login&op=logout')
         .then(function (data) {
-            console.log ('logout');
+            console.log('logout');
             localStorage.removeItem('access_token');
             localStorage.removeItem('refresh_token');
             localStorage.removeItem('type_user');
@@ -352,6 +156,7 @@ function click_shop() {
         localStorage.removeItem('total_prod');
     });
 }
+
 
 function load_login_modal() {
 
@@ -576,6 +381,245 @@ function load_login_modal() {
 }
 
 
+
+function change_photo() {
+
+    $(".change_photo").on("click", function () {
+        console.log("change_photo");
+        $("<form></form>").attr("action", "/upload").attr("method", "post").attr("enctype", "multipart/form-data").attr("class", "mb-3 form_upload_photo").appendTo(".user_profile_body").html(`
+
+        
+        <div class="mb-3 upload_photp" >
+            <label for="fileToUpload" class="form-label">Selecciona un archivo</label>
+            <input type="file" class="form-control" name="fileToUpload" id="fileToUpload">
+        </div>
+        <button type="submit" class="btn btn-primary">Subir archivo</button>
+    
+    `);
+
+    
+        
+
+
+
+        $(this).removeClass("change_photo").removeClass("btn-primary").addClass("hidde_change_photo").addClass("btn-secondary").text("Cerrar");
+        hide_change_photo();
+    });
+
+}
+
+
+function hide_change_photo() {
+    $(".hidde_change_photo").on("click", function () {
+        console.log("hide__change_photo");
+        $(".form_upload_photo").remove();
+        $(".dropzone").remove();
+
+        $(this).removeClass("hidde_change_photo").removeClass("btn-secondary").addClass("change_photo").addClass("btn-primary").text("Cambiar foto");
+
+        change_photo();
+    });
+}
+
+
+
+function load_profile(data) {
+
+    $("<div></div>").attr("class", "ms-2 loged_button round_button").attr("data-toggle", "modal")
+        .attr("data-target", "#userModal").appendTo(".login_bar").html(`<img src="` + data[0].avatar + `">`);
+
+    $("<div></div>").attr("class", "modal fade").attr("id", "userModal")
+        .attr("tabindex", "-1")
+        .attr("aria-labelledby", "userMuserModalLabelodal")
+        .attr("aria-hidden", "true")
+        .appendTo(".login_bar").html(`
+
+
+    <div class="modal-dialog modal-dialog-centered ">
+        <div class="modal-content modal-dialog-centered modal-dialog-scrollable">
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="userModalLabel">Datos de usuario</h5>
+            </div>
+
+            <div class="modal-body col-md-12">
+                <div class="text-center">
+                    <div class="user-photo round_img">
+                        <img src="`+ data[0].avatar + `">
+                    </div>
+                    <div>
+                        <p class="user-id">User ID: <span id="userId">`+ data[0].id_user + `</span></p>
+                    </div>
+                </div>
+
+                <div class="my-3 mx-3">
+                    <div class="card">
+                        <div class="card-body user_profile_body">
+                        <p class="card-text"><strong>Username:</strong> `+ data[0].username + `</p>
+                            <p class="card-text"><strong>Nombre:</strong> `+ data[0].name + `</p>
+                            <p class="card-text"><strong>Apellidos:</strong> `+ data[0].surname + `</p>
+                            <p class="card-text"><strong>Email:</strong> `+ data[0].email + `</p>
+                            <p class="card-text"><strong>Teléfono:</strong> `+ data[0].tlf + `</p>
+                            <button type="button" class="btn btn-primary col-md-12"  data-dismiss="modal" data-toggle="modal" data-target="#phoneVerificationModal" >Activar 2fa</button>
+                            <button type="button" class="btn btn-primary change_photo col-md-6 my-2" >Cambiar foto</button>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex">
+                    <button type="button" class="btn btn-secondary offset-md-10 col-md-2" data-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>`);
+
+}
+
+
+function load_modal_phone_verification(data) {
+
+    $("<div></div>").attr("class", "modal fade").attr("id", "phoneVerificationModal").attr("tabindex", "-1")
+        .attr("aria-labelledby", "phoneVerificationModalLabel").attr("aria-hidden", "true").appendTo(".login_bar").html(`
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="phoneVerificationModalLabel">Verifica tu Teléfono</h5>
+                    <button type="button" class="close close_verify_phone" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body modal_phone_body">
+                    <form id="phoneVerificationForm">
+                    
+                        <div class="form-outline mb-4">
+                            <label class="form-label" for="phone_number">Número de Teléfono</label>
+                            <input type="email" id="phone_number" class="form-control phone_number" value = "`+ data[0].tlf + `" />
+                            <span id="error_phone_number" class="error"></span>
+                        </div>
+                        <button type="button" class="btn btn-primary col-md-4 offset-lg-4 save_phone">Siguiente</button>
+                    </form>
+                </div>
+            </div>
+        </div>`);
+}
+
+
+function button_save_phone(data) {
+    $(".save_phone").on("click", function () {
+
+        let phone_regex = /^[9|6|7][0-9]{8}$/;
+        let phone = $(".phone_number").val();
+
+        localStorage.setItem('phone', phone);
+
+        if (phone_regex.test(phone)) {
+
+            ajaxPromise('POST', 'JSON', friendlyURL('?module=login'), { phone: phone, username: data[0].username, op: 'save_phone' })
+                .then(function (data) {
+                    document.getElementById('error_phone_number').innerHTML = "";
+                    console.log(data);
+                    $(".modal_phone_body").empty().html(`
+
+                    <form id="phone_code_form">
+                        
+                            <div class="form-outline mb-4">
+                                <label class="form-label" for="phone_code">Código Recibido</label>
+                                <input type="email" id="phone_code" class="form-control phone_code"/>
+                                <span id="error_phone_code" class="error"></span>
+
+                            </div>
+
+                            <button type="button" class="btn btn-primary col-md-4 offset-lg-4 send_sms">Comprobar</button>
+                        </form>`);
+
+
+                    send_sms(phone);
+                    compare();
+
+
+                }).catch(function () {
+                    console.log("Error al guardar el teléfono");
+                });
+        } else {
+            document.getElementById('error_phone_number').innerHTML = "Introduce un teléfono válido";
+        }
+    });
+}
+
+
+function send_sms(phone) {
+    console.log("send_sms");
+
+    ajaxPromise('POST', 'JSON', friendlyURL('?module=login'), { phone: phone, op: 'send_sms' })
+        .then(function (data) {
+            console.log(data);
+            console.log("Código enviado", data);
+        }).catch(function () {
+            console.error("Error al guardar el teléfono");
+        });
+}
+
+function compare() {
+    $(".send_sms").on("click", function () {
+
+        let phone = localStorage.getItem('phone');
+        let code = $(".phone_code").val();
+
+        ajaxPromise('POST', 'JSON', friendlyURL('?module=login'), { phone: phone, code: code, op: 'verify_OTP' })
+            .then(function (data) {
+                console.log(data);
+                console.log("Código enviado", data);
+
+                if (data == "done") {
+                    console.log("Código correcto");
+                    $('.close_verify_phone').click();
+                    new Noty({
+                        text: 'Verificación 2fa activada.',
+                        type: 'success',
+                        layout: 'topRight',
+                        timeout: 3000
+                    }).show();
+
+
+                } else {
+
+                    document.getElementById('error_phone_code').innerHTML = "Código incorrecto";
+                    new Noty({
+                        text: 'El pin no es correcto o ha caducado.',
+                        type: 'error',
+                        layout: 'topRight',
+                        timeout: 3000
+                    }).show();
+
+                }
+
+
+            }).catch(function () {
+                console.error("Error al guardar el teléfono");
+            });
+    });
+}
+
+function load_menu_content(){
+    $("<div></div>").attr("class", "ms-2 loged_button").appendTo(".login_bar").html(
+        `<button class="btn btn-primary logout" >Cerrar Sesión</button>`);
+
+    $("<div></div>").attr("class", "ms-2 cart_button").appendTo(".login_bar").html(
+        `<button class="btn btn-primary" data-bs-toggle="modal" onclick="window.location.href=friendlyURL('?module=cart')">Carrito</button>`);
+
+    $(".button_like_building").removeAttr("data-bs-toggle");
+    $(".button_like_building").removeAttr("data-bs-target");
+    $(".button_like_building").removeAttr("onclick");
+    $(".button_like_building").addClass("button_like_building_active");
+
+    $(".button_cart_building").removeAttr("data-bs-toggle");
+    $(".button_cart_building").removeAttr("data-bs-target");
+    $(".button_cart_building").removeAttr("onclick");
+    $(".button_cart_building").addClass("button_cart_building_active");
+
+}
 
 
 

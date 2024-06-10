@@ -311,8 +311,11 @@ function load_content() {
         localStorage.setItem("token_email", path[5]);
 
     } else if (path[4] === 'verify') {
-        ajaxPromise('POST', 'JSON', friendlyURL("?module=login"), { token_email: path[5], op: ' verify_email' })
+        console.log("///////////////////////////////////////////////", path[5]);
+
+        ajaxPromise('POST', 'JSON', friendlyURL("?module=login"), { token_email: path[5], op: 'verify_email' })
             .then(function (data) {
+                
                 new Noty({
                     text: 'Email verificado.',
                     type: 'success',

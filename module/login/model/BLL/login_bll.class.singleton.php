@@ -341,7 +341,7 @@ class login_bll
 			'code' =>  $code
 		];
 
-		// $res = json_decode(OTP::send_sms($obj), true);
+		$res = json_decode(OTP::send_sms($obj), true);
 		return $code;
 	}
 

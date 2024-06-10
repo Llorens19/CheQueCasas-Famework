@@ -27,6 +27,7 @@ class login_dao
 	{
 
 		$sql = "UPDATE user SET active = 1, token_email= '' WHERE token_email = '$token_email'";
+		
 
 		$stmt = $db->ejecutar($sql);
 		return "update";
