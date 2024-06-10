@@ -116,4 +116,8 @@ class controller_login
         echo json_encode(common::load_model('login_model', 'get_upload_photo', $_FILES['file']));
     }
 
+    function save_profile() {
+        echo json_encode(common::load_model('login_model', 'get_save_profile', [$_POST['name'], $_POST['surname'], $_POST['phone'], $_SESSION['username'], $_SESSION['type_user']]));
+    }
+
 }

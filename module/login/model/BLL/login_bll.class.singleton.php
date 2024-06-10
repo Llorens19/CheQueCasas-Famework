@@ -445,51 +445,53 @@ class login_bll
 
 
 	public function get_upload_photo_BLL($args)
-	{
+{
+    $dir = 'view/img/login/photos_user/';
+    $unique_id = uniqid('', true); // Genera un identificador único
+    $target_file = $dir . $unique_id . '.' . strtolower(pathinfo($args["name"], PATHINFO_EXTENSION)); // Ruta donde se guardará la imagen
+    $uploadOk = 1;
+    $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION)); // Obtenemos la extensión de la imagen
 
-		$dir = 'view/img/login/photos_user/';
-		$target_file = $dir . basename($args["name"]); //Ruta donde se guardará la imagen
-		$uploadOk = 1;
-		$imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION)); //Obtenemos la extensión de la imagen
+    error_log($imageFileType);
+    error_log($target_file);
 
+    $check = getimagesize($args["tmp_name"]);  // Comprobamos si es una imagen
 
-		error_log($imageFileType);
-		error_log($target_file);
+    if ($check !== false) {
+        $uploadOk = 1;
+    } else {
+        $uploadOk = 0;
+        error_log("El archivo no es una imagen");
+        return "error_not_image";
+    }
 
-		$check = getimagesize($args["tmp_name"]);  //Comprobamos si es una imagen
+    if ($args["size"] > 5000000) {
+        $uploadOk = 0;
+        error_log("El archivo es demasiado grande");
+        return "error_to_big";
+    }
 
-		if ($check !== false) {
-			$uploadOk = 1;
-		} else {
-			$uploadOk = 0;
-			error_log("El archivo no es una imagen");
-			return "error_not_image";
-		}
+    if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") {
+        $uploadOk = 0;
+        error_log("Solo se permiten archivos JPG, JPEG, PNG y GIF");
+        return "error_format";
+    }
 
-		if ($args["size"] > 5000000) {
-			$uploadOk = 0;
-			error_log("El archivo es demasiado grande");
-			return "error_to_big";
-		}
+    if ($uploadOk == 0) {
+        return "error";
+    } else {
+        $this->dao->update_user_photo($this->db, $_SESSION['username'], $target_file, $_SESSION['type_user']);
+        if (move_uploaded_file($args["tmp_name"], $target_file)) { // Movemos la imagen a la ruta especificada
+            return "done";
+        } else {
+            return "error";
+        }
+    }
+}
 
-		if (
-			$imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
-			&& $imageFileType != "gif"
-		) {
-			$uploadOk = 0;
-			error_log("Solo se permiten archivos JPG, JPEG, PNG y GIF");
-			return "error_format";
-		}
-
-		if ($uploadOk == 0) {
-			return "error";
-		} else {
-			$this->dao->update_user_photo($this->db, $_SESSION['username'], $target_file);
-			if (move_uploaded_file($args["tmp_name"], $target_file)) { //Movemos la imagen a la ruta especificada
-				return "done";
-			} else {
-				return "error";
-			}
-		}
-	}
+public function get_save_profile_BLL($args)
+{
+	$this->dao->update_user_profile($this->db, $args[0], $args[1], $args[2], $_SESSION['username'], $_SESSION['type_user']);
+	return "done";
+}
 }

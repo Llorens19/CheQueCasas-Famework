@@ -498,20 +498,57 @@ function load_profile(data) {
                     </div>
                 </div>
 
-                <div class="my-3 mx-3">
+              <div class="my-3 mx-3">
                     <div class="card">
                         <div class="card-body user_profile_body">
-                        <p class="card-text"><strong>Username:</strong> `+ data[0].username + `</p>
-                            <p class="card-text"><strong>Nombre:</strong> `+ data[0].name + `</p>
-                            <p class="card-text"><strong>Apellidos:</strong> `+ data[0].surname + `</p>
-                            <p class="card-text"><strong>Email:</strong> `+ data[0].email + `</p>
-                            <p class="card-text"><strong>Teléfono:</strong> `+ data[0].tlf + `</p>
-                            <button type="button" class="btn btn-primary col-md-12"  data-dismiss="modal" data-toggle="modal" data-target="#phoneVerificationModal" >Activar 2fa</button>
-                            <button type="button" class="btn btn-primary change_photo col-md-6 my-2" >Cambiar foto</button>
+                            <div class="form-group row mb-3">
+                                <div class="col-md-5">
+                                    <label for="username"><strong>Username:</strong></label>
+                                    <input type="text" id="username" class="form-control" value="`+ data[0].username + `" readonly>
+                                </div>
+                                <div class="col-md-7">
+                                    <label for="tlf"><strong>Teléfono:</strong></label>
+                                    <input type="text" id="tlf" class="form-control" value="`+ data[0].tlf + `">
+                                    <span id="error_tlf" class="error"></span>
+                                </div>
+                            </div>
+                            <div class="form-group row mb-3">
+                                <div class="col-md-5">
+                                    <label for="name"><strong>Nombre:</strong></label>
+                                    <input type="text" id="name" class="form-control" value="`+ data[0].name + `">
+                                    <span id="error_name" class="error"></span>
+                                </div>
+                                <div class="col-md-7">
+                                    <label for="surname"><strong>Apellidos:</strong></label>
+                                    <input type="text" id="surname" class="form-control" value="`+ data[0].surname + `">
+                                    <span id="error_surname" class="error"></span>
+                                </div>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="email"><strong>Email:</strong></label>
+                                <input type="email" id="email" class="form-control" value="`+ data[0].email + `" readonly>
+                            </div>
 
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <button type="button" class="btn btn-primary col-md-12 mb-3" data-dismiss="modal" data-toggle="modal" data-target="#phoneVerificationModal">Activar 2fa</button>
+                                </div>
+                                <div class="col-md-4">
+                                    <button type="button" class="btn btn-danger col-md-12 mb-3" data-dismiss="modal" data-toggle="modal" data-target="#phoneVerificationModal">Likes</button>
+                                </div>
+                                <div class="col-md-4">
+                                    <button type="button" class="btn btn-success col-md-12 mb-3 save_profile">Guardar</button>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <button type="button" class="btn btn-primary change_photo col-md-12">Cambiar foto</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
+
+
 
                 <div class="d-flex">
                     <button type="button" class="btn btn-secondary offset-md-10 col-md-2" data-dismiss="modal">Close</button>
@@ -521,6 +558,7 @@ function load_profile(data) {
         </div>
     </div>`);
 
+    save_profile();
 }
 
 
@@ -665,6 +703,86 @@ function load_menu_content(){
     $(".button_cart_building").removeAttr("onclick");
     $(".button_cart_building").addClass("button_cart_building_active");
 
+}
+
+function save_profile(){
+
+    $(".save_profile").on("click", function () {
+        let name = $("#name").val();
+        let surname = $("#surname").val();
+        let tlf = $("#tlf").val();
+
+        let phone_regex = /^[9|6|7][0-9]{8}$/;
+        let name_regex = /^[a-zA-Z\s]*$/;
+        let surname_regex = /^[a-zA-Z\s]*$/;
+        let correct = true;
+
+        if (!name) {
+            document.getElementById('error_name').innerHTML = "Introduce un nombre";
+            correct= false;
+        }else {
+            document.getElementById('error_name').innerHTML = "";
+        }
+
+        if (!surname) {
+            document.getElementById('error_surname').innerHTML = "Introduce un apellido";
+            correct= false;
+        }else {
+            document.getElementById('error_surname').innerHTML = "";
+        }
+
+        if (!tlf) {
+            document.getElementById('error_tlf').innerHTML = "Introduce un teléfono";
+            correct= false;
+        }else {
+            document.getElementById('error_tlf').innerHTML = "";
+        }
+
+
+        if (!name_regex.test(name)) {
+            document.getElementById('error_name').innerHTML = "Introduce un nombre válido";
+            correct= false;
+        }else {
+            document.getElementById('error_name').innerHTML = "";
+        }
+
+        if (!surname_regex.test(surname)) {
+            document.getElementById('error_surname').innerHTML = "Introduce un apellido válido";
+            correct= false;
+        }else {
+            document.getElementById('error_surname').innerHTML = "";
+        }
+
+        if (!phone_regex.test(tlf)) {
+            document.getElementById('error_tlf').innerHTML = "Introduce un teléfono válido";
+            correct= false;
+        }else {
+            document.getElementById('error_tlf').innerHTML = "";
+        }
+
+        if (correct) {
+        ajaxPromise('POST', 'JSON', friendlyURL('?module=login'), { name: name, surname: surname, phone: tlf, op: 'save_profile' })
+            .then(function (data) {
+                console.log(data);
+                new Noty({
+                    text: 'Datos actualizados correctamente.',
+                    type: 'success',
+                    layout: 'topRight',
+                    timeout: 3000
+                }).show();
+            }).catch(function () {
+                console.log("Error al guardar los datos");
+            });
+        }else{
+            new Noty({
+                text: 'Introduce los datos correctamente.',
+                type: 'error',
+                layout: 'topRight',
+                timeout: 3000
+            }).show();
+        }
+    });
+    
 }
 
 

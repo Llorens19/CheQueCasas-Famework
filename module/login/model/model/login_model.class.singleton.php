@@ -96,5 +96,9 @@
             return $this -> bll -> get_upload_photo_BLL($args);
         }
 
+        public function get_save_profile ($args) {
+            return $this -> bll -> get_save_profile_BLL($args);
+        }
+
 
     }

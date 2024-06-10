@@ -227,12 +227,43 @@ class login_dao
 
 	}
 
-	function update_user_photo($db, $username, $avatar)
+	function update_user_photo($db, $username, $avatar, $type_user)
 	{
-		$sql = "UPDATE user SET avatar = '$avatar' WHERE username = '$username'";
+
+		if($type_user == 'normal' and isset($type_user)){
+
+			$sql = "UPDATE user SET avatar = '$avatar' WHERE username = '$username'";
+		}else if($type_user == 'google' and isset($type_user)){
+
+			$sql = "UPDATE user_google SET avatar = '$avatar' WHERE username = '$username'";
+		}else if($type_user == 'github' and isset($type_user)){
+
+			$sql = "UPDATE user_github SET avatar = '$avatar' WHERE username = '$username'";
+		}
+
+
+			$stmt = $db->ejecutar($sql);
+			return "ok";
+
+	}
+
+	function update_user_profile($db, $name, $surname, $tlf, $username, $type_user)
+	{
+		if($type_user == 'normal' and isset($type_user)){
+
+			$sql = "UPDATE user SET name = '$name', surname = '$surname', tlf = '$tlf' WHERE username = '$username'";
+		}else if($type_user == 'google' and isset($type_user)){
+			
+			$sql = "UPDATE user_google SET name = '$name', surname = '$surname', tlf = '$tlf' WHERE username = '$username'";
+		}else if($type_user == 'github' and isset($type_user)){
+			
+			$sql = "UPDATE user_github SET name = '$name', surname = '$surname', tlf = '$tlf' WHERE username = '$username'";
+		}
 
 		$stmt = $db->ejecutar($sql);
 		return "ok";
+
 	}
+
 
 }
