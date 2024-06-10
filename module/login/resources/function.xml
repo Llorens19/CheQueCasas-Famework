@@ -101,4 +101,9 @@
         <uri>social_login</uri>
     </function>
 
+    <function>
+        <name>upload_photo</name>
+        <uri>upload_photo</uri>
+    </function>
+
 </functions>

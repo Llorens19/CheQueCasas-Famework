@@ -316,9 +316,16 @@ function buy() {
                 .then(function (data) {
 
                     console.log(data);
-                    
-                })
-                .catch(function () {
+                    $(".list_cart").empty();
+                    loadCart();
+                    new Noty({
+                        text: 'Compra efectuada.',
+                        type: 'success',
+                        layout: 'topRight',
+                        timeout: 3000
+                    }).show();
+
+                }).catch(function () {
                     console.error('error');
                 });
         }

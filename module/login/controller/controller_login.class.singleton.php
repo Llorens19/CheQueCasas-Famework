@@ -110,6 +110,10 @@ class controller_login
         echo json_encode(common::load_model('login_model', 'get_social_login', [$_POST['id'], $_POST['username'], $_POST['email'], $_POST['avatar'], $_POST['type_user']]));
     } 
 
-    
+    function upload_photo () {
+        error_log("Entra en upload_photo");
+        error_log(print_r($_FILES['file'], true));
+        echo json_encode(common::load_model('login_model', 'get_upload_photo', $_FILES['file']));
+    }
 
 }

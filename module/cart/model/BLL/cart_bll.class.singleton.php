@@ -58,26 +58,27 @@
 			if(isset($id)){
 
 				$res2 = $this->dao->save_lines($this->db, $id, $args[0], $args[6]);
-				
+				error_log("1");
 				$this->dao->update_stock($this->db, $args[0], $args[6]);
-				
+				error_log("2");
 				$order = $this->dao->select_order($this->db, $id);
 				$user_order = $this->dao->select_user_order($this->db, $id);
-				
+				error_log("3");
 				$html = PDF::create_Bill($order, $user_order, $id);
-
+				error_log("4");
 				
 				$url_qr =QR::QR_bill($html, $id);
 				
-
+				error_log("5");
 				$this->dao->save_qr($this->db, $id, $url_qr);
-
+				error_log("6");
 				
 				$this->dao->delete_cart($this->db, $args[0], $args[6]);
-				
+				error_log("7");
 				$url_pdf = 'pdf/factura' . $id . '.pdf';
-
+				error_log("8");
 				$this->dao->save_pdf_url($this->db, $id, $url_pdf);
+				error_log("9");
 
 			return "done";
 
@@ -154,11 +155,6 @@
 				return 'add';
 			}
 		}
-	
-
-
-
-
 
 
 	}

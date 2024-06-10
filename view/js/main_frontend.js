@@ -1,16 +1,26 @@
 async function ajaxPromise(sType, sTData, sUrl, sData = undefined) {
     try {
-        const data = await $.ajax({
+        const ajaxOptions = {
             url: sUrl,
             type: sType,
-            dataType: sTData,
-            data: sData
-        });
+            dataType: sTData
+        };
+
+        // Si se pasa FormData, debemos ajustar contentType y processData
+        if (sData instanceof FormData) {
+            ajaxOptions.contentType = false;
+            ajaxOptions.processData = false;
+            ajaxOptions.data = sData;
+        } else {
+            ajaxOptions.data = sData;
+        }
+
+        const data = await $.ajax(ajaxOptions);
         return data;
     } catch (errorThrow) {
         throw errorThrow;
     }
-};
+}
 
 function absoluteURL(url) {
 
@@ -386,27 +396,63 @@ function change_photo() {
 
     $(".change_photo").on("click", function () {
         console.log("change_photo");
-        $("<form></form>").attr("action", "/upload").attr("method", "post").attr("enctype", "multipart/form-data").attr("class", "mb-3 form_upload_photo").appendTo(".user_profile_body").html(`
-
         
-        <div class="mb-3 upload_photp" >
-            <label for="fileToUpload" class="form-label">Selecciona un archivo</label>
-            <input type="file" class="form-control" name="fileToUpload" id="fileToUpload">
-        </div>
-        <button type="submit" class="btn btn-primary">Subir archivo</button>
-    
-    `);
-
-    
-        
-
-
+        $("<form></form>").attr("action", "/upload").attr("method", "post").attr("enctype", "multipart/form-data").attr("class", "mb-3 form_upload_photo").attr('id', 'uploadForm').appendTo(".user_profile_body").html(`
+            <div class="mb-3 upload_photo" >
+                <label for="fileToUpload" class="form-label">Selecciona un archivo</label>
+                <input type="file" class="form-control" name="file" id="file" style="width: 100%; height: 150px;">
+            </div>
+            <button type="submit" class="btn btn-primary">Subir archivo</button>
+        `);
 
         $(this).removeClass("change_photo").removeClass("btn-primary").addClass("hidde_change_photo").addClass("btn-secondary").text("Cerrar");
         hide_change_photo();
+        upload_photo();
     });
 
 }
+
+
+function upload_photo() {
+    $(".form_upload_photo").on("submit", function (e) {
+        e.preventDefault();
+        console.log("upload_photo");
+
+        var formData = new FormData(this);
+
+
+        ajaxPromise('POST', 'JSON', friendlyURL('?module=login&op=upload_photo'), formData)
+            .then(function (data) {
+                console.log(data);
+                alert('Archivo subido exitosamente.');
+            })
+            .catch(function (error) {
+                console.error("Error al subir el archivo", error);
+            });
+    
+
+    });
+
+
+    // $.ajax({
+    //     url: friendlyURL('?module=login'),
+    //     type: 'POST',
+    //     data:  { formData: formData, op: 'upload_photo' },
+    //     contentType: false,
+    //     processData: false,
+    //     success: function (data) {
+    //         console.log(data);
+    //         alert('Archivo subido exitosamente.');
+    //     }
+
+
+    // });
+
+    // });
+
+
+}
+
 
 
 function hide_change_photo() {

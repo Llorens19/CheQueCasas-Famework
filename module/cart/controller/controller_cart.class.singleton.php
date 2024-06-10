@@ -62,4 +62,7 @@
             error_log("add_product");
             echo json_encode(common::load_model('cart_model', 'get_add_product',  [$_SESSION['username'], $_POST['id_product'], $_SESSION['type_user']]));
         }
+
+        
+
     }

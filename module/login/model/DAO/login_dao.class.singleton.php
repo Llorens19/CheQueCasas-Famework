@@ -227,4 +227,12 @@ class login_dao
 
 	}
 
+	function update_user_photo($db, $username, $avatar)
+	{
+		$sql = "UPDATE user SET avatar = '$avatar' WHERE username = '$username'";
+
+		$stmt = $db->ejecutar($sql);
+		return "ok";
+	}
+
 }

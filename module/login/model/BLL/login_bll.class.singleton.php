@@ -137,8 +137,8 @@ class login_bll
 	{
 		error_log("llega");
 		$_SESSION['username'] = null;
-        $_SESSION['tiempo'] = null;
-        $_SESSION['type_user'] = null;
+		$_SESSION['tiempo'] = null;
+		$_SESSION['type_user'] = null;
 
 		return 'Done';
 	}
@@ -250,7 +250,6 @@ class login_bll
 			$this->dao->update_verify_email($this->db, $args);
 
 			return 'verify';
-		
 		} else {
 			return 'fail';
 		}
@@ -394,7 +393,7 @@ class login_bll
 			if (!empty($this->dao->select_user_google($this->db, $args[1], $args[2]))) {
 				$user = $this->dao->select_user_google($this->db, $args[1], $args[2]);
 
-				$_SESSION['username'] = $user[0]['username']; 
+				$_SESSION['username'] = $user[0]['username'];
 				$_SESSION['tiempo'] = time();
 				$_SESSION['type_user'] = "google";
 				$tokens = [];
@@ -433,7 +432,7 @@ class login_bll
 				$_SESSION['username'] = $user[0]['username'];
 				$_SESSION['tiempo'] = time();
 				$_SESSION['type_user'] = "github";
-				
+
 				$tokens = [];
 				$tokens[0] = middleware::create_access_token($user[0]['username']);
 				$tokens[1] = middleware::create_refresh_token($user[0]["username"]);
@@ -441,6 +440,56 @@ class login_bll
 			}
 		} else {
 			return "error";
+		}
+	}
+
+
+	public function get_upload_photo_BLL($args)
+	{
+
+		$dir = 'view/img/login/photos_user/';
+		$target_file = $dir . basename($args["name"]); //Ruta donde se guardará la imagen
+		$uploadOk = 1;
+		$imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION)); //Obtenemos la extensión de la imagen
+
+
+		error_log($imageFileType);
+		error_log($target_file);
+
+		$check = getimagesize($args["tmp_name"]);  //Comprobamos si es una imagen
+
+		if ($check !== false) {
+			$uploadOk = 1;
+		} else {
+			$uploadOk = 0;
+			error_log("El archivo no es una imagen");
+			return "error_not_image";
+		}
+
+		if ($args["size"] > 5000000) {
+			$uploadOk = 0;
+			error_log("El archivo es demasiado grande");
+			return "error_to_big";
+		}
+
+		if (
+			$imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+			&& $imageFileType != "gif"
+		) {
+			$uploadOk = 0;
+			error_log("Solo se permiten archivos JPG, JPEG, PNG y GIF");
+			return "error_format";
+		}
+
+		if ($uploadOk == 0) {
+			return "error";
+		} else {
+			$this->dao->update_user_photo($this->db, $_SESSION['username'], $target_file);
+			if (move_uploaded_file($args["tmp_name"], $target_file)) { //Movemos la imagen a la ruta especificada
+				return "done";
+			} else {
+				return "error";
+			}
 		}
 	}
 }
