@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 02-06-2024 a las 14:09:49
+-- Tiempo de generación: 11-06-2024 a las 22:10:50
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -299,39 +299,39 @@ CREATE TABLE `building` (
 --
 
 INSERT INTO `building` (`id_building`, `ref_cat`, `price`, `room_number`, `bathroom_number`, `garage`, `heating`, `publication_date`, `m2`, `id_type`, `id_city`, `id_operations`, `id_home_automation`, `views`, `latitude`, `longitude`) VALUES
-(1, 'REF123', 500001, 3, 2, 'Yes', 'Central Heating', '2024-01-26', 150.50, 1, 1, 1, 3, 191, 40.1865, -3.56637),
-(2, 'REF456', 750000, 4, 3, 'Yes', 'Radiators', '2024-01-25', 200.75, 2, 2, 2, 2, 96, 41.2632, 2.05181),
-(3, 'REF789', 1000000, 5, 4, 'Yes', 'Underfloor Heating', '2024-01-24', 300.00, 4, 5, 4, 1, 23, 41.7064, -1.1362),
+(1, 'REF123', 500001, 3, 2, 'Yes', 'Central Heating', '2024-01-26', 150.50, 1, 1, 1, 3, 205, 40.1865, -3.56637),
+(2, 'REF456', 750000, 4, 3, 'Yes', 'Radiators', '2024-01-25', 200.75, 2, 2, 2, 2, 98, 41.2632, 2.05181),
+(3, 'REF789', 1000000, 5, 4, 'Yes', 'Underfloor Heating', '2024-01-24', 300.00, 4, 5, 4, 1, 24, 41.7064, -1.1362),
 (4, 'REFABC', 600000, 3, 2, 'Yes', 'Central Heating', '2024-03-07', 160.25, 2, 1, 2, 3, 21, 40.5084, -3.40447),
 (5, 'REFDEF', 800000, 4, 3, 'Yes', 'Radiators', '2024-03-07', 180.50, 1, 2, 1, 2, 21, 41.1069, 1.98458),
-(6, 'REFGHI', 1200000, 5, 4, 'Yes', 'Underfloor Heating', '2024-03-07', 250.75, 3, 3, 3, 1, 33, 39.6603, -0.357879),
+(6, 'REFGHI', 1200000, 5, 4, 'Yes', 'Underfloor Heating', '2024-03-07', 250.75, 3, 3, 3, 1, 47, 39.6603, -0.357879),
 (7, 'REFJKL', 900000, 4, 3, 'Yes', 'Central Heating', '2024-03-07', 200.00, 1, 1, 2, 4, 22, 40.2377, -3.75441),
-(8, 'REFMNO', 1100000, 5, 4, 'Yes', 'Radiators', '2024-03-07', 220.30, 4, 2, 1, 1, 5, 41.3693, 1.9461),
-(9, 'REFPQR', 950000, 4, 3, 'Yes', 'Underfloor Heating', '2024-03-07', 190.75, 2, 3, 3, 2, 12, 39.2809, -0.339576),
-(10, 'REFSTU', 1300000, 6, 5, 'Yes', 'Radiators', '2024-03-07', 280.00, 3, 1, 2, 4, 6, 40.2675, -3.66033),
+(8, 'REFMNO', 1100000, 5, 4, 'Yes', 'Radiators', '2024-03-07', 220.30, 4, 2, 1, 1, 19, 41.3693, 1.9461),
+(9, 'REFPQR', 950000, 4, 3, 'Yes', 'Underfloor Heating', '2024-03-07', 190.75, 2, 3, 3, 2, 16, 39.2809, -0.339576),
+(10, 'REFSTU', 1300000, 6, 5, 'Yes', 'Radiators', '2024-03-07', 280.00, 3, 1, 2, 4, 32, 40.2675, -3.66033),
 (129, 'REFXYZ', 620000, 3, 2, 'Yes', 'Central Heating', '2024-03-24', 155.75, 3, 1, 3, 2, 2, 40.182, -3.50832),
 (130, 'REF1234', 850000, 4, 3, 'Yes', 'Radiators', '2024-03-24', 190.25, 5, 2, 1, 3, 0, 41.567, 2.19622),
-(131, 'REF5678', 1100000, 5, 4, 'Yes', 'Underfloor Heating', '2024-03-24', 225.50, 2, 3, 2, 4, 1, 39.3384, -0.20202),
+(131, 'REF5678', 1100000, 5, 4, 'Yes', 'Underfloor Heating', '2024-03-24', 225.50, 2, 3, 2, 4, 4, 39.3384, -0.20202),
 (132, 'REF91011', 720000, 4, 3, 'Yes', 'Central Heating', '2024-03-24', 180.00, 1, 4, 3, 1, 1, 38.5884, -0.800768),
-(133, 'REF121314', 920000, 4, 3, 'Yes', 'Radiators', '2024-03-24', 195.75, 4, 1, 1, 2, 1, 40.4492, -3.85961),
+(133, 'REF121314', 920000, 4, 3, 'Yes', 'Radiators', '2024-03-24', 195.75, 4, 1, 1, 2, 5, 40.4492, -3.85961),
 (134, 'REF151617', 1180000, 5, 4, 'Yes', 'Underfloor Heating', '2024-03-24', 240.30, 3, 2, 2, 3, 1, 41.4088, 2.45956),
-(135, 'REF181920', 780000, 4, 3, 'Yes', 'Central Heating', '2024-03-24', 170.50, 2, 5, 3, 4, 0, 41.5084, -0.949688),
+(135, 'REF181920', 780000, 4, 3, 'Yes', 'Central Heating', '2024-03-24', 170.50, 2, 5, 3, 4, 1, 41.5084, -0.949688),
 (136, 'REF212223', 1020000, 5, 4, 'Yes', 'Radiators', '2024-03-24', 215.75, 1, 6, 1, 1, 2, 38.6409, -0.433343),
 (137, 'REF242526', 1320000, 6, 5, 'Yes', 'Underfloor Heating', '2024-03-24', 260.00, 5, 7, 2, 2, 0, 37.3004, -6.04323),
 (138, 'REF272829', 840000, 4, 3, 'Yes', 'Central Heating', '2024-03-24', 175.25, 3, 8, 3, 3, 0, 42.395, -0.42657),
 (139, 'REF303132', 970000, 4, 3, 'Yes', 'Radiators', '2024-03-24', 185.75, 4, 9, 1, 4, 1, 43.3924, -5.95046),
 (140, 'REF333435', 1220000, 5, 4, 'Yes', 'Underfloor Heating', '2024-03-24', 230.30, 2, 10, 2, 1, 1, 39.3207, 2.57897),
-(141, 'REF363738', 890000, 4, 3, 'Yes', 'Central Heating', '2024-03-24', 165.50, 1, 11, 3, 2, 0, 28.2142, -15.6693),
+(141, 'REF363738', 890000, 4, 3, 'Yes', 'Central Heating', '2024-03-24', 165.50, 1, 11, 3, 2, 5, 28.2142, -15.6693),
 (142, 'REF394041', 1050000, 5, 4, 'Yes', 'Radiators', '2024-03-24', 195.75, 5, 12, 1, 3, 0, 28.1866, -16.1376),
 (143, 'REF424344', 1280000, 6, 5, 'Yes', 'Underfloor Heating', '2024-03-24', 255.00, 3, 13, 2, 4, 0, 43.4449, -6.07965),
-(144, 'REF454647', 860000, 4, 3, 'Yes', 'Central Heating', '2024-03-24', 170.25, 2, 1, 3, 1, 0, 40.5187, -3.4041),
+(144, 'REF454647', 860000, 4, 3, 'Yes', 'Central Heating', '2024-03-24', 170.25, 2, 1, 3, 1, 1, 40.5187, -3.4041),
 (145, 'REF484950', 990000, 4, 3, 'Yes', 'Radiators', '2024-03-24', 190.75, 4, 2, 1, 2, 0, 41.6778, 2.43806),
-(146, 'REF515253', 1250000, 5, 4, 'Yes', 'Underfloor Heating', '2024-03-24', 235.30, 1, 3, 2, 3, 0, 39.6149, -0.145082),
+(146, 'REF515253', 1250000, 5, 4, 'Yes', 'Underfloor Heating', '2024-03-24', 235.30, 1, 3, 2, 3, 5, 39.6149, -0.145082),
 (147, 'REF545556', 920000, 4, 3, 'Yes', 'Central Heating', '2024-03-24', 175.50, 3, 4, 3, 4, 0, 38.6436, -0.695464),
-(148, 'REF575859', 1040000, 5, 4, 'Yes', 'Radiators', '2024-03-24', 205.75, 5, 5, 1, 1, 0, 41.442, -0.756584),
+(148, 'REF575859', 1040000, 5, 4, 'Yes', 'Radiators', '2024-03-24', 205.75, 5, 5, 1, 1, 3, 41.442, -0.756584),
 (149, 'REF606162', 870000, 4, 3, 'Yes', 'Central Heating', '2024-03-24', 180.75, 2, 6, 2, 2, 2, 38.6054, -0.590011),
 (150, 'REF636465', 1000000, 5, 4, 'Yes', 'Radiators', '2024-03-24', 195.50, 3, 7, 3, 3, 0, 37.2235, -5.95785),
-(151, 'REF666768', 1150000, 5, 4, 'Yes', 'Underfloor Heating', '2024-03-24', 215.25, 1, 8, 1, 4, 0, 41.8526, -0.394448),
+(151, 'REF666768', 1150000, 5, 4, 'Yes', 'Underfloor Heating', '2024-03-24', 215.25, 1, 8, 1, 4, 14, 41.8526, -0.394448),
 (152, 'REF697071', 790000, 4, 3, 'Yes', 'Central Heating', '2024-03-24', 175.00, 4, 9, 2, 1, 1, 43.3801, -6.10851),
 (153, 'REF727374', 950000, 4, 3, 'Yes', 'Radiators', '2024-03-24', 185.75, 5, 10, 3, 2, 0, 39.7674, 2.88696),
 (154, 'REF757677', 1200000, 5, 4, 'Yes', 'Underfloor Heating', '2024-03-24', 240.30, 2, 11, 1, 3, 0, 28.4138, -15.595),
@@ -343,7 +343,7 @@ INSERT INTO `building` (`id_building`, `ref_cat`, `price`, `room_number`, `bathr
 (160, 'REF929394', 1280000, 6, 5, 'Yes', 'Underfloor Heating', '2024-03-24', 255.00, 3, 4, 1, 1, 0, 38.7058, -0.691387),
 (161, 'REF959697', 920000, 4, 3, 'Yes', 'Central Heating', '2024-03-24', 170.75, 4, 5, 2, 2, 1, 41.8758, -1.00014),
 (162, 'REF9899100', 1070000, 5, 4, 'Yes', 'Radiators', '2024-03-24', 205.50, 1, 6, 3, 3, 1, 39.0865, -0.454189),
-(163, 'REF101102103', 1310000, 6, 5, 'Yes', 'Underfloor Heating', '2024-03-24', 245.30, 2, 7, 1, 4, 0, 37.6595, -5.98527),
+(163, 'REF101102103', 1310000, 6, 5, 'Yes', 'Underfloor Heating', '2024-03-24', 245.30, 2, 7, 1, 4, 1, 37.6595, -5.98527),
 (164, 'REF104105106', 860000, 4, 3, 'Yes', 'Central Heating', '2024-03-24', 175.25, 3, 8, 2, 1, 0, 42.2075, -0.337676),
 (165, 'REF107108109', 990000, 4, 3, 'Yes', 'Radiators', '2024-03-24', 185.75, 5, 9, 3, 2, 0, 43.1992, -5.98315),
 (166, 'REF110111112', 1260000, 5, 4, 'Yes', 'Underfloor Heating', '2024-03-24', 235.00, 1, 10, 1, 3, 0, 39.7368, 2.35786),
@@ -354,19 +354,19 @@ INSERT INTO `building` (`id_building`, `ref_cat`, `price`, `room_number`, `bathr
 (171, 'REF125126127', 1180000, 5, 4, 'Yes', 'Underfloor Heating', '2024-03-24', 215.30, 1, 3, 1, 4, 0, 39.5237, -0.374279),
 (172, 'REF128129130', 800000, 4, 3, 'Yes', 'Central Heating', '2024-03-24', 170.75, 2, 4, 2, 1, 0, 38.9713, -0.769433),
 (173, 'REF131132133', 980000, 4, 3, 'Yes', 'Radiators', '2024-03-24', 190.25, 3, 5, 3, 2, 0, 41.8891, -0.699214),
-(174, 'REF134135136', 1260000, 6, 5, 'Yes', 'Underfloor Heating', '2024-03-24', 240.00, 4, 6, 1, 3, 0, 38.751, -0.63427),
+(174, 'REF134135136', 1260000, 6, 5, 'Yes', 'Underfloor Heating', '2024-03-24', 240.00, 4, 6, 1, 3, 1, 38.751, -0.63427),
 (175, 'REF137138139', 840000, 4, 3, 'Yes', 'Central Heating', '2024-03-24', 175.25, 5, 7, 2, 4, 0, 37.1655, -6.11511),
 (176, 'REF140141142', 980000, 4, 3, 'Yes', 'Radiators', '2024-03-24', 190.75, 1, 8, 3, 1, 0, 41.8404, -0.583959),
 (177, 'REF143144145', 1270000, 5, 4, 'Yes', 'Underfloor Heating', '2024-03-24', 230.50, 2, 9, 1, 2, 0, 43.0693, -5.89392),
 (178, 'REF146147148', 900000, 4, 3, 'Yes', 'Central Heating', '2024-03-24', 175.75, 3, 10, 2, 3, 0, 39.3727, 2.66969),
-(179, 'REF149150151', 1020000, 5, 4, 'Yes', 'Radiators', '2024-03-24', 195.25, 4, 11, 3, 4, 0, 27.9116, -15.6544),
-(180, 'REF152153154', 1280000, 6, 5, 'Yes', 'Underfloor Heating', '2024-03-24', 245.30, 1, 12, 1, 1, 0, 27.9688, -16.0712),
+(179, 'REF149150151', 1020000, 5, 4, 'Yes', 'Radiators', '2024-03-24', 195.25, 4, 11, 3, 4, 1, 27.9116, -15.6544),
+(180, 'REF152153154', 1280000, 6, 5, 'Yes', 'Underfloor Heating', '2024-03-24', 245.30, 1, 12, 1, 1, 1, 27.9688, -16.0712),
 (181, 'REF155156157', 880000, 4, 3, 'Yes', 'Central Heating', '2024-03-24', 175.50, 2, 13, 2, 2, 0, 43.2304, -5.55149),
 (182, 'REF158159160', 1050000, 5, 4, 'Yes', 'Radiators', '2024-03-24', 200.75, 3, 1, 3, 3, 0, 40.2031, -3.56688),
 (183, 'REF161162163', 1300000, 6, 5, 'Yes', 'Underfloor Heating', '2024-03-24', 235.00, 4, 2, 1, 4, 0, 41.2109, 2.39178),
-(184, 'REF164165166', 920000, 4, 3, 'Yes', 'Central Heating', '2024-03-24', 180.75, 5, 3, 2, 1, 0, 39.5843, -0.159403),
+(184, 'REF164165166', 920000, 4, 3, 'Yes', 'Central Heating', '2024-03-24', 180.75, 5, 3, 2, 1, 2, 39.5843, -0.159403),
 (185, 'REF167168169', 1030000, 5, 4, 'Yes', 'Radiators', '2024-03-24', 195.25, 1, 4, 3, 2, 0, 38.6639, -0.551041),
-(186, 'REF170171172', 1270000, 6, 5, 'Yes', 'Underfloor Heating', '2024-03-24', 240.50, 2, 5, 1, 3, 0, 41.5033, -0.883656),
+(186, 'REF170171172', 1270000, 6, 5, 'Yes', 'Underfloor Heating', '2024-03-24', 240.50, 2, 5, 1, 3, 1, 41.5033, -0.883656),
 (187, 'REF173174175', 910000, 4, 3, 'Yes', 'Central Heating', '2024-03-24', 185.75, 3, 6, 2, 4, 1, 38.9864, -0.704195),
 (188, 'REF176177178', 1040000, 5, 4, 'Yes', 'Radiators', '2024-03-24', 205.30, 4, 7, 3, 1, 0, 37.3098, -5.7837);
 
@@ -394,7 +394,14 @@ INSERT INTO `cart` (`id_line`, `id_user`, `id_product`, `total_quantity`, `price
 (40, 'SGfG3gKhGVSIbQyy2rVSfSXbUhS2', 129, 1, 750000.00, 1),
 (41, 'SGfG3gKhGVSIbQyy2rVSfSXbUhS2', 130, 1, 1000000.00, 0),
 (42, 'SGfG3gKhGVSIbQyy2rVSfSXbUhS2', 131, 1, 600000.00, 1),
-(43, 'SGfG3gKhGVSIbQyy2rVSfSXbUhS2', 132, 1, 800000.00, 1);
+(43, 'SGfG3gKhGVSIbQyy2rVSfSXbUhS2', 132, 1, 800000.00, 1),
+(148, '54', 131, 1, 600000.00, 0),
+(149, '54', 137, 1, 1300000.00, 0),
+(151, '54', 142, 1, 920000.00, 0),
+(154, '53', 155, 1, 1250000.00, 0),
+(164, '56', 200, 1, 3.00, 0),
+(166, '53', 200, 4, 3.00, 0),
+(167, '53', 128, 3, 500001.00, 0);
 
 -- --------------------------------------------------------
 
@@ -1033,7 +1040,11 @@ CREATE TABLE `likes` (
 --
 
 INSERT INTO `likes` (`id_like`, `id_building`, `ref_cat`, `date`, `id_user`, `username`) VALUES
-(1321, 5, 'REFDEF', '2024-06-02 14:07:55', '53', 'Llorens21');
+(1340, 133, 'REF121314', '2024-06-11 15:25:05', '53', 'Llorens21'),
+(1341, 139, 'REF303132', '2024-06-11 15:25:09', '53', 'Llorens21'),
+(1342, 9, 'REFPQR', '2024-06-11 16:22:30', '53', 'Llorens21'),
+(1343, 141, 'REF363738', '2024-06-11 16:23:26', '53', 'Llorens21'),
+(1345, 8, 'REFMNO', '2024-06-11 16:25:14', '53', 'Llorens21');
 
 -- --------------------------------------------------------
 
@@ -1082,6 +1093,26 @@ INSERT INTO `order` (`id_order`, `id_user`, `id_product`, `id_line`, `total_quan
 ('101', '53', 132, 109, 1, 800000.00),
 ('102', '17BKmFLAmcMBUofjMLCG7QQWbEI3', 131, 112, 10, 600000.00),
 ('103', '17BKmFLAmcMBUofjMLCG7QQWbEI3', 128, 114, 1, 500001.00),
+('104', '17BKmFLAmcMBUofjMLCG7QQWbEI3', 132, 119, 1, 800000.00),
+('104', '17BKmFLAmcMBUofjMLCG7QQWbEI3', 134, 120, 1, 900000.00),
+('104', '17BKmFLAmcMBUofjMLCG7QQWbEI3', 141, 121, 1, 720000.00),
+('105', '53', 145, 118, 1, 1020000.00),
+('105', '53', 129, 122, 1, 750000.00),
+('106', '53', 130, 123, 1, 1000000.00),
+('106', '53', 203, 134, 1, 350.00),
+('107', '54', 138, 150, 1, 620000.00),
+('107', '54', 200, 152, 5, 3.00),
+('108', '53', 131, 155, 1, 600000.00),
+('108', '53', 200, 156, 9, 3.00),
+('109', '56', 201, 159, 1, 20.00),
+('110', '56', 201, 160, 1, 20.00),
+('111', '56', 200, 158, 1, 3.00),
+('111', '56', 201, 161, 1, 20.00),
+('112', '56', 201, 163, 3, 20.00),
+('113', '56', 201, 165, 1, 20.00),
+('114', '56', 202, 162, 1, 300.00),
+('115', '53', 150, 153, 1, 890000.00),
+('116', '56', 128, 168, 2, 500001.00),
 ('25', '53', 132, 28, 1, 800000.00),
 ('25', '53', 134, 29, 1, 900000.00),
 ('25', '53', 166, 37, 1, 1250000.00),
@@ -1243,29 +1274,29 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`id_product`, `price_product`, `stock`, `n_product`, `id_building`, `d_product`, `image_url`) VALUES
-(128, 500001.00, 0, 'REF123', 1, 'Inmueble', '[www.fotocasa.es][64800].jpg'),
-(129, 750000.00, 1, 'REF456', 2, 'Inmueble', '[www.fotocasa.es][50683].jpg'),
-(130, 1000000.00, 1, 'REF789', 3, 'Inmueble', '[www.fotocasa.es][662]2809647.jpg'),
-(131, 600000.00, 1, 'REFABC', 4, 'Inmueble', '444738940.jpg'),
-(132, 800000.00, 1, 'REFDEF', 5, 'Inmueble', '[www.fotocasa.es][33544].jpg'),
+(128, 500001.00, 3, 'REF123', 1, 'Inmueble', '[www.fotocasa.es][64800].jpg'),
+(129, 750000.00, 0, 'REF456', 2, 'Inmueble', '[www.fotocasa.es][50683].jpg'),
+(130, 1000000.00, 0, 'REF789', 3, 'Inmueble', '[www.fotocasa.es][662]2809647.jpg'),
+(131, 600000.00, 0, 'REFABC', 4, 'Inmueble', '444738940.jpg'),
+(132, 800000.00, 0, 'REFDEF', 5, 'Inmueble', '[www.fotocasa.es][33544].jpg'),
 (133, 1200000.00, 1, 'REFGHI', 6, 'Inmueble', 'b0e1215d-32e8-4fe3-8d7c-ea4e115fd6e2.jpeg'),
-(134, 900000.00, 1, 'REFJKL', 7, 'Inmueble', '[www.fotocasa.es][8161].jpg'),
+(134, 900000.00, 0, 'REFJKL', 7, 'Inmueble', '[www.fotocasa.es][8161].jpg'),
 (135, 1100000.00, 1, 'REFMNO', 8, 'Inmueble', '8bd61680-9429-4cc1-a151-d73c2b6b8cdd.jpeg'),
 (136, 950000.00, 1, 'REFPQR', 9, 'Inmueble', '4638a094-80c2-4393-b94f-f4c3b988a5d4.jpeg'),
 (137, 1300000.00, 1, 'REFSTU', 10, 'Inmueble', '444738934.jpg'),
-(138, 620000.00, 1, 'REFXYZ', 129, 'Inmueble', 'cc78c1db-5333-4610-b67e-cc4004bf5003.jpeg'),
+(138, 620000.00, 0, 'REFXYZ', 129, 'Inmueble', 'cc78c1db-5333-4610-b67e-cc4004bf5003.jpeg'),
 (139, 850000.00, 1, 'REF1234', 130, 'Inmueble', '87fc7576-fd5f-4341-8837-54f3536fc1cf.jpeg'),
 (140, 1100000.00, 1, 'REF5678', 131, 'Inmueble', '[www.fotocasa.es][23817].jpg'),
-(141, 720000.00, 1, 'REF91011', 132, 'Inmueble', '[www.fotocasa.es][622]655129429.jpg'),
+(141, 720000.00, 0, 'REF91011', 132, 'Inmueble', '[www.fotocasa.es][622]655129429.jpg'),
 (142, 920000.00, 1, 'REF121314', 133, 'Inmueble', '[www.fotocasa.es][1669].jpg'),
 (143, 1180000.00, 1, 'REF151617', 134, 'Inmueble', '[www.fotocasa.es][8161].jpg'),
 (144, 780000.00, 1, 'REF181920', 135, 'Inmueble', '[www.fotocasa.es][96412].jpg'),
-(145, 1020000.00, 1, 'REF212223', 136, 'Inmueble', '[www.fotocasa.es][22634].jpg'),
+(145, 1020000.00, 0, 'REF212223', 136, 'Inmueble', '[www.fotocasa.es][22634].jpg'),
 (146, 1320000.00, 1, 'REF242526', 137, 'Inmueble', '[www.fotocasa.es][39558].jpg'),
 (147, 840000.00, 1, 'REF272829', 138, 'Inmueble', '[www.fotocasa.es][96150].jpg'),
 (148, 970000.00, 1, 'REF303132', 139, 'Inmueble', '[www.fotocasa.es][30265].jpg'),
 (149, 1220000.00, 1, 'REF333435', 140, 'Inmueble', '[www.fotocasa.es][45725].jpg'),
-(150, 890000.00, 1, 'REF363738', 141, 'Inmueble', '[www.fotocasa.es][13508].jpg'),
+(150, 890000.00, 0, 'REF363738', 141, 'Inmueble', '[www.fotocasa.es][13508].jpg'),
 (151, 1050000.00, 1, 'REF394041', 142, 'Inmueble', '[www.fotocasa.es][71570].jpg'),
 (152, 1280000.00, 1, 'REF424344', 143, 'Inmueble', '[www.fotocasa.es][67060].jpg'),
 (153, 860000.00, 1, 'REF454647', 144, 'Inmueble', '1b6b946f-462d-4762-8701-eba47016c3df.jpeg'),
@@ -1312,7 +1343,12 @@ INSERT INTO `product` (`id_product`, `price_product`, `stock`, `n_product`, `id_
 (194, 1030000.00, 1, 'REF167168169', 185, 'Inmueble', '[www.fotocasa.es][28905].jpg'),
 (195, 1270000.00, 1, 'REF170171172', 186, 'Inmueble', '[www.fotocasa.es][47]647017250.jpg'),
 (196, 910000.00, 1, 'REF173174175', 187, 'Inmueble', '[www.fotocasa.es][21248].jpg'),
-(197, 1040000.00, 1, 'REF176177178', 188, 'Inmueble', '15b43bab-9a9f-4baa-aa84-025d28f12fa8.jpeg');
+(197, 1040000.00, 1, 'REF176177178', 188, 'Inmueble', '15b43bab-9a9f-4baa-aa84-025d28f12fa8.jpeg'),
+(200, 3.00, 5999985, 'Sobao', NULL, 'Tienes hambre, compra un sobao.', 'sobao.jpg'),
+(201, 20.00, 993, 'Servicio de Limpieza.', NULL, 'Descansa, deja que te limpien la casa.', 'limpieza.jpg'),
+(202, 300.00, 5999, 'Mesa', NULL, 'Sencillamente una mesa, ¿que más quieres?', 'mesa.jpg'),
+(203, 350.00, 2, 'Seguro', NULL, 'Depreocupate con nuestro seguro anual.', 'seguro.jpg'),
+(204, 1545.00, 340, 'Sofá', NULL, '¿Un duro día?, echate una peli en el sofá.', 'sofa.jpg');
 
 -- --------------------------------------------------------
 
@@ -1368,7 +1404,10 @@ CREATE TABLE `user` (
 INSERT INTO `user` (`id_user`, `name`, `surname`, `tlf`, `username`, `password`, `email`, `type_user`, `avatar`, `active`, `token_email`, `code_OTP`, `2fa_active`, `expire_OTP`, `login_trys`) VALUES
 (51, 'Diego', 'Soriano', '658311725', 'Llorens18', '$2y$12$d.MI4onIxsmdXPiu4T.rcuiheppGHHyLY43oKniVTg2sBTFkTgchG', 'diegollorenssoriano2001@gmail.com', 'client', 'https://i.pravatar.cc/500?u=dad77be30c8d0fc60d337434639f61f2', 0, 'd1e56f4a86245f25ad52', '7892', 0, '2001-01-19 00:00:00', 0),
 (52, 'Diego', 'Soriano', '658311725', 'Llorens19', '$2y$12$.NuvXxjumKZQOrCdOs.4NuDR.rseFCS7KkM2fd1Z65xCju.gDZKiW', 'llorenssorianodiego@gmail.com', 'client', 'https://i.pravatar.cc/500?u=af7709d1d6cb834f44dd8d05688c3e7b', 0, 'c193255957a0dcce45d5', '7892', 0, '2001-01-19 00:00:00', 0),
-(53, 'Diego', 'Soriano', '658311725', 'Llorens21', '$2y$12$22E7VrlIalA2UZ6FE4jurOxr4m1SJsMla1OnpXKUmIIh19Y.bZ4bq', 'dllorens21@gmail.com', 'client', 'https://i.pravatar.cc/500?u=b684c9f159a1bdb8c2ffd7e69ee70faf', 1, '', '0422', 1, '2024-05-29 19:46:03', 2);
+(53, 'Diego', 'Llorenssdgsdfs dfssdf ', '666666666', 'Llorens21', '$2y$12$22E7VrlIalA2UZ6FE4jurOxr4m1SJsMla1OnpXKUmIIh19Y.bZ4bq', 'dllorens21@gmail.com', 'client', 'view/img/login/photos_user/666864302287b0.94599341.jpg', 1, '', '5298', 1, '2024-06-10 20:51:12', 0),
+(54, 'Diego', 'Llorens Soriano', '658311725', 'Llorens211', '$2y$12$YTH.dANcFEEVQ6tSSSmAeeUapnfPMUKxYfiy0Zc9i49oIjUpeCrq6', 'dllorens211@gmail.com', 'client', 'https://i.pravatar.cc/500?u=f626893dec40ab0dd234f00b32fb0d03', 1, '', '4155', 0, '2024-06-10 20:16:01', 0),
+(55, 'Diego', 'Llorens Soriano', '658311725', 'Llorens2113', '$2y$12$l11ZKWfsnpl/TJsLhVwN7.2Lx6TL60d12rc4zLJlQGOLBNyPanJOC', 'diegollorenssorianoty2001@gmail.com', 'client', 'https://i.pravatar.cc/500?u=32414bb37c5483dd44d70052f76ea135', 1, '', NULL, 0, '2001-01-19 00:00:00', 0),
+(56, 'Diego', 'Llorens Soriano', '658311725', 'Llorens', '$2y$12$hhfij.HsKAcEpgZN/6EDPupqHD8pu2xk/QkYKCkFu6F2iqsUXlpf2', 'diegollorensgregsoriano2001@gmail.com', 'client', 'view/img/login/photos_user/66677ae5126bc8.49526816.jpeg', 1, '', NULL, 0, '2001-01-19 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -1412,7 +1451,7 @@ CREATE TABLE `user_google` (
 --
 
 INSERT INTO `user_google` (`id_user`, `username`, `email`, `avatar`, `active`, `type_user`) VALUES
-('17BKmFLAmcMBUofjMLCG7QQWbEI3', 'diegollorenssoriano2001', 'diegollorenssoriano2001@gmail.com', 'https://lh3.googleusercontent.com/a/ACg8ocIbxqzk24MQlxTKfqxUnfq0V60_tOWsnZigmFK6_XFeQqpMSQ=s96-c', 1, 'client'),
+('17BKmFLAmcMBUofjMLCG7QQWbEI3', 'diegollorenssoriano2001', 'diegollorenssoriano2001@gmail.com', 'view/img/login/photos_user/66677c37d95505.11584182.jpeg', 1, 'client'),
 ('SGfG3gKhGVSIbQyy2rVSfSXbUhS2', 'llorenssorianodiego', 'llorenssorianodiego@gmail.com', 'https://lh3.googleusercontent.com/a/ACg8ocKhna8mxm1Ld_6AC0a8IdL-sF3o65FIyF4MuWyXVdic2o4S-Q=s96-c', 1, 'client');
 
 -- --------------------------------------------------------
@@ -1542,7 +1581,20 @@ INSERT INTO `user_order` (`id_order`, `id_user`, `name_buyer`, `surname_buyer`, 
 (100, 53, 'Diego', 'Llorens Soriano', 'diegollorenssoriano2001@gmail.com', 'dfsdsdfsdf', '', '2024-06-01 15:28:13', 600000.00, 'pdf/factura100.pdf', 'QR/QR100.png'),
 (101, 53, 'Diego', 'Llorens Soriano', 'diegollorenssoriano2001@gmail.com', 'erwqeqwe', '', '2024-06-01 15:33:02', 1300001.00, 'pdf/factura101.pdf', 'QR/QR101.png'),
 (102, 17, 'Diego', 'Llorens Soriano', 'diegollorenssoriano2001@gmail.com', 'ewqeqwewqe', '', '2024-06-01 17:01:28', 6000000.00, 'pdf/factura102.pdf', 'QR/QR102.png'),
-(103, 17, 'Diego', 'Llorens Soriano', 'diegollorenssoriano2001@gmail.com', 'dfewwqewqew', '', '2024-06-01 17:20:42', 500001.00, 'pdf/factura103.pdf', 'QR/QR103.png');
+(103, 17, 'Diego', 'Llorens Soriano', 'diegollorenssoriano2001@gmail.com', 'dfewwqewqew', '', '2024-06-01 17:20:42', 500001.00, 'pdf/factura103.pdf', 'QR/QR103.png'),
+(104, 17, 'Diego', 'Llorens Soriano', 'diegollorenssoriano2001@gmail.com', 'safasfsafas', '', '2024-06-03 21:11:29', 2420000.00, 'pdf/factura104.pdf', ''),
+(105, 53, 'Diego', 'Llorens Soriano', 'diegollorenssoriano2001@gmail.com', '35eefsdfsdfsd', '', '2024-06-03 21:45:59', 1770000.00, 'pdf/factura105.pdf', 'QR/QR105.png'),
+(106, 53, 'Diego', 'Llorens Soriano', 'diegollorenssoriano2001@gmail.com', 'werwerwere', 'werwer', '2024-06-04 00:35:48', 1000350.00, 'pdf/factura106.pdf', 'QR/QR106.png'),
+(107, 54, 'Diego', 'asdasd sadas ', 'ggsgd@hjsd.com', 'sadas  asd', ' asd', '2024-06-10 20:12:15', 620015.00, 'pdf/factura107.pdf', 'QR/QR107.png'),
+(108, 53, 'fgbfd', '', '', '', '', '2024-06-10 20:54:34', 600027.00, 'pdf/factura108.pdf', 'QR/QR108.png'),
+(109, 56, 'Diego', 'Llorens Soriano', 'diegollorenssoriano2001@gmail.com', 'AvsadsDaniel Gilsdfdsf', 'dsfds', '2024-06-10 22:22:39', 20.00, 'pdf/factura109.pdf', 'QR/QR109.png'),
+(110, 56, 'Diego', 'Llorens Soriano', 'diegollorenssoriano2001@gmail.com', 'dsfdf', '', '2024-06-10 22:24:09', 20.00, 'pdf/factura110.pdf', 'QR/QR110.png'),
+(111, 56, 'Diego', 'Llorens Soriano', 'diegollorenssoriano2001@gmail.com', 'dfs', 'SAD SADSADSA', '2024-06-10 22:27:50', 23.00, 'pdf/factura111.pdf', 'QR/QR111.png'),
+(112, 56, 'Diego', 'Llorens Soriano', 'diegollorenssoriano2001@gmail.com', 'dgfd', '', '2024-06-10 22:32:42', 60.00, 'pdf/factura112.pdf', 'QR/QR112.png'),
+(113, 56, 'Diego', 'Llorens Soriano', 'diegollorenssoriano2001@gmail.com', 'fsdfsdfsd', '', '2024-06-10 22:33:31', 20.00, 'pdf/factura113.pdf', 'QR/QR113.png'),
+(114, 56, 'Diego', 'Llorens Soriano', 'diegollorenssoriano2001@gmail.com', 'dsads', '', '2024-06-10 22:34:04', 300.00, 'pdf/factura114.pdf', 'QR/QR114.png'),
+(115, 53, 'Diego', 'Llorens Soriano', 'dllorens21@gmail.com', 'e565g', '', '2024-06-11 16:45:15', 890000.00, 'pdf/factura115.pdf', 'QR/QR115.png'),
+(116, 56, 'Diego', 'Llorens Soriano', 'diegollorensgregsoriano2001@gmail.com', '5435', '', '2024-06-11 16:48:47', 1000002.00, 'pdf/factura116.pdf', 'QR/QR116.png');
 
 --
 -- Índices para tablas volcadas
@@ -1678,7 +1730,7 @@ ALTER TABLE `building`
 -- AUTO_INCREMENT de la tabla `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `id_line` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=115;
+  MODIFY `id_line` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=169;
 
 --
 -- AUTO_INCREMENT de la tabla `category`
@@ -1708,7 +1760,7 @@ ALTER TABLE `image`
 -- AUTO_INCREMENT de la tabla `likes`
 --
 ALTER TABLE `likes`
-  MODIFY `id_like` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1323;
+  MODIFY `id_like` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1347;
 
 --
 -- AUTO_INCREMENT de la tabla `operations`
@@ -1720,7 +1772,7 @@ ALTER TABLE `operations`
 -- AUTO_INCREMENT de la tabla `product`
 --
 ALTER TABLE `product`
-  MODIFY `id_product` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=200;
+  MODIFY `id_product` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=205;
 
 --
 -- AUTO_INCREMENT de la tabla `type`
@@ -1732,13 +1784,13 @@ ALTER TABLE `type`
 -- AUTO_INCREMENT de la tabla `user`
 --
 ALTER TABLE `user`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- AUTO_INCREMENT de la tabla `user_order`
 --
 ALTER TABLE `user_order`
-  MODIFY `id_order` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=104;
+  MODIFY `id_order` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=117;
 
 --
 -- Restricciones para tablas volcadas
