@@ -17,6 +17,7 @@ function mapBox_all(data) {
                 <div class="custom-card">
                     <div class="custom-card-item">
                         <swiper-container class='mySwiper swiper-slide-centered carrousel_scroll' 
+                         onclick='event.stopPropagation();'
                             navigation='true' keyboard='true' pagination='true' pagination-clickable='true'
                             space-between='0' slides-per-view='1' slides-per-group='1'> 
                             ${(() => {
@@ -173,7 +174,6 @@ function check_points(){
 
     ajaxPromise('POST', 'JSON', friendlyURL('?module=maps'), {op:"points"})
     .then(function(data) {
-        console.log(data);
         let in_poligon = [];
         for (row in data) {
             poligon = JSON.parse(localStorage.getItem('poligon'));
@@ -183,8 +183,6 @@ function check_points(){
                 in_poligon.push(data[row].id_building);
             }
         }
-
-        console.log(in_poligon);
         localStorage.setItem('in_poligon', JSON.stringify(in_poligon));
         recharge_filters();
 

@@ -15,7 +15,7 @@ function carrousel_operations() {
 
         .catch(function () {
             console.error("Error en la peticion carrousel_operations");
-            console.log("Error en la peticion carrousel_operations");
+            console.eror("Error en la peticion carrousel_operations");
             //window.location.href = "index.php?module=ctrl_exceptions&op=503&type=503&lugar=Carrusel_Brands HOME";
         });
 }
@@ -126,7 +126,6 @@ function most_viewed() {
 function lasts_views() {
 
     let lasts_views = JSON.parse(localStorage.getItem('idsArray'));
-    console.log(lasts_views);
     if (lasts_views != null) {
 
         ajaxPromise('POST', 'JSON', friendlyURL('?module=home'), { lasts_views: lasts_views, op: "lasts_views"})

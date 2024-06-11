@@ -151,18 +151,3 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
-
-Dropzone.options.myDropzone = {
-  acceptedFiles: 'image/png,image/jpeg,image/jpg',
-  maxFilesize: 5, // Tamaño máximo del archivo en MB
-  init: function() {
-      this.on("success", function(file, response) {
-          console.log(response);
-      });
-      this.on("error", function(file, response) {
-          console.error(response);
-      });
-  }
-};
-
-

@@ -19,7 +19,6 @@ function protecturl() {
                 logout_auto();
 
             }else{
-                console.log("token refreescado");
                 localStorage.setItem("access_token", data);
                 load_menu();
             }

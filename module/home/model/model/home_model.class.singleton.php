@@ -46,6 +46,4 @@ class home_model
         return $this->bll->get_lasts_views_BLL($args);
     }
 
-    
-    
 }

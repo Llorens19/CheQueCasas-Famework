@@ -51,7 +51,7 @@ class home_dao
 		return $db->listar($stmt);
 	}
 
-	public function select_lasts_views($array, $db)
+	public function select_lasts_views($db, $array)
 	{
 		$sql = "SELECT *
                     FROM building b, type t, operations o, city c

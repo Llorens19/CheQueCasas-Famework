@@ -32,11 +32,8 @@ function load_operation (array_filters) {
 
 
 function load_autocomplete(array_filters) {
-    console.log('dentro de load_autocomplete');
-    console.table(array_filters);
     ajaxPromise( 'POST', 'JSON', friendlyURL('?module=search'), {array_filters: array_filters, op:'autocomplete'})
     .then(function (data) {
-        console.log('dentro de load_autocomplete');
         $('.search_auto').empty();
         $('.search_auto').fadeIn(300);
 
@@ -94,10 +91,8 @@ function launch_search(){
     $('.search').on('click', function () {
         let array_filters = JSON.parse(localStorage.getItem('array_filters_search'));
 
-        console.log(array_filters);
         localStorage.removeItem('array_filters_search');
         $("#autocom").val();
-        console.log($("#autocom").val());
 
         localStorage.setItem('city', $("#autocom").val() || '%');
         localStorage.setItem('type', $('.type').val() || '%');

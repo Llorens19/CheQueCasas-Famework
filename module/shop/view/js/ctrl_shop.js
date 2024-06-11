@@ -166,8 +166,7 @@ function load_scroll() {
             let total_cliks = Math.ceil(total_prod / 4);
             let extra_buildings = (total_cliks * 4) - total_prod;
             localStorage.removeItem("cliks");
-            console.log(total_prod);
-            console.log(extra_buildings);
+            
 
 
 
@@ -205,7 +204,6 @@ function load_scroll() {
 
 function clicks() {
     $(document).on("click", ".list_content_shop", function () {
-        console.log("clicks");
         let id_building = this.getAttribute("id");
         loadDetails(id_building);
     });
@@ -214,7 +212,7 @@ function clicks() {
 }
 
 function loadDetails(id_building) {
-    console.log("loadDetails");
+
     ajaxPromise("POST", "JSON", friendlyURL('?module=shop'), { id_building: id_building, op: 'details_building' })
         .then(function (data) {
 
@@ -226,7 +224,6 @@ function loadDetails(id_building) {
             window.scrollTo(0, 0);
 
             let lasts_views = JSON.parse(localStorage.getItem('idsArray'));
-            console.log(lasts_views);
             if (lasts_views == null) {
                 localStorage.setItem('idsArray', JSON.stringify([id_building]));
             } else {
@@ -255,8 +252,6 @@ function loadDetails(id_building) {
                 localStorage.setItem("idsArray", JSON.stringify(idsArray));
 
             }
-
-            console.log(data);
 
             $("<div></div>")
                 .attr({ id: data[1].id_image, class: "carrousel-details " }).attr("style", "margin-top: 20vh;")
@@ -344,8 +339,6 @@ function loadDetails(id_building) {
             });
 
             filters = JSON.parse(localStorage.getItem("filters")) || undefined;
-            console.log(filters);
-
             ajaxForSearchScroll(friendlyURL('?module=shop'), filters, 'load_buildings');
 
             have_like(data[0].id_building);
@@ -696,9 +689,6 @@ function recharge_filters() {
     highlight(filters);
     localStorage.setItem("filters", JSON.stringify(filters));
 
-    console.log("recharge_filters");
-    console.table(filters);
-
     ajaxForSearch(friendlyURL('?module=shop'), filters, 'load_buildings');
 }
 
@@ -1033,17 +1023,12 @@ function click_like_building() {
         event.stopPropagation();
         let id = $(this).attr("id");
 
-        console.log(id);
-
-
 
         ajaxPromise("POST", "JSON", friendlyURL('?module=shop'), { "id_building": id, op: 'action_like' })
             .then(function (data) {
 
-                console.table(data[0].message);
 
                 if (data[0].message == "add") {
-                    console.table("Añadimos");
                     $(".img_" + id).attr("src", "view/img/shop/img_card/con_megusta.png");
 
 
@@ -1052,7 +1037,6 @@ function click_like_building() {
                     $(".count_likes" + id).text(valor + 1);
 
                 } else if (data[0].message == "remove") {
-                    console.table("Borramos");
                     $(".img_" + id).attr("src", "view/img/shop/img_card/sin_megusta.png");
                     let valor = parseInt($(".count_likes" + id).text());
 
@@ -1077,13 +1061,9 @@ function click_cart_building() {
     $(document).on("click", ".button_cart_building_active", function (event) {
         event.stopPropagation();
         let id = $(this).attr("id");
-        console.log(id);
-
         ajaxPromise("POST", "JSON", friendlyURL('?module=shop'), { "id_building": id, op: 'action_cart' })
 
             .then(function (data) {
-
-                console.table(data);
 
                 
             })
@@ -1111,11 +1091,7 @@ async function find_likes_user() {
                 }
             );
 
-            console.log(id_building_like_user);
-
             //localStorage.setItem('all_likes_table', JSON.stringify(data));
-
-            console.table(data);
 
             localStorage.setItem('id_likes_user', JSON.stringify(id_building_like_user));
 
@@ -1123,7 +1099,7 @@ async function find_likes_user() {
 
         })
         .catch(function (error) {
-            console.log("Este usuario no ha dado likes");
+            console.error("Este usuario no ha dado likes");
             localStorage.setItem('id_likes_user', JSON.stringify([]));
 
         });
@@ -1156,9 +1132,7 @@ function have_like(id_building) {
     let ids = JSON.parse(localStorage.getItem('id_likes_user'));
 
     for (let id of ids) {
-        console.log(id);
         if (id === String(id_building)) {
-            console.log("Hay coincidencia");
             $(".img_" + id_building).attr("src", "view/img/shop/img_card/con_megusta.png");
 
 
@@ -1187,13 +1161,8 @@ function count_like(id_building) {
 
 
 function print_scroll(url, sData) {
-
-    console.log(url);
-    console.table(sData);
-
     ajaxPromise("POST", "JSON", url, sData)
         .then(function (data) {
-            console.log(data);
 
             if (data == "error") {
                 $("<div></div>").attr("class", "list_content_shop row gy-4 align-items-center card_shop").appendTo(".list_buildings").html("<h3>¡sin sugerencias!</h3>");
@@ -1209,6 +1178,7 @@ function print_scroll(url, sData) {
             <div class="custom-card">
                 <div class="custom-card-item">          
                 <swiper-container class='mySwiper swiper-slide-centered carrousel_scroll' 
+                onclick='event.stopPropagation();'
                 navigation='true' keyboard='true' pagination='true' pagination-clickable='true'
                 space-between='0' slides-per-view='1' slides-per-group='1'> `+
                             (function () {

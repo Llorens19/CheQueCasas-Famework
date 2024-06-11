@@ -65,7 +65,7 @@ function increment() {
             input.val(value);
             ajaxPromise('POST', 'JSON', friendlyURL('?module=cart'), { op: 'increment', id_line: id })
                 .then(function (data) {
-                    console.log(data);
+                    
                     total_money()
                 })
                 .catch(function () {
@@ -98,12 +98,12 @@ function decrement() {
 
 function deleteLine() {
     $(".delete_line_cart").click(function () {
-        console.log('delete');
+        
         let id = $(this).attr('id');
-        console.log(id);
+     
         ajaxPromise('POST', 'JSON', friendlyURL('?module=cart'), { op: 'delete_line_cart', id_line: id })
             .then(function (data) {
-                console.log(data);
+               
                 // $(".list_cart").empty();
                 // loadCart();
                 $("#line_" + id).remove();
@@ -118,19 +118,18 @@ function deleteLine() {
 
 function selected_line() {
     $(".selected_line").click(function () {
-        console.log('selected');
+        
         let id = $(this).attr('id');
-        console.log(id);
+        
 
 
         let state = $(this).prop('checked');
         let state_bd = state ? 1 : 0;
-        console.log(state_bd);
+    
 
 
         ajaxPromise('POST', 'JSON', friendlyURL('?module=cart'), { op: 'selected_line', id_line: id, state: state_bd })
             .then(function (data) {
-                console.log(data);
                 total_money();
             })
             .catch(function () {
@@ -145,7 +144,6 @@ function total_money() {
 
     ajaxPromise("POST", "JSON", friendlyURL("?module=cart"), { op: "total_money" })
         .then(function (data) {
-            console.log(data[0].total);
             if (data[0].total == null) {
                 $(".total_money").html("Total: 0.00 €");
             } else {
@@ -158,7 +156,6 @@ function total_money() {
 }
 
 function validate_buy_data() {
-    console.log("validaaaaaaaaaa");
     let name_ex = /^[a-zA-Z\s]{3,30}$/;
     let surnames_ex = /^[a-zA-Z\s]{3,30}$/;
     let direction_ex = /^[a-zA-Z0-9\s]{3,30}$/;
@@ -309,13 +306,9 @@ function buy() {
         };
 
         check = validate_buy_data();
-        console.log(check);
         if (check) {
-            console.log('buy');
             ajaxPromise('POST', 'JSON', friendlyURL('?module=cart'), data)
                 .then(function (data) {
-
-                    console.log(data);
                     $(".list_cart").empty();
                     loadCart();
                     new Noty({
@@ -337,8 +330,6 @@ function load_facturas() {
 
     ajaxPromise("POST", "JSON", friendlyURL("?module=cart"), { op: "load_facturas" })
         .then(function (data) {
-            console.log(data);
-
             for (row in data) {
 
                 $("<tr></tr>").attr('class', 'row_factura')
@@ -364,11 +355,8 @@ function load_facturas() {
 
 function load_factura() {
     $(".load_factura").click(function () {
-
-        console.log('load factura');
         let id = $(this).attr('id');
         const url = absoluteURL('pdf/factura' + id + '.pdf');
-        console.log(url);
 
         // Configurar la URL del worker de PDF.js
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.9.359/pdf.worker.min.js';
@@ -419,7 +407,6 @@ function load_factura() {
 function load_qr() {
     
     $(".load_qr").click(function () {
-        console.log('load qr');
         let id = $(this).attr('id');
         const url = absoluteURL('QR/QR' + id + '.png');
 
@@ -436,7 +423,6 @@ function load_qr() {
 function check_stock() {
     ajaxPromise("POST", "JSON", friendlyURL("?module=cart"), { op: "check_stock" })
         .then(function (data) {
-            console.log("wuligrjsdjhaiñhbunjj");
             
         })
         .catch(function () {
@@ -479,9 +465,6 @@ function buttons_cart() {
 function carrousel_products() {
     ajaxPromise('POST', 'JSON', friendlyURL('?module=cart'), {op: "products" })
         .then(function (data) {
-            console.log(data);
-
-
             for (row in data) {
                 $('<swiper-slide></swiper-slide>').attr('class', "element_product").attr('id', data[row].id_product).appendTo(".carrousel_products")
                     .html(`
@@ -511,10 +494,8 @@ function carrousel_products() {
 function click_product() {
     $(".element_product").click(function () {
         let id = $(this).attr('id');
-        console.log(id);
         ajaxPromise('POST', 'JSON', friendlyURL('?module=cart'), { op: 'add_product', id_product: id })
             .then(function (data) {
-                console.log(data);
                 $(".list_cart").empty();
                 loadCart();
             })
@@ -529,13 +510,11 @@ function click_product() {
 
 
 $(document).ready(() => {
-    console.log('cart ready');
     check_stock();
     loadCart();
     button_close_pdf();
     button_close_qr();
     carrousel_products();
-
     $('.footer').attr('class', 'footer col-lg-7');
 });
 

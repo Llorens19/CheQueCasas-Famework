@@ -1,5 +1,4 @@
 function login() {
-    console.log("login");
     if (validate_login() != 0) {
         username = document.getElementById('login_username').value;
         password = document.getElementById('login_password').value;
@@ -23,7 +22,6 @@ function login() {
 
                     ajaxPromise('POST', 'JSON', friendlyURL('?module=login'), data_imput)
                         .then(function (result) {
-                            console.log(result);
                             if (result == "error_user") {
                                 document.getElementById('error_login_username').innerHTML = "El usario no existe."
                             } else if (result == "error_passwd") {
@@ -34,7 +32,6 @@ function login() {
                             } else if (result == "error_active") {
                                 document.getElementById('error_login_username').innerHTML = "El usuario no esta activo"
                             } else {
-                                console.log("result", result);
                                 localStorage.removeItem("access_token");
                                 localStorage.removeItem("refresh_token");
                                 localStorage.setItem("access_token", result[0]);
@@ -55,9 +52,7 @@ function login() {
                                 }, 1000);
                             }
                         }).catch(function (textStatus) {
-                            if (console && console.log) {
                                 console.error("Error login", textStatus);
-                            }
                         });
 
                 }
@@ -79,11 +74,8 @@ function login() {
 }
 
 function send_sms_identity(phone, username) {
-    console.log("send_sms");
-
     ajaxPromise('POST', 'JSON', friendlyURL('?module=login'), { phone: phone, username: username, op: 'send_sms_identity' })
         .then(function (data) {
-            console.log(data);
             console.log("Código enviado", data);
         }).catch(function () {
             console.error("Error al guardar el teléfono");
@@ -140,7 +132,6 @@ function send_recover_password() {
             email: document.getElementById('recover_email').value,
             op: 'send_recover_email'
         };
-        console.table(data);
         ajaxPromise('POST', 'JSON', friendlyURL('?module=login'), data)
             .then(function (data) {
                 if (data == "error") {
@@ -167,7 +158,7 @@ function send_recover_password() {
                 }
             })
             .catch(function (textStatus) {
-                console.log('Error: Recover password error');
+                console.error('Error: Recover password error');
             });
     }
 }
@@ -189,12 +180,10 @@ function click_login() {
     });
 
     $('.google_button').on('click', function (e) {
-        console.log("google");
         social_login('google');
     });
 
     $('.github_button').on('click', function (e) {
-        console.log("github");
         social_login('github');
     });
 
@@ -238,7 +227,6 @@ function validate_mail_recover_password() {
 function load_form_new_password() {
     token_email = localStorage.getItem('token_email');
     localStorage.removeItem('token_email');
-    console.log(token_email);
     ajaxPromise('POST', 'JSON', friendlyURL('?module=login'), { token_email: token_email, op: 'verify_token' })
 
         .then(function (data) {
@@ -247,10 +235,7 @@ function load_form_new_password() {
                     charge_recover();
                     click_new_password(token_email);
                 }, 1000);
-            } else {
-                console.log("error");
-            }
-
+            } 
         })
         .catch(function (textStatus) {
             console.error("Error: Verify token error", textStatus);
@@ -266,12 +251,10 @@ function click_new_password(token_email) {
 
 function send_new_password(token_email) {
     if (validate_new_password() != 0) {
-        console.log("send_new_password", token_email);
         let data = { token_email: token_email, password: $('#recover_password').val(), op: 'new_password' };
 
         ajaxPromise('POST', 'JSON', friendlyURL("?module=login"), data)
             .then(function (data) {
-                console.log(data);
                 if (data == "done") {
                     new Noty({
                         text: 'Contraseña cambiada.',
@@ -298,21 +281,15 @@ function send_new_password(token_email) {
 }
 
 function load_content() {
-    console.log("load_content");
     let path = window.location.pathname.split('/');
 
-    console.table(path);
-
     if (path[4] === 'recover') {
-        console.log("recover");
 
         load_form_new_password();
 
         localStorage.setItem("token_email", path[5]);
 
     } else if (path[4] === 'verify') {
-        console.log("///////////////////////////////////////////////", path[5]);
-
         ajaxPromise('POST', 'JSON', friendlyURL("?module=login"), { token_email: path[5], op: 'verify_email' })
             .then(function (data) {
                 
@@ -462,10 +439,8 @@ function compare_idenity(username) {
         ajaxPromise('POST', 'JSON', friendlyURL('?module=login'), { phone: phone, username: username, code: code, op: 'verify_code_identity' })
             .then(function (data) {
 
-                console.log(data);
 
                 if (data == "done") {
-                    console.log("Código correcto");
                     $('.close_verify_phone_identity').click();
 
                     new Noty({
@@ -506,7 +481,6 @@ function reset_trys() {
 
     ajaxPromise('POST', 'JSON', friendlyURL('?module=login'), { username: username, op: 'reset_trys' })
         .then(function (data) {
-            console.log(data);
         })
         .catch(function (textStatus) {
             console.error('Error al resetear los intentos');
@@ -519,11 +493,8 @@ function social_login(param){
 
     authService.signInWithPopup(provider_config(param)) 
     .then(function(result) {
-        console.log('Hemos autenticado al usuario ', result.user);
         email_name = result.user.email;
         let username = email_name.split('@');
-        console.log(username[0]);
-
         user = {
             id: result.user.uid, 
             username: username[0], 
@@ -532,8 +503,6 @@ function social_login(param){
             type_user: param,
             op: 'social_login'
         };
-
-        console.log(user);
         
         if (result) {
 
@@ -567,19 +536,19 @@ function social_login(param){
                 // }
             })
             .catch(function() {
-                console.log('Error: Social login error');
+                console.error('Error: Social login error');
             });
         }
     })
     .catch(function(error) {
         var errorCode = error.code;
-        console.log(errorCode);
+        console.error(errorCode);
         var errorMessage = error.message;
-        console.log(errorMessage);
+        console.error(errorMessage);
         var email = error.email;
-        console.log(email);
+        console.error(email);
         var credential = error.credential;
-        console.log(credential);
+        console.error(credential);
     });
 }
 
@@ -613,7 +582,6 @@ function provider_config(param){
 }
 
 $(document).ready(function () {
-    console.log("ready");
     setTimeout(function () {
         click_login();
         load_content();

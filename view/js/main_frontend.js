@@ -63,13 +63,11 @@ function load_menu() {
     let type_user = localStorage.getItem('type_user');
     let token = localStorage.getItem('access_token');
 
-    console.log(token);
     if (token) {
 
 
         ajaxPromise('POST', 'JSON', friendlyURL('?module=login'), { 'token': token, type_user: type_user, op: 'data_user' })
             .then(function (data) {
-                console.log(data[0]);
 
                 $(".login_bar").empty();
 
@@ -82,8 +80,6 @@ function load_menu() {
 
                 if (data[0].type_user == "admin") {
                     //find_likes_user();
-                    console.log("Admin loged");
-
                     $("<div></div>").attr("class", "ms-2 admin_options").appendTo(".login_bar").html(
                         `<button onclick="window.location.href='index.php?page=controller_admin&op=list'" class="btn btn-danger">Opciones Admin</button>`);
 
@@ -96,7 +92,6 @@ function load_menu() {
 
                 } else {
                     //find_likes_user();
-                    console.log("Client loged");
                     $('.opc_CRUD').show();
                     $('.opc_exceptions').show();
                 }
@@ -110,7 +105,7 @@ function load_menu() {
                     )
 
             }).catch(function () {
-                console.log("Error al cargar los datos del user");
+                console.error("Error al cargar los datos del user");
             });
     } else {
 
@@ -122,7 +117,6 @@ function load_menu() {
         $("<div></div>").attr("class", "ms-2 login_button").appendTo(".login_bar").html(
             `<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal">Login/Register</button>`);
 
-        console.log("No hay token disponible");
 
     }
 }
@@ -146,7 +140,6 @@ function click_logout() {
 function logout() {
     ajaxPromise('POST', 'JSON', 'index.php?module=login&op=logout')
         .then(function (data) {
-            console.log('logout');
             localStorage.removeItem('access_token');
             localStorage.removeItem('refresh_token');
             localStorage.removeItem('type_user');
@@ -155,7 +148,7 @@ function logout() {
             localStorage.removeItem('username');
             window.location.href = "index.php?module=home&op=view";
         }).catch(function () {
-            console.log('Something has occured');
+            console.error('Error en el logout');
         });
 }
 
@@ -395,8 +388,6 @@ function load_login_modal() {
 function change_photo() {
 
     $(".change_photo").on("click", function () {
-        console.log("change_photo");
-        
         $("<form></form>").attr("action", "/upload").attr("method", "post").attr("enctype", "multipart/form-data").attr("class", "mb-3 form_upload_photo").attr('id', 'uploadForm').appendTo(".user_profile_body").html(`
             <div class="mb-3 upload_photo" >
                 <label for="fileToUpload" class="form-label">Selecciona un archivo</label>
@@ -416,16 +407,11 @@ function change_photo() {
 function upload_photo() {
     $(".form_upload_photo").on("submit", function (e) {
         e.preventDefault();
-        console.log("upload_photo");
-
         var formData = new FormData(this);
 
 
         ajaxPromise('POST', 'JSON', friendlyURL('?module=login&op=upload_photo'), formData)
             .then(function (data) {
-                console.log(data);
-                
-
                 new Noty({
                     text: 'Foto de perfil cambiada.',
                     type: 'success',
@@ -451,32 +437,12 @@ function upload_photo() {
     
 
     });
-
-
-    // $.ajax({
-    //     url: friendlyURL('?module=login'),
-    //     type: 'POST',
-    //     data:  { formData: formData, op: 'upload_photo' },
-    //     contentType: false,
-    //     processData: false,
-    //     success: function (data) {
-    //         console.log(data);
-    //         alert('Archivo subido exitosamente.');
-    //     }
-
-
-    // });
-
-    // });
-
-
 }
 
 
 
 function hide_change_photo() {
     $(".hidde_change_photo").on("click", function () {
-        console.log("hide__change_photo");
         $(".form_upload_photo").remove();
         $(".dropzone").remove();
 
@@ -634,7 +600,6 @@ function button_save_phone(data) {
             ajaxPromise('POST', 'JSON', friendlyURL('?module=login'), { phone: phone, username: data[0].username, op: 'save_phone' })
                 .then(function (data) {
                     document.getElementById('error_phone_number').innerHTML = "";
-                    console.log(data);
                     $(".modal_phone_body").empty().html(`
 
                     <form id="phone_code_form">
@@ -655,7 +620,7 @@ function button_save_phone(data) {
 
 
                 }).catch(function () {
-                    console.log("Error al guardar el teléfono");
+                    console.error("Error al guardar el teléfono");
                 });
         } else {
             document.getElementById('error_phone_number').innerHTML = "Introduce un teléfono válido";
@@ -665,12 +630,8 @@ function button_save_phone(data) {
 
 
 function send_sms(phone) {
-    console.log("send_sms");
-
     ajaxPromise('POST', 'JSON', friendlyURL('?module=login'), { phone: phone, op: 'send_sms' })
         .then(function (data) {
-            console.log(data);
-            console.log("Código enviado", data);
         }).catch(function () {
             console.error("Error al guardar el teléfono");
         });
@@ -684,11 +645,7 @@ function compare() {
 
         ajaxPromise('POST', 'JSON', friendlyURL('?module=login'), { phone: phone, code: code, op: 'verify_OTP' })
             .then(function (data) {
-                console.log(data);
-                console.log("Código enviado", data);
-
                 if (data == "done") {
-                    console.log("Código correcto");
                     $('.close_verify_phone').click();
                     new Noty({
                         text: 'Verificación 2fa activada.',
@@ -794,7 +751,6 @@ function save_profile(){
         if (correct) {
         ajaxPromise('POST', 'JSON', friendlyURL('?module=login'), { name: name, surname: surname, phone: tlf, op: 'save_profile' })
             .then(function (data) {
-                console.log(data);
                 new Noty({
                     text: 'Datos actualizados correctamente.',
                     type: 'success',
@@ -802,7 +758,7 @@ function save_profile(){
                     timeout: 3000
                 }).show();
             }).catch(function () {
-                console.log("Error al guardar los datos");
+                console.error("Error al guardar los datos");
             });
         }else{
             new Noty({
@@ -846,8 +802,6 @@ function find_likes_user_buildings() {
 
     ajaxPromise('POST', 'JSON', friendlyURL('?module=login'), {op: 'find_likes_user' })
         .then(function (data) {
-
-            console.table(data);
             for (row in data[0]) {
                 $("<div></div>").attr({
                     id: "card_like_"+ data[0][row].id_like,
@@ -911,11 +865,9 @@ function click_like_buton_modal() {
 
     $(".button_like_modal").on("click", function () {
         let id_like= $(this).attr('id');
-       console.log("like ",id_like);
 
         ajaxPromise('POST', 'JSON', friendlyURL('?module=login'), { id_like: id_like, op: 'delete_like' })
             .then(function (data) {
-                console.log(data);
                 new Noty({
                     text: 'Like eliminado correctamente.',
                     type: 'success',
@@ -933,8 +885,6 @@ function click_like_buton_modal() {
 function element_like_click() { 
     $(".element_like").on("click", function () {
         let id_building = $(this).attr('class').split(" ")[3].split("_")[2];
-
-        console.log(id_building);
         localStorage.removeItem('id_details');
         localStorage.setItem('id_details', id_building);
         setTimeout(function () {

@@ -10,11 +10,8 @@ function register() {
             password: document.getElementById('register_password').value
         };
 
-        console.table(data);
-
         ajaxPromise('POST', 'JSON', friendlyURL('?module=login'), data)
             .then(function (result) {
-                console.log("result");
                 if (result === "error_email") {
                     document.getElementById('error_register_username').innerHTML = " ";
                     document.getElementById('error_register_email').innerHTML = "El email ya esta en uso, intentalo con otro";
