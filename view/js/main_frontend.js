@@ -534,7 +534,8 @@ function load_profile(data) {
                                     <button type="button" class="btn btn-primary col-md-12 mb-3" data-dismiss="modal" data-toggle="modal" data-target="#phoneVerificationModal">Activar 2fa</button>
                                 </div>
                                 <div class="col-md-4">
-                                    <button type="button" class="btn btn-danger col-md-12 mb-3" data-dismiss="modal" data-toggle="modal" data-target="#phoneVerificationModal">Likes</button>
+                                   
+                                    <button type="button" class="btn btn-danger col-md-12 mb-3" data-toggle="modal" data-target="#largeModal">Likes</button>
                                 </div>
                                 <div class="col-md-4">
                                     <button type="button" class="btn btn-success col-md-12 mb-3 save_profile">Guardar</button>
@@ -559,6 +560,8 @@ function load_profile(data) {
     </div>`);
 
     save_profile();
+    modal_likes();
+    find_likes_user();
 }
 
 
@@ -783,6 +786,99 @@ function save_profile(){
         }
     });
     
+}
+
+function modal_likes(){
+
+
+
+    $("<div></div>").attr("class", "modal fade").attr("id", "largeModal").attr("tabindex", "-1")
+    .attr("aria-labelledby", "largeModalLabel").attr("aria-hidden", "true").appendTo(".login_bar").html(`
+    <div class="modal-dialog" style="max-width: 60%; height: 85vh;">
+        <div class="modal-content" style="height: 100%;">
+            <div class="modal-header">
+                <h5 class="modal-title" id="largeModalLabel">Likes</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body
+            " style="overflow-y: auto;">
+                <div class="row list_likes" id="likes">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+    `);
+}
+
+
+function find_likes_user() {
+    
+
+    ajaxPromise('POST', 'JSON', friendlyURL('?module=login'), {op: 'find_likes_user' })
+        .then(function (data) {
+            console.table(data);
+            for (row in data[0]) {
+                $("<div></div>").attr({
+                    id: data[0][row].id_building,
+                    class: "card2 list_content_shop mb-4",
+                }).appendTo(".list_likes").html(
+                    "<div class='card2-body'>" +
+                    "<div class='row'>" +
+                    "<div class='col-md-6' onclick='event.stopPropagation();'>" +
+                    "<swiper-container class='mySwiper swiper-slide-centered carrousel_list3' " +
+                    "navigation='true' keyboard='true' pagination='true' pagination-clickable='true'" +
+                    "space-between='0' slides-per-view='1' slides-per-group='1'>" +
+                    (function () {
+                        let slides = [];
+                        for (let row_images in data[1]) {
+                            if (data[1][row_images].id_building == data[0][row].id_building) {
+                                slides.push(
+                                    "<swiper-slide>" +
+                                    "<img src='view/img/shop/test/" +
+                                    data[1][row_images].url_image +
+                                    "' class='img-fluid img-control'>" +
+                                    "</swiper-slide>"
+                                );
+                            }
+                        }
+                        return slides.join("");
+                    })() +
+                    "</swiper-container>" +
+                    "</div>" +
+                    "<div class='col-md-6'>" +
+                    "<h3 class='card2-title'>" + data[0][row].price + "€</h3>" +
+                    "<p class='card2-text'>" +
+                    "<small class='text-muted'>" + data[0][row].n_city + "</small>" +
+                    "</p>" +
+                    "<ul class='list-unstyled'>" +
+                    "<li><i class='bi bi-check'></i> " + data[0][row].m2 + " m<sup>2</sup></li>" +
+                    "<li><i class='bi bi-check'></i> " + data[0][row].room_number + " hab. <i class='bi bi-check'></i> " + data[0][row].bathroom_number + " baños</li>" +
+                    "<li><i class='bi bi-check'></i> Tipo: " + data[0][row].n_type + "</li>" +
+                    "</ul>" +
+                    "<div class='d-flex justify-content-between mt-3'>" +
+                    "<button type='button' class='btn btn-outline-secondary'><img src='view/img/shop/img_card2/compartir.png' style='height: 30px;' alt='Compartir'></button>" +
+                    "<button type='button' class='btn btn-outline-secondary'><img src='view/img/shop/img_card2/chat.png' style='height: 30px;' alt='Chat'></button>" +
+                    "<button type='button' id=" + data[0][row].id_building + " class='btn btn-outline-secondary button_like_building' onclick='event.stopPropagation();' data-bs-toggle='modal' data-bs-target='#loginModal'><img src='view/img/shop/img_card2/sin_megusta.png' class='img_like_building img_" + data[0][row].id_building + "' id=img_" + data[0][row].id_building + " style='height: 30px;' alt='Me gusta'></button>" +
+                    "<button type='button' id=" + data[0][row].id_building + " class='btn btn-outline-secondary button_cart_building' onclick='event.stopPropagation();' data-bs-toggle='modal' data-bs-target='#loginModal'><img src='view/img/shop/img_card2/cart.png' id=" + data[0][row].id_building + " style='height: 30px;' alt='Carrito'></button>" +
+                    "</div>" +
+                    "</div>" +
+                    "</div>" +
+                    "</div>"
+                );
+            }
+            
+            
+        }
+        ).catch(function () {
+            console.error("Error al cargar los likes");
+        });
+
 }
 
 

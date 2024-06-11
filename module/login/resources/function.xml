@@ -111,5 +111,10 @@
         <uri>save_profile</uri>
     </function>
 
+    <function>
+        <name>find_likes_user</name>
+        <uri>find_likes_user</uri>
+    </function>
+
 
 </functions>

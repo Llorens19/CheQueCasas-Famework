@@ -265,5 +265,57 @@ class login_dao
 
 	}
 
+	function select_likes_user($db, $username, $type_user)
+	{
+		if($type_user == 'normal' and isset($type_user)){
+
+			$sql = "SELECT * FROM building 
+			inner join city on building.id_city = city.id_city 
+			inner join product on building.id_building = product.id_building 
+			WHERE building.id_building IN (SELECT id_building 
+										   FROM likes 
+										   WHERE id_user = (SELECT id_user 
+										   					FROM user 
+															WHERE username = '$username'))";
+			
+
+		}else if($type_user == 'google' and isset($type_user)){
+
+			$sql = "SELECT * FROM building 
+			inner join city on building.id_city = city.id_city 
+			inner join product on building.id_building = product.id_building 
+			WHERE building.id_building IN (SELECT id_building 
+										   FROM likes 
+										   WHERE id_user = (SELECT id_user 
+										   					FROM user_google
+															WHERE username = '$username'))";
+			
+			
+		}else if($type_user == 'github' and isset($type_user)){
+			
+			$sql = "SELECT * FROM building 
+			inner join city on building.id_city = city.id_city 
+			inner join product on building.id_building = product.id_building 
+			WHERE building.id_building IN (SELECT id_building 
+										   FROM likes 
+										   WHERE id_user = (SELECT id_user 
+										   					FROM user_github 
+															WHERE username = '$username'))";
+		}
+
+		error_log($sql);
+
+		$stmt = $db->ejecutar($sql);
+		return $db->listar($stmt);
+	}
+
+	function select_img ($db){
+
+		$sql = "SELECT * FROM image";
+
+		$stmt = $db->ejecutar($sql);
+		return $db->listar($stmt);
+	}
+	
 
 }

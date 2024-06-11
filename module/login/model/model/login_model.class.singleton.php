@@ -100,5 +100,9 @@
             return $this -> bll -> get_save_profile_BLL($args);
         }
 
+        public function get_find_likes_user($args) {
+            return $this -> bll -> get_find_likes_user_BLL($args);
+        }
+
 
     }

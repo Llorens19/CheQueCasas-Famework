@@ -120,4 +120,9 @@ class controller_login
         echo json_encode(common::load_model('login_model', 'get_save_profile', [$_POST['name'], $_POST['surname'], $_POST['phone'], $_SESSION['username'], $_SESSION['type_user']]));
     }
 
+    function find_likes_user() {
+        error_log("Entra en find_likes_user");
+        echo json_encode(common::load_model('login_model', 'get_find_likes_user', [$_SESSION['username'], $_SESSION['type_user']]));
+    }
+
 }

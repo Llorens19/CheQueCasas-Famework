@@ -494,4 +494,12 @@ public function get_save_profile_BLL($args)
 	$this->dao->update_user_profile($this->db, $args[0], $args[1], $args[2], $_SESSION['username'], $_SESSION['type_user']);
 	return "done";
 }
+
+public function get_find_likes_user_BLL($args)
+{
+	$rdo = [];
+	$rdo[0] = $this->dao->select_likes_user($this->db, $args[0], $args[1]);
+	$rdo[1] = $this->dao->select_img($this->db);
+	return $rdo;
+}
 }

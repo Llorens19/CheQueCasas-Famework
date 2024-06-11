@@ -2548,21 +2548,49 @@ canvas {
 
 
 
-.dropzone {
-    border: 2px dashed #007bff;
+
+
+
+
+
+.card2 {
     border-radius: 5px;
-    background-color: #f9f9f9;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+  
+}
+
+.card2:hover {
+    background-color: #00000027;
+
+}
+
+.card2-body {
     padding: 20px;
-    text-align: center;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
 }
 
-.dropzone:hover {
-    background-color: #e9e9e9;
+.card2-title {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
 }
 
-.dropzone input[type="file"] {
-    display: none;
+.card2-text small {
+    font-size: 0.9rem;
 }
 
+.img-fluid {
+    border-radius: 15px;
+    max-height: 300px;
+    object-fit: cover;
+}
+
+.btn-outline-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    border-radius: 50%;
+}
+
+.btn-outline-secondary img {
+    max-height: 20px;
+}
