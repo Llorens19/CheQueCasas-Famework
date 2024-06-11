@@ -465,7 +465,7 @@ class login_bll
         return "error_not_image";
     }
 
-    if ($args["size"] > 5000000) {
+    if ($args["size"] > 5000000) { // Comprobamos si la imagen es mayor a 5MB
         $uploadOk = 0;
         error_log("El archivo es demasiado grande");
         return "error_to_big";

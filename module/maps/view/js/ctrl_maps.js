@@ -13,7 +13,7 @@ function mapBox_all(data) {
         const marker = new mapboxgl.Marker();
         const minPopup = new mapboxgl.Popup();
         const popupContent = `
-            <div class="col-lg-12 my-2" id="${data[0][row].id_building}">
+            <div class="col-lg-12 my-2 point_map" id="${data[0][row].id_building}">
                 <div class="custom-card">
                     <div class="custom-card-item">
                         <swiper-container class='mySwiper swiper-slide-centered carrousel_scroll' 
@@ -69,6 +69,15 @@ marker.setPopup(minPopup).setLngLat([data[0][row].longitude, data[0][row].latitu
             .setLngLat([data[0][row].longitude, data[0][row].latitude])
             .addTo(map);
     }
+}
+
+function click_point_map() {
+
+    $(document).on("click", ".point_map", function () {
+        let id = $(this).attr("id");
+        loadDetails(id);
+    }
+    );
 }
 
 function mapBox(id) {

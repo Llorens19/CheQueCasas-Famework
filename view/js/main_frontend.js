@@ -851,7 +851,7 @@ function find_likes_user_buildings() {
             for (row in data[0]) {
                 $("<div></div>").attr({
                     id: "card_like_"+ data[0][row].id_like,
-                    class: "card2 mb-4",
+                    class: "card2 element_like mb-4 card_like_"+ data[0][row].id_building,
                 }).appendTo(".list_likes").html(
                     "<div class='card2-body'>" +
                     "<div class='row'>" +
@@ -898,6 +898,7 @@ function find_likes_user_buildings() {
             
 
             click_like_buton_modal();
+            element_like_click();
             
         }
         ).catch(function () {
@@ -925,6 +926,21 @@ function click_like_buton_modal() {
             }).catch(function () {
                 console.error("Error al eliminar el like");
             });
+    }
+    );
+} 
+
+function element_like_click() { 
+    $(".element_like").on("click", function () {
+        let id_building = $(this).attr('class').split(" ")[3].split("_")[2];
+
+        console.log(id_building);
+        localStorage.removeItem('id_details');
+        localStorage.setItem('id_details', id_building);
+        setTimeout(function () {
+            window.location.href = friendlyURL('?module=shop');
+        }, 200);
+
     }
     );
 }

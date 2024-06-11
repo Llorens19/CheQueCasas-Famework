@@ -19,6 +19,7 @@ function print_points() {
     ajaxPromise('POST', 'JSON', friendlyURL('?module=shop'), { 'filters': filters, 'total_prod': 0, 'items_page': 100000, op: 'load_buildings' })
         .then(function (data) {
             mapBox_all(data);//
+            click_point_map();
         })
         .catch(function () {
             console.error("error en print_points");
@@ -283,7 +284,7 @@ function loadDetails(id_building) {
                 .appendTo(".details-shop")
                 .html(
                     "<div class='col-lg-6 my-4'>" +
-                    "<h3>Detalles de la Vivienda</h3>" +
+                    "<h3>"+data[0][0].price+" €</h3>" +
                     "<p class='fst-italic'><strong>Tipo de Propiedad:</strong>" +data[0][0].n_type+"</p>" +
                     "<p><strong>Habitaciones:</strong>  " + data[0][0].room_number + " </p>" +
                     "<p><strong>Baños:</strong>  " + data[0][0].bathroom_number + "</p>" +
@@ -909,6 +910,7 @@ function delete_button() {
         shopAll();
 
 
+        location.reload();
     });
 }
 
@@ -1201,7 +1203,7 @@ function print_scroll(url, sData) {
                 for (row in data[0]) {
 
 
-                    $("<div></div>").attr("class", "col-lg-3 my-2").attr("id", data[0][row].id_building).appendTo(".scroll-details")
+                    $("<div></div>").attr("class", "col-lg-3 my-2 element_scroll").attr("id", data[0][row].id_building).appendTo(".scroll-details")
                         .html(`
             
             <div class="custom-card">
@@ -1253,8 +1255,11 @@ function print_scroll(url, sData) {
                 
             `);
                 }
+
+                click_element_scroll();
             }
 
+       
 
 
         })
@@ -1263,6 +1268,14 @@ function print_scroll(url, sData) {
             //window.location.href = "index.php?module=ctrl_exceptions&op=503&type=503&lugar=Function ajxForSearch SHOP";
         });
 
+}
+
+function click_element_scroll() {
+    $(document).on("click", ".element_scroll", function () {
+        let id = $(this).attr("id");
+        $(".details-shop").empty();
+        loadDetails(id);
+    });
 }
 
 
