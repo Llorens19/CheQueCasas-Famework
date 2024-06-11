@@ -125,4 +125,9 @@ class controller_login
         echo json_encode(common::load_model('login_model', 'get_find_likes_user', [$_SESSION['username'], $_SESSION['type_user']]));
     }
 
+
+    function delete_like() {
+        echo json_encode(common::load_model('login_model', 'get_delete_like', $_POST['id_like']));
+    }
+
 }

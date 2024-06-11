@@ -116,5 +116,11 @@
         <uri>find_likes_user</uri>
     </function>
 
+    
+    <function>
+        <name>delete_like</name>
+        <uri>delete_like</uri>
+    </function>
+
 
 </functions>

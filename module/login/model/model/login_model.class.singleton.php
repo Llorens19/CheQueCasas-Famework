@@ -104,5 +104,9 @@
             return $this -> bll -> get_find_likes_user_BLL($args);
         }
 
+        public function get_delete_like($args) {
+            return $this -> bll -> get_delete_like_BLL($args);
+        }
+
 
     }

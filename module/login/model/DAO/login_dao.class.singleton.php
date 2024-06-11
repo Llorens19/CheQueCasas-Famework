@@ -269,38 +269,50 @@ class login_dao
 	{
 		if($type_user == 'normal' and isset($type_user)){
 
-			$sql = "SELECT * FROM building 
+			$sql = "SELECT DISTINCT * FROM building 
 			inner join city on building.id_city = city.id_city 
+			inner join likes on building.id_building = likes.id_building
 			inner join product on building.id_building = product.id_building 
 			WHERE building.id_building IN (SELECT id_building 
 										   FROM likes 
 										   WHERE id_user = (SELECT id_user 
 										   					FROM user 
-															WHERE username = '$username'))";
+															WHERE username = '$username'))
+			AND likes.id_user = (SELECT id_user 
+									FROM user 
+									WHERE username = '$username')";
 			
 
 		}else if($type_user == 'google' and isset($type_user)){
 
-			$sql = "SELECT * FROM building 
+			$sql = "SELECT DISTINCT * FROM building 
 			inner join city on building.id_city = city.id_city 
+			inner join likes on building.id_building = likes.id_building
 			inner join product on building.id_building = product.id_building 
 			WHERE building.id_building IN (SELECT id_building 
 										   FROM likes 
 										   WHERE id_user = (SELECT id_user 
 										   					FROM user_google
-															WHERE username = '$username'))";
+															WHERE username = '$username'))
+			AND likes.id_user = (SELECT id_user
+									FROM user_google
+									WHERE username = '$username')";
 			
 			
 		}else if($type_user == 'github' and isset($type_user)){
 			
-			$sql = "SELECT * FROM building 
+			$sql = "SELECT DISTINCT  * FROM building 
 			inner join city on building.id_city = city.id_city 
+			inner join likes on building.id_building = likes.id_building
 			inner join product on building.id_building = product.id_building 
 			WHERE building.id_building IN (SELECT id_building 
 										   FROM likes 
 										   WHERE id_user = (SELECT id_user 
 										   					FROM user_github 
-															WHERE username = '$username'))";
+															WHERE username = '$username'))
+			AND likes.id_user = (SELECT id_user
+									FROM user_github
+									WHERE username = '$username')";
 		}
 
 		error_log($sql);
@@ -315,6 +327,15 @@ class login_dao
 
 		$stmt = $db->ejecutar($sql);
 		return $db->listar($stmt);
+	}
+
+	function delete_like($db, $id_like)
+	{
+		$sql = "DELETE FROM likes WHERE id_like = '$id_like'";
+
+		error_log($sql);
+		$stmt = $db->ejecutar($sql);
+		return "ok";
 	}
 	
 

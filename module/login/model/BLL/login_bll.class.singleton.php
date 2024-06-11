@@ -502,4 +502,10 @@ public function get_find_likes_user_BLL($args)
 	$rdo[1] = $this->dao->select_img($this->db);
 	return $rdo;
 }
+
+public function get_delete_like_BLL($args)
+{
+	$this->dao->delete_like($this->db, $args);
+	return "done";
+}
 }
