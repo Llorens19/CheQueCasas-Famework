@@ -1,6 +1,6 @@
 # CheQueCasas (PHP - Jqwery) 🏠💻
 
-Proyecto realizado en 1º DAW, cuyo fin es tener un primer contacto con la elaboración de Páginas WEB.
+Proyecto realizado en 1º DAW, cuyo fin es tener un primer contacto con la elaboración de aplicaciones WEB.
 
 ## Descripción
 
@@ -63,3 +63,22 @@ Proyecto realizado en 1º DAW, cuyo fin es tener un primer contacto con la elabo
 5. **Integración con Mapas 🗺️**
    - Integra servicios de mapas para mostrar la ubicación de las propiedades en un mapa interactivo.
    - Facilita a los usuarios visualizar la localización geográfica de las propiedades.
+
+## Funcionalidades del Módulo "Search" 🔍
+
+### Funcionalidades Principales
+
+1. **Carga de Tipos de Propiedad 🏠**
+   - Permite cargar y mostrar los diferentes tipos de propiedades disponibles.
+
+2. **Carga de Operaciones 🛠️**
+   - Permite cargar y mostrar las diferentes operaciones disponibles (compra, alquiler, etc.).
+
+3. **Autocompletado de Búsqueda 📝**
+   - Proporciona una funcionalidad de autocompletado para la búsqueda de ciudades.
+
+4. **Botón de Búsqueda 🚀**
+   - Inicia la búsqueda basada en los filtros seleccionados por el usuario.
+
+
+
