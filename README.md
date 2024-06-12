@@ -8,13 +8,13 @@ Proyecto realizado en 1º DAW, cuyo fin es tener un primer contacto con la elabo
 
 ### Módulos Principales
 
-- **Cart 🛒**: Este módulo permite a los usuarios gestionar una lista de propiedades que les interesan, agregando o eliminando casas según sus preferencias.
 - **Home 🏡**: Es el módulo de inicio de la aplicación, donde el usuario realiza su primer filtro de búsqueda según sus preferencias, o bien accede a las viviendas destacadas.
-- **Login 🔑**: Módulo de autenticación de usuarios, que incluye el inicio de sesión y el registro de nuevos usuarios para acceder a funcionalidades personalizadas.
-- **Maps 🗺️**: Integración con servicios de mapas para mostrar la ubicación de las propiedades, permitiendo a los usuarios visualizar las casas disponibles en un mapa interactivo.
-- **Search 🔍**: Funcionalidad avanzada de búsqueda que permite a los usuarios filtrar propiedades según diversos criterios como tipo, operación o ubicación.
 - **Shop 🏬**: Este es el módulo principal, cuyo fin es facilitar el proceso de compra y alquiler de propiedades. Dispone de una serie de filtros que nos facilitan encontrar aquello que buscamos.
-
+- **Search 🔍**: Funcionalidad avanzada de búsqueda que permite a los usuarios filtrar propiedades según diversos criterios como tipo, operación o ubicación.
+- **Maps 🗺️**: Integración con servicios de mapas para mostrar la ubicación de las propiedades, permitiendo a los usuarios visualizar las casas disponibles en un mapa interactivo.
+- **Login 🔑**: Módulo de autenticación de usuarios, que incluye el inicio de sesión y el registro de nuevos usuarios para acceder a funcionalidades personalizadas.
+- **Cart 🛒**: Este módulo permite a los usuarios gestionar una lista de propiedades que les interesan, agregando o eliminando casas según sus preferencias.
+  
 ## Funcionalidades del Módulo "Home" 🏡
 
 ### Funcionalidades Principales
@@ -38,6 +38,7 @@ Proyecto realizado en 1º DAW, cuyo fin es tener un primer contacto con la elabo
 5. **Últimas Propiedades Vistas 🕒**
    - Muestra un carrusel de las últimas propiedades que el usuario ha visitado.
    - Ayuda a los usuarios a retomar rápidamente su búsqueda donde la dejaron.
+
 
 ## Funcionalidades del Módulo "Shop" 🏬
 
@@ -107,3 +108,56 @@ Proyecto realizado en 1º DAW, cuyo fin es tener un primer contacto con la elabo
 8. **Activar Verificación en Dos Pasos (2FA) 🔐**
    - Existe la opción de configurar y activar la verificación en dos pasos para mejorar la seguridad de su cuenta.
 
+## Funcionalidades del Módulo "Maps" 🗺️
+
+### Funcionalidades Principales
+
+1. **Visualización de Propiedades en el Mapa 🏠**
+   - Muestra todas las propiedades disponibles en un mapa interactivo utilizando Mapbox.
+   - Cada propiedad se representa con un marcador que incluye una ventana emergente con detalles de la propiedad.
+
+2. **Detalles de la Propiedad en el Mapa 📋**
+   - Al hacer clic en un marcador, se muestra una ventana emergente con detalles como precio, ubicación, número de habitaciones, baños, tipo de propiedad y tamaño.
+   - Las ventanas emergentes también incluyen un carrusel de imágenes de la propiedad.
+
+3. **Funcionalidad de Dibujo en el Mapa ✏️**
+   - Permite a los usuarios dibujar polígonos en el mapa para seleccionar áreas específicas.
+   - Los polígonos dibujados se pueden utilizar para filtrar propiedades que se encuentran dentro del área seleccionada.
+
+4. **Puntos en el Mapa 🔍**
+   - Permite a los usuarios ver los puntos de las propiedades en el mapa.
+   - Proporciona información detallada sobre cada propiedad cuando se hace clic en los puntos del mapa.
+
+## Funcionalidades del Módulo "Cart" 🛒
+
+### Funcionalidades Principales
+
+1. **Cargar Carrito 🛒**
+   - Carga los artículos del carrito de compras del usuario.
+   - Muestra cada artículo en una lista con su imagen, nombre, descripción, cantidad, precio y opciones para incrementar, decrementar o eliminar el artículo.
+
+2. **Incrementar Cantidad ➕**
+   - Permite a los usuarios incrementar la cantidad de un artículo en el carrito.
+   - Actualiza la cantidad en el servidor y recalcula el total del carrito.
+
+3. **Decrementar Cantidad ➖**
+   - Permite a los usuarios decrementar la cantidad de un artículo en el carrito.
+   - Actualiza la cantidad en el servidor y recalcula el total del carrito.
+
+4. **Eliminar Artículo 🗑️**
+   - Permite a los usuarios eliminar un artículo del carrito.
+   - Actualiza el carrito en el servidor y recalcula el total del carrito.
+
+5. **Seleccionar Artículos ✅**
+   - Permite a los usuarios seleccionar o deseleccionar artículos en el carrito.
+   - Actualiza el estado de selección en el servidor y recalcula el total del carrito.
+
+6. **Calcular Total 💰**
+   - Calcula y muestra el total del carrito en función de los artículos seleccionados.
+
+7. **Realizar Compra 🛍️**
+   - Permite a los usuarios realizar la compra de los artículos en el carrito.
+   - Valida los datos de compra, envía la solicitud al servidor y muestra una notificación de éxito.
+
+8. **Ver Facturas y QR 📄📱**
+   - Permite a los usuarios ver las facturas y códigos QR de sus compras anteriores.
