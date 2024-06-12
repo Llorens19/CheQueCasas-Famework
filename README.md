@@ -15,22 +15,51 @@ Proyecto realizado en 1º DAW, cuyo fin es tener un primer contacto con la elabo
 - **Search 🔍**: Funcionalidad avanzada de búsqueda que permite a los usuarios filtrar propiedades según diversos criterios como tipo, operación o ubicación.
 - **Shop 🏬**: Este es el módulo principal, cuyo fin es facilitar el proceso de compra y alquiler de propiedades. Dispone de una serie de filtros que nos facilitan encontrar aquello que buscamos.
 
-## Funcionalidades del Módulo "Shop"
+## Funcionalidades del Módulo "Home" 🏡
 
 ### Funcionalidades Principales
 
-1. **Búsqueda y Filtros**
-   El módulo "Shop" permite a los usuarios realizar búsquedas avanzadas utilizando diversos filtros. Los filtros pueden incluir criterios como el tipo de propiedad, operación, ubicación, precio, y más. La búsqueda es manejada principalmente por las funciones de AJAX que se comunican con el backend para obtener los resultados basados en los filtros aplicados.
+1. **Carrusel de Operaciones 🛠️**
+   - Muestra las diferentes operaciones disponibles (compra, alquiler, alquiler con opción a compra, etc.).
+   - Cada operación se representa con una imagen y un título que facilita la identificación visual.
 
-2. **Paginación y Scroll **
-   El módulo implementa la funcionalidad de paginación para dividir los resultados en páginas manejables. También incluye una función de scroll para cargar más resultados a medida que el usuario va pidiendo más viviendas.
+2. **Carrusel de Tipos de Propiedad 🏠**
+   - Presenta los diferentes tipos de propiedades disponibles (casas, apartamentos, oficinas, etc.).
+   - Cada tipo de propiedad se muestra con una imagen representativa y una breve descripción.
 
-3. **Visualización de Detalles de la Propiedad**
-   Los usuarios pueden ver detalles de cada vivienda. Al hacer clic en una propiedad de la lista, se muestra una vista detallada que incluye información como precio, ubicación, número de habitaciones, baños, garaje, superficie y descripción.
+3. **Carrusel de Ciudades 🌆**
+   - Muestra las ciudades donde hay propiedades disponibles.
+   - Cada ciudad se presenta con una imagen y el nombre de la ciudad para facilitar la búsqueda geográfica.
 
-4. **Gestión de Favoritos y Carrito**
-   Los usuarios pueden agregar propiedades a sus favoritos o a su carrito. Esta funcionalidad permite a los usuarios guardar propiedades de interés para revisarlas más tarde o proceder con la comprao el alquiler.
+4. **Propiedades Más Vistas 👀**
+   - Presenta una lista de las propiedades más vistas por los usuarios.
+   - Incluye detalles breves como el precio, la ubicación, el número de habitaciones y el tipo de propiedad.
 
-5. **Integración con Mapas**
-   El módulo integra servicios de mapas para mostrar la ubicación de las propiedades en un mapa interactivo. Esto facilita a los usuarios visualizar la localización de las propiedades.
+5. **Últimas Propiedades Vistas 🕒**
+   - Muestra un carrusel de las últimas propiedades que el usuario ha visitado.
+   - Ayuda a los usuarios a retomar rápidamente su búsqueda donde la dejaron.
 
+## Funcionalidades del Módulo "Shop" 🏬
+
+### Funcionalidades Principales
+
+1. **Búsqueda y Filtros 🔍**
+   - Permite a los usuarios realizar búsquedas avanzadas utilizando diversos filtros.
+   - Los filtros pueden incluir criterios como el tipo de propiedad, operación, ubicación, precio, y más.
+   - La búsqueda es manejada principalmente por las funciones de AJAX que se comunican con el backend para obtener los resultados basados en los filtros aplicados.
+
+2. **Paginación y Scroll 📜**
+   - Implementa la funcionalidad de paginación para dividir los resultados en páginas manejables.
+   - Incluye una función de scroll para cargar más resultados a medida que el usuario va pidiendo más viviendas.
+
+3. **Visualización de Detalles de la Propiedad 🏠**
+   - Permite a los usuarios ver detalles completos de cada propiedad.
+   - Al hacer clic en una propiedad de la lista, se muestra una vista detallada que incluye información como precio, ubicación, número de habitaciones, baños, garaje, superficie y descripción.
+
+4. **Gestión de Favoritos y Carrito ❤️**
+   - Los usuarios pueden agregar propiedades a sus favoritos o a su carrito.
+   - Esta funcionalidad permite a los usuarios guardar propiedades de interés para revisarlas más tarde o proceder con la compra/alquiler.
+
+5. **Integración con Mapas 🗺️**
+   - Integra servicios de mapas para mostrar la ubicación de las propiedades en un mapa interactivo.
+   - Facilita a los usuarios visualizar la localización geográfica de las propiedades.
