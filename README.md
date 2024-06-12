@@ -1,4 +1,4 @@
-# CheQueCasas (PHP - Jqwery) 🏠💻
+# CheQueCasas (PHP - jQuery) 🏠💻
 
 Proyecto realizado en 1º DAW, cuyo fin es tener un primer contacto con la elaboración de aplicaciones WEB.
 
@@ -46,7 +46,6 @@ Proyecto realizado en 1º DAW, cuyo fin es tener un primer contacto con la elabo
 1. **Búsqueda y Filtros 🔍**
    - Permite a los usuarios realizar búsquedas avanzadas utilizando diversos filtros.
    - Los filtros pueden incluir criterios como el tipo de propiedad, operación, ubicación, precio, y más.
-   - La búsqueda es manejada principalmente por las funciones de AJAX que se comunican con el backend para obtener los resultados basados en los filtros aplicados.
 
 2. **Paginación y Scroll 📜**
    - Implementa la funcionalidad de paginación para dividir los resultados en páginas manejables.
@@ -80,5 +79,31 @@ Proyecto realizado en 1º DAW, cuyo fin es tener un primer contacto con la elabo
 4. **Botón de Búsqueda 🚀**
    - Inicia la búsqueda basada en los filtros seleccionados por el usuario.
 
+## Funcionalidades del Módulo "Login" 🔑
 
+### Funcionalidades Principales
+
+1. **Inicio de Sesión 🔑**
+   - Permite a los usuarios autenticarse ingresando su nombre de usuario y contraseña.
+
+2. **Registro de Usuarios 📝**
+   - Facilita la creación de nuevas cuentas de usuario.
+
+3. **Recuperación de Contraseña 🔄**
+   - Permite a los usuarios recuperar sus contraseñas en caso de olvido.
+
+4. **Social Login🌐**
+   - Soporta el inicio de sesión utilizando cuentas de Google y GitHub.
+
+5. **Cambio de Foto de Perfil 📸**
+   - Permite a los usuarios subir y cambiar su foto de perfil.
+
+6. **Ver y Gestionar Favoritos ❤️**
+   - Los usuarios pueden ver y gestionar las viviendas que han marcado como favoritas.
+
+7. **Modificar Datos Personales 📝**
+   - Permite a los usuarios actualizar su información personal, incluyendo nombre, apellidos y teléfono.
+
+8. **Activar Verificación en Dos Pasos (2FA) 🔐**
+   - Existe la opción de configurar y activar la verificación en dos pasos para mejorar la seguridad de su cuenta.
 
