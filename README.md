@@ -6,6 +6,7 @@ Proyecto realizado en 1º DAW, cuyo fin es tener un primer contacto con la elabo
 
 **CheQueCasas** es una aplicación web desarrollada en PHP y jQuery que facilita la compra y alquiler de casas. La aplicación está diseñada para ofrecer una experiencia de usuario personalizada y eficiente, permitiendo a los usuarios buscar propiedades, ver detalles, y gestionar sus preferencias de compra o alquiler de manera sencilla.
 
+
 ### Módulos Principales
 
 - **Home 🏡**: Es el módulo de inicio de la aplicación, donde el usuario realiza su primer filtro de búsqueda según sus preferencias, o bien accede a las viviendas destacadas.
@@ -14,6 +15,25 @@ Proyecto realizado en 1º DAW, cuyo fin es tener un primer contacto con la elabo
 - **Maps 🗺️**: Integración con servicios de mapas para mostrar la ubicación de las propiedades, permitiendo a los usuarios visualizar las casas disponibles en un mapa interactivo.
 - **Login 🔑**: Módulo de autenticación de usuarios, que incluye el inicio de sesión y el registro de nuevos usuarios para acceder a funcionalidades personalizadas.
 - **Cart 🛒**: Este módulo permite a los usuarios gestionar una lista de propiedades que les interesan, agregando o eliminando casas según sus preferencias.
+
+### Tecnologías Utilizadas
+
+#### Backend
+
+![Backend](https://skillicons.dev/icons?i=mysql,php,jwt)
+
+- **MySQL**: Sistema de gestión de bases de datos relacional.
+- **PHP**: Lenguaje de programación del lado del servidor.
+- **JWT**: Estándar abierto para la creación de tokens de acceso seguros.
+
+#### Frontend
+
+![Frontend](https://skillicons.dev/icons?i=jquery,html,css)
+
+- **jQuery**: Biblioteca de JavaScript para simplificar la manipulación del DOM.
+- **HTML**: Lenguaje de marcado para estructurar las páginas web.
+- **CSS**: Lenguaje de estilo para diseñar las páginas web.
+
   
 ## Funcionalidades del Módulo "Home" 🏡
 
